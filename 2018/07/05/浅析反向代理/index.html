@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-center-circle.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon1.ico?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon1.ico?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon1.ico?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/favicon1.ico?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近这段时间频频接触到反代的东西，所以就更进一步的了解了一番, 有什么不对的地方还请大佬们指正~本文需要用到的代码已上传Github本文由安全客原创发布，禁止转载">
+<meta name="keywords" content="Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅析反向代理">
+<meta property="og:url" content="http://passer6y.fun/2018/07/05/浅析反向代理/index.html">
+<meta property="og:site_name" content="Passerby&#39;s Blog">
+<meta property="og:description" content="最近这段时间频频接触到反代的东西，所以就更进一步的了解了一番, 有什么不对的地方还请大佬们指正~本文需要用到的代码已上传Github本文由安全客原创发布，禁止转载">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://p4.ssl.qhimg.com/t01cb5a2af8acb7cd4d.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/07/02/5b3a009246944.png">
+<meta property="og:image" content="https://i.loli.net/2018/07/02/5b3a00ad80dcc.png">
+<meta property="og:image" content="https://i.loli.net/2018/07/02/5b3a00e2a7a3a.png">
+<meta property="og:image" content="https://i.loli.net/2018/07/02/5b3a00fcdacf6.png">
+<meta property="og:image" content="https://i.loli.net/2018/07/02/5b3a011fb3e7a.png">
+<meta property="og:image" content="https://i.loli.net/2018/07/02/5b3a01347ddc1.png">
+<meta property="og:image" content="https://i.loli.net/2018/07/02/5b3a01616cf05.png">
+<meta property="og:image" content="https://i.loli.net/2018/07/02/5b3a01781e415.png">
+<meta property="og:image" content="https://i.loli.net/2018/07/02/5b3a0196ef547.png">
+<meta property="og:image" content="https://i.loli.net/2018/07/02/5b3a01bbc6af4.png">
+<meta property="og:updated_time" content="2018-07-05T16:15:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅析反向代理">
+<meta name="twitter:description" content="最近这段时间频频接触到反代的东西，所以就更进一步的了解了一番, 有什么不对的地方还请大佬们指正~本文需要用到的代码已上传Github本文由安全客原创发布，禁止转载">
+<meta name="twitter:image" content="https://p4.ssl.qhimg.com/t01cb5a2af8acb7cd4d.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Passerby's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="http://passer6y.fun/2018/07/05/浅析反向代理/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>浅析反向代理 | Passerby's Blog</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Passerby's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-ctf">
+    <a href="/categories/CTF/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-flag"></i> <br />CTF</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-web">
+    <a href="/categories/Web/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-jsfiddle"></i> <br />Web</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-code">
+    <a href="/categories/Code/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-code"></i> <br />Code</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-internet">
+    <a href="/categories/Internet/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-wifi"></i> <br />内网渗透</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-others">
+    <a href="/categories/Others/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-eye"></i> <br />Others</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-folder-open"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/About/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />Suche</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://passer6y.fun/2018/07/05/浅析反向代理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Passer6y">
+      <meta itemprop="description" content="A salty fish">
+      <meta itemprop="image" content="/images/21.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Passerby's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">浅析反向代理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2018-07-05 23:00:00" itemprop="dateCreated datePublished" datetime="2018-07-05T23:00:00+08:00">2018-07-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-07-06 00:15:44" itemprop="dateModified" datetime="2018-07-06T00:15:44+08:00">2018-07-06</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Web/" itemprop="url" rel="index"><span itemprop="name">Web</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/05/浅析反向代理/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2018/07/05/浅析反向代理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/07/05/浅析反向代理/" class="leancloud_visitors" data-flag-title="浅析反向代理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Views: </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://p4.ssl.qhimg.com/t01cb5a2af8acb7cd4d.jpg" alt=""></p>
+<blockquote>
+<p>最近这段时间频频接触到反代的东西，所以就更进一步的了解了一番, 有什么不对的地方还请大佬们指正~<br>本文需要用到的代码已上传<a href="https://github.com/Passer6y/Reverse_proxy" target="_blank" rel="noopener">Github</a><br><strong>本文由<a href="https://www.anquanke.com/post/id/150436" target="_blank" rel="noopener">安全客</a>原创发布，禁止转载</strong><br><a id="more"></a></p>
+</blockquote>
+<p><strong>本文涉及到的东西仅供技术研究，请勿用于非法用途，否则后果自负</strong></p>
+<h1 id="浅析反向代理"><a href="#浅析反向代理" class="headerlink" title="浅析反向代理"></a>浅析反向代理</h1><h2 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01: 前言"></a>0x01: 前言</h2><p>最近把博客重新弄了一下，发现了一个特别有意思的东西，看图~<br><img src="https://i.loli.net/2018/07/02/5b3a009246944.png" alt="Alt text"></p>
+<p>还有一些有意思的东西，比如反代谷歌(谷歌镜像站)、钓鱼、绕过国内备案和线下CTF中的一些骚操作，等等。</p>
+<h2 id="0x02-简介"><a href="#0x02-简介" class="headerlink" title="0x02: 简介"></a>0x02: 简介</h2><p>反向代理，简而言之就是反向代理服务器从目标内容服务器上抓取内容返回给用户，反向代理服务器充当一个中介功能，他本身是没有任何内容的。区别于正向代理而言，反向代理是代理的服务端，而正向代理是代理的客户端。<br> <img src="https://i.loli.net/2018/07/02/5b3a00ad80dcc.png" alt="Alt text"></p>
+<p>再来简单介绍一下我在前言中所说的我让我的博客ip是如何变成1.1.1.1的，其实1.1.1.1是一台DNS服务器(号称全球最快的DNS)，正好1.1.1.1又是cf cdn中的一个节点。这样我们就可以将域名解析到1.1.1.1，然后在cf中设置好真实的回源地址即可。在文末已附上教程链接，感兴趣的可以玩玩~</p>
+<h2 id="0x03-一些有意思的东西"><a href="#0x03-一些有意思的东西" class="headerlink" title="0x03: 一些有意思的东西"></a>0x03: 一些有意思的东西</h2><p>除了上述所说的套一个CDN，让自己ip变成1.1.1.1来隐藏自己站点ip，还有一些其他好玩的~</p>
+<ol>
+<li>CTF线下中的一些思路<br>因为我们线下赛中每支队伍的web站点都一样，笔者在之前的一次线下训练赛的时候尝试过修改apache配置文件来反代分数最高的队伍的站点，从而达到流量转发(伤害转移)的效果。这个具体能不能实现得看服务器的权限能提升到多高，其次也得根据具体的check机制来灵活使用。如果提升的权限不够高的话，也可以配置.htaccess来实现反代。用tcpdump倒流量顺手抓一波别人的payload。<br>如果我们采用的是.htaccess方法进行反向代理，这里说一下这种方法的原理和其他的不同在于它本质上是利用.htaccess映射到一个php文件，然后利用php文件去抓取目标服务器的信息返回给客户端。这里.htaccess配置的作用是重写url。所以我们不妨在这个php文件中包含一下这个demo1.php即可达到payload的记录的效果：</li>
+</ol>
+<p>代码如下：<br>demo1.php<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">write_log();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_http_raw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    $raw = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line">    $raw .= $_SERVER[<span class="string">'REQUEST_METHOD'</span>].<span class="string">' '</span>.$_SERVER[<span class="string">'REQUEST_URI'</span>].<span class="string">' '</span>.$_SERVER[<span class="string">'SERVER_PROTOCOL'</span>].<span class="string">"\r\n"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span>($_SERVER <span class="keyword">as</span> $key =&gt; $value) &#123;</span><br><span class="line">        <span class="keyword">if</span>(substr($key, <span class="number">0</span>, <span class="number">5</span>) === <span class="string">'HTTP_'</span>) &#123;</span><br><span class="line">            $key = substr($key, <span class="number">5</span>);</span><br><span class="line">            $key = str_replace(<span class="string">'_'</span>, <span class="string">'-'</span>, $key);</span><br><span class="line">            $raw .= $key.<span class="string">': '</span>.$value.<span class="string">"\r\n"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    $raw .= <span class="string">"\r\n"</span>;</span><br><span class="line">    $raw .= file_get_contents(<span class="string">'php://input'</span>);</span><br><span class="line">    <span class="keyword">return</span> $raw;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">write_log</span><span class="params">()</span></span>&#123;</span><br><span class="line">    $data = date(<span class="string">"Y/m/d H:i:s"</span>).<span class="string">"\r\n"</span>.get_http_raw().<span class="string">"\r\n\r\n"</span>;</span><br><span class="line">    $file = fopen(<span class="string">'log1.txt'</span>, <span class="string">'a'</span>); <span class="comment">//日志路径</span></span><br><span class="line">    fwrite($file, $data);</span><br><span class="line">    fclose($file);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>记录如下:<br><img src="https://i.loli.net/2018/07/02/5b3a00e2a7a3a.png" alt="Alt text"></p>
+<ol start="2">
+<li>克隆网站 –中间人攻击<br>我们可以安装一个nginx的第三方模块ngx_http_substitutions_filter_module,然后nginx的配置文件中加入一段，即可弹窗等。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">subs_filter &lt;/head&gt; &quot;&lt;script&gt;alert(&apos;1&apos;);&lt;/script&gt;&lt;/head&gt;&quot;;</span><br></pre></td></tr></table></figure>
+<p>location部分的配置如下：<br><img src="https://i.loli.net/2018/07/02/5b3a00fcdacf6.png" alt="Alt text"></p>
+<p>这里有个坑弄了我好久… 就是我们请求网站的时候，数据包头部一般会有Accept-Encoding部分，如下图所示，这个部分告诉服务器，客户端能以怎样的形式解码。那么问题来了，数据包是压缩的，我们怎样才能用subs_filter 替换其中的内容呢？ 其实正像上面截图的配置那样设置：反代服务器请求上游服务器的时候带上Accept-Encoding=‘ ’ 即可，表示不接受任何压缩数据。</p>
+<p><img src="https://i.loli.net/2018/07/02/5b3a011fb3e7a.png" alt="Alt text"></p>
+<p>访问<a href="http://a.cuit.store,效果如下：" target="_blank" rel="noopener">http://a.cuit.store,效果如下：</a><br><img src="https://i.loli.net/2018/07/02/5b3a01347ddc1.png" alt="Alt text"></p>
+<p>这样如果我们反代一个登录页面，比如qq空间，然后植入我们的js脚本，后果emmm…<br>当然了，不同站的反代难度是不一样的~</p>
+<ol start="3">
+<li>绕过网站所有权验证，调用在线的云扫描器给我们需要渗透的网站进行扫描<br>以人人扫这个云扫描平台为例：<a href="http://www.renrenscan.com/，" target="_blank" rel="noopener">http://www.renrenscan.com/，</a> 其中需要我们把一个认证文件放到网站根目录上，我们可以设置反代规则的时候，对这个文件进行排除，不进行代理即可绕过，或者直接用.htaccess的方法进行反代就行。<br><img src="https://i.loli.net/2018/07/02/5b3a01616cf05.png" alt="Alt text"><br>这样我们只需要等待扫描结果，即可get目标站的漏洞了~</li>
+</ol>
+<p>如果我们再邪恶一点….顺便也可以包含上demo1.php，把这些扫描的payload都导出来下来(手动滑稽)</p>
+<p> ps：这里说点其他的，我发现在给我博客加cdn的时候，发现了如下图所示的这个，因为我用的是cloudflare免费版的套餐，可以看到有很多请求没有经过CDN处理就直接回源了，这就可以让我们想到如果我们渗透的站点是套了CDN的，常规的找邮件服务器，静态文件，ssrf啥的如果都不管用，还不如来点简单粗暴的，暴力发包让CDN承受不住而回源，这样真实ip’轻松’get~</p>
+<p><img src="https://i.loli.net/2018/07/02/5b3a01781e415.png" alt="Alt text"></p>
+<h2 id="0x04-反向代理不当"><a href="#0x04-反向代理不当" class="headerlink" title="0x04: 反向代理不当"></a>0x04: 反向代理不当</h2><p>一般当我们遇到了反代服务器的时候，可以试着用burpsuite的repeat功能，设置host为反代服务器，然后把http请求中的路径改为内网中的host(一般需要穷举，穷举网段ip端口域名等等)。因为反向代理的本质就是将客户端的请求url重写后发往上游服务器，将返回结果发回客户端，在这之中，如果对路径的配置不当就有可能导致反向代理变正向代理导致一些信息泄露，内网穿透等等漏洞。<br><img src="https://i.loli.net/2018/07/02/5b3a0196ef547.png" alt="Alt text"></p>
+<p>参考：<br><a href="http://wooyun.jozxing.cc/static/bugs/wooyun-2016-0191121.html" target="_blank" rel="noopener">陌陌web服务器Path处理不当可以正向代理</a><br><a href="https://bbs.ichunqiu.com/thread-36628-1-1.html" target="_blank" rel="noopener">内网穿透代理洞</a><br><a href="https://mp.weixin.qq.com/s?__biz=MjM5NjA0NjgyMA==&amp;mid=2651064742&amp;idx=4&amp;sn=acab07b6df1b307c5ef27b70e3e74e69&amp;chksm=bd1f9b2d8a68123b6064cc4fbbfa7388508d8763a976a18cb8deacb72680f5db7d894a614b91&amp;mpshare=1&amp;scene=23&amp;srcid=0123MGZlcIvsLgWBmyZ5h4rZ#rd" target="_blank" rel="noopener">谷歌内部主机信息泄露漏洞</a><br><a href="http://wooyun.chamd5.org/bug_detail.php?wybug_id=wooyun-2015-0131169" target="_blank" rel="noopener">新浪HTTP代理配置不当漫游内网</a><br><a href="https://paper.tuisec.win/detail/b6d9381e54b0778" target="_blank" rel="noopener">挖洞经验之代理不当日进内网</a>  </p>
+<p>还有一种就是nginx为Django做反代的时候，<a href="https://www.leavesongs.com/PENETRATION/nginx-insecure-configuration.html#_1" target="_blank" rel="noopener">静态文件配置错误导致源码泄露</a></p>
+<p>##0x05: 如何防止被反向代理<br>反向代理不仅会对用户造成威胁，而且对服务器来说也会增强负载，还有就是通过代理的方式盗取网站数据，还有就是seo相关的影响了等等…</p>
+<ol>
+<li>通过js防止反代：如果地址栏的网址不是<a href="http://www.passer6y.fun那么就进行跳转。" target="_blank" rel="noopener">www.passer6y.fun那么就进行跳转。</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">if (document.domain !=&apos;www.passer6y.fun&apos;)&#123;</span><br><span class="line">    window.location.href=&apos;http://www.passer6y.fun/&apos;;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>其实这种方法还是可以绕过的，nginx有扩展模块可以将指定的字符进行替换，这时我们只需将target域名替换成我们自己的就行了(上文有说到如何替换)。或者直接不代理这个js文件也行。</p>
+<ol start="2">
+<li><p>php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">if($_SERVER[&apos;SERVER_NAME&apos;] != &apos;www.passer6y.fun&apos; )   </span><br><span class="line">&#123;  </span><br><span class="line">header(&apos;Location: http://www.passer6y.fun/&apos;);</span><br><span class="line">&#125;  </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>.htaccess</p>
+</li>
+</ol>
+<p>.htaccess<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RewriteEngine On</span><br><span class="line">    RewriteBase /</span><br><span class="line">    php_value auto_append_file proxy.php</span><br></pre></td></tr></table></figure></p>
+<p> proxy.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">        $f = getenv(“HTTP_X_FORWARDED_FOR”);</span><br><span class="line">        $server = getenv(“HTTP_HOST”);</span><br><span class="line">        if (($f!=””)&amp;&amp;($server!=”www.passer6y.fun”)&#123;</span><br><span class="line">            echo ‘本服务器禁止恶意反向代理！’;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    ?&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="0x06-Apache-反代配置方法"><a href="#0x06-Apache-反代配置方法" class="headerlink" title="0x06: Apache 反代配置方法"></a>0x06: Apache 反代配置方法</h2><h3 id="1-windows下："><a href="#1-windows下：" class="headerlink" title="1. windows下："></a>1. windows下：</h3><p>修改配置文件：Apache\conf\httpd.conf，将以下两个前面的注释符去掉。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#LoadModule proxy_module modules/mod_proxy.so</span><br><span class="line">#LoadModule proxy_http_module modules/mod_proxy_http.so</span><br></pre></td></tr></table></figure></p>
+<p>然后新增一个Apache\conf\vhosts.conf文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line"></span><br><span class="line">        ServerAdmin admin   # 域名信息</span><br><span class="line"></span><br><span class="line">        ServerName passer6y.cn # 邮件信息</span><br><span class="line"></span><br><span class="line">        ProxyRequests Off  </span><br><span class="line"></span><br><span class="line">        &lt;Proxy *&gt;</span><br><span class="line"></span><br><span class="line">        Order deny,allow</span><br><span class="line"></span><br><span class="line">        Allow from all</span><br><span class="line"></span><br><span class="line">        &lt;/Proxy&gt;</span><br><span class="line"></span><br><span class="line">        ProxyPass / http://passer6y.cn/ # 将一个远端服务器映射到本地服务器的URL空间</span><br><span class="line"></span><br><span class="line">        ProxyPassReverse / http://passer6y.cn/ # 调整由反向代理服务器发送的HTTP回应头中的URL。</span><br><span class="line"></span><br><span class="line">    &lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-linux下"><a href="#2-linux下" class="headerlink" title="2. linux下"></a>2. linux下</h3><blockquote>
+<p>参考：<a href="https://www.leaseweb.com/labs/2014/12/tutorial-apache-2-4-transparent-reverse-proxy/" target="_blank" rel="noopener">https://www.leaseweb.com/labs/2014/12/tutorial-apache-2-4-transparent-reverse-proxy/</a><br>测试环境：Ubuntu 16.04，apache2<br>加载”proxy_http”模块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo a2enmod proxy_http</span><br><span class="line">sudo service apache2 restart</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>在/etc/apache2/sites-available/下，修改配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">    ProxyPreserveHost On</span><br><span class="line">    ProxyPass / http://192.168.83.1/  # 指定根URL(/)下的内容映射到给定地址的后端服务器</span><br><span class="line">    ProxyPassReverse / http://192.168.83.1/  </span><br><span class="line">&lt;/VirtualHost&gt;</span><br><span class="line">~</span><br></pre></td></tr></table></figure></p>
+<p>重启apache生效配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo service apache2 reload</span><br><span class="line">sudo service apache2 restart</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-htaccess配置反向代理"><a href="#3-htaccess配置反向代理" class="headerlink" title="3. .htaccess配置反向代理"></a>3. .htaccess配置反向代理</h3><p>这种方法配置反向代理准确的说是php反向代理，我们通过.htaccess中配置一些重写规则，然后把请求映射到一个php文件中，这个php帮我们请求上游服务器的内容，然后将上游服务器的返回的内容获取回来发回客户端。这种配置反代的好处是所需权限比较小，但是也有很多弊端，随着网站的复杂度，我们所写的抓取页面的php脚本难度就不大一样了。</p>
+<p><a href="https://github.com/Passer6y/Reverse_proxy" target="_blank" rel="noopener">Github</a>上放了3个php反代脚本的demo，使用说明也见里面的readme即可。</p>
+<p>##0x07 nginx 反向代理</p>
+<h3 id="1-简单反代"><a href="#1-简单反代" class="headerlink" title="1. 简单反代"></a>1. 简单反代</h3><p>Nginx核心配置文件nginx.conf：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> server &#123;</span><br><span class="line">        listen       80;   # 监听端口(web服务端口)</span><br><span class="line">        server_name  localhost;  # 当前服务的域名，这里是本地测试</span><br><span class="line"></span><br><span class="line">        location / &#123;   # 这里的/ 表示把服务器的根目录反代到www.baidu.com的根目录。</span><br><span class="line">            proxy_pass http://www.baidu.com;</span><br><span class="line">			proxy_redirect default;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-实例：反代Google"><a href="#2-实例：反代Google" class="headerlink" title="2. 实例：反代Google"></a>2. 实例：反代Google</h3><blockquote>
+<p>测试环境：cent os7<br>条件准备：一个域名，<a href="https://oneinstack.com/auto/" target="_blank" rel="noopener">OneinStack一键安装lnmp</a>，<a href="https://blog.linuxeye.cn/448.html" target="_blank" rel="noopener">Let’s Encrypt 的ssl证书</a></p>
+</blockquote>
+<p>接下来编辑nginx下的主机配置文件：/usr/local/nginx/conf/vhost/<br><img src="https://i.loli.net/2018/07/02/5b3a01bbc6af4.png" alt="Alt text"><br>然后在最后插入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;  </span><br><span class="line">    proxy_set_header  Host  &quot;www.google.com&quot;;</span><br><span class="line">    proxy_set_header  User-Agent $http_user_agent;</span><br><span class="line">    proxy_set_header  Connection &quot;&quot;;</span><br><span class="line">    proxy_http_version 1.1;</span><br><span class="line">    proxy_pass https://www.google.com;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>检测Nginx配置是否正确：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@vultr vhost]# nginx -t</span><br><span class="line">nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful</span><br></pre></td></tr></table></figure></p>
+<p>重载Nginx服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@vultr vhost]# service nginx reload</span><br><span class="line">Reloading nginx configuration (via systemctl):             [  OK  ]</span><br></pre></td></tr></table></figure></p>
+<p>打开google.cuit.store，成功~</p>
+<h2 id="0x08-结语"><a href="#0x08-结语" class="headerlink" title="0x08 结语"></a>0x08 结语</h2><p>这次介绍了我所了解的三种反代情况以及其中一些有意思的玩法。笔者能力有限，第一次写文章有什么理解不对的地方还请大家多多指点！</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+	
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Passer6y</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://passer6y.fun/2018/07/05/浅析反向代理/" title="浅析反向代理">http://passer6y.fun/2018/07/05/浅析反向代理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>true</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web/" rel="tag"><i class="fa fa-tag"></i> Web</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/04/bugkuwp/" rel="next" title="Bugku Write Up">
+                <i class="fa fa-chevron-left"></i> Bugku Write Up
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/07/骇极杯Web Writeup/" rel="prev" title="骇极杯Web Writeup">
+                骇极杯Web Writeup <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/21.jpg"
+                alt="Passer6y" />
+            
+              <p class="site-author-name" itemprop="name">Passer6y</p>
+              <p class="site-description motion-element" itemprop="description">A salty fish</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:passer6y@d0g3.cn" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.wefun.win/" title="WeFun" target="_blank">WeFun</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#浅析反向代理"><span class="nav-number">1.</span> <span class="nav-text">浅析反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-前言"><span class="nav-number">1.1.</span> <span class="nav-text">0x01: 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-简介"><span class="nav-number">1.2.</span> <span class="nav-text">0x02: 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-一些有意思的东西"><span class="nav-number">1.3.</span> <span class="nav-text">0x03: 一些有意思的东西</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-反向代理不当"><span class="nav-number">1.4.</span> <span class="nav-text">0x04: 反向代理不当</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-Apache-反代配置方法"><span class="nav-number">1.5.</span> <span class="nav-text">0x06: Apache 反代配置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-windows下："><span class="nav-number">1.5.1.</span> <span class="nav-text">1. windows下：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-linux下"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. linux下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-htaccess配置反向代理"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. .htaccess配置反向代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-简单反代"><span class="nav-number">1.5.4.</span> <span class="nav-text">1. 简单反代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-实例：反代Google"><span class="nav-number">1.5.5.</span> <span class="nav-text">2. 实例：反代Google</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x08-结语"><span class="nav-number">1.6.</span> <span class="nav-text">0x08 结语</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Passer6y</span>
+
+  
+
+  
+</div>
+
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+ 
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共31.4k字</span>
+</div>
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: false,
+        appId: '3Jm4JutlBzR7fb3fxICb50pS-gzGzoHsz',
+        appKey: 'TDRlM3HCI03SteHoOtVxJIMS',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("3Jm4JutlBzR7fb3fxICb50pS-gzGzoHsz", "TDRlM3HCI03SteHoOtVxJIMS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('Copied')
+          else $(this).text('Copy failed')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('Copy')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
