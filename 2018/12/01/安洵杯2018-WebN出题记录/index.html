@@ -115,13 +115,13 @@
 
 
 
-  <meta name="description" content="出题思路考点，同源代码执行(Some攻击)，一个jsonp接口，搞不了xss，获取不了信息，但是能回调调用js函数，这样就可以Bypass csrf token了~">
+  <meta name="description" content="出题思路考点，同源代码执行(Some攻击)，一个jsonp接口，搞不了xss，获取不了信息，但是能回调调用js函数，这样就可以Bypass csrf token了~ 漏洞点： 礼品中心处：怎么购买 怎么充值都是失败的。 分析js代码：在reward.php中点击富萝莉后，会用iframe加载confirm.php的文件 跟进confirm.php一个jsonp的回调接口， 跟进接口jsonp接口">
 <meta name="keywords" content="CTF">
 <meta property="og:type" content="article">
 <meta property="og:title" content="安洵杯2018-WebN出题记录">
 <meta property="og:url" content="http://passer6y.fun/2018/12/01/安洵杯2018-WebN出题记录/index.html">
 <meta property="og:site_name" content="Passerby&#39;s Blog">
-<meta property="og:description" content="出题思路考点，同源代码执行(Some攻击)，一个jsonp接口，搞不了xss，获取不了信息，但是能回调调用js函数，这样就可以Bypass csrf token了~">
+<meta property="og:description" content="出题思路考点，同源代码执行(Some攻击)，一个jsonp接口，搞不了xss，获取不了信息，但是能回调调用js函数，这样就可以Bypass csrf token了~ 漏洞点： 礼品中心处：怎么购买 怎么充值都是失败的。 分析js代码：在reward.php中点击富萝莉后，会用iframe加载confirm.php的文件 跟进confirm.php一个jsonp的回调接口， 跟进接口jsonp接口">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/6pgi1em6bjnj3hhytju6fpv0/image_1cs6hv2drb3k1sgfrop6u419699.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/f3k2f9dta43t2l92c89eo713/image_1cs6i2efa1qol641htss81lh7m.png">
@@ -135,10 +135,10 @@
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/76iioigktfac7rzlp48wz7pf/exp.zip">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/q12i7rtkjemh1h5ee1i2nnq8/1.py">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/34ka4snouxxlrxtsdyf5rtgg/demo.mp4">
-<meta property="og:updated_time" content="2019-01-29T12:32:31.025Z">
+<meta property="og:updated_time" content="2019-01-29T12:33:57.187Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="安洵杯2018-WebN出题记录">
-<meta name="twitter:description" content="出题思路考点，同源代码执行(Some攻击)，一个jsonp接口，搞不了xss，获取不了信息，但是能回调调用js函数，这样就可以Bypass csrf token了~">
+<meta name="twitter:description" content="出题思路考点，同源代码执行(Some攻击)，一个jsonp接口，搞不了xss，获取不了信息，但是能回调调用js函数，这样就可以Bypass csrf token了~ 漏洞点： 礼品中心处：怎么购买 怎么充值都是失败的。 分析js代码：在reward.php中点击富萝莉后，会用iframe加载confirm.php的文件 跟进confirm.php一个jsonp的回调接口， 跟进接口jsonp接口">
 <meta name="twitter:image" content="http://static.zybuluo.com/Passer6y/6pgi1em6bjnj3hhytju6fpv0/image_1cs6hv2drb3k1sgfrop6u419699.png">
 
 
@@ -463,7 +463,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Updated at: 2019-01-29 20:32:31" itemprop="dateModified" datetime="2019-01-29T20:32:31+08:00">2019-01-29</time>
+                <time title="Updated at: 2019-01-29 20:33:57" itemprop="dateModified" datetime="2019-01-29T20:33:57+08:00">2019-01-29</time>
               
             
           </span>
@@ -517,7 +517,8 @@
       
 
       
-        <h2 id="出题思路"><a href="#出题思路" class="headerlink" title="出题思路"></a>出题思路</h2><p>考点，同源代码执行(Some攻击)，一个jsonp接口，搞不了xss，获取不了信息，但是能回调调用js函数，这样就可以Bypass csrf token了~<br><a id="more"></a></p>
+        <a id="more"></a>
+<h2 id="出题思路"><a href="#出题思路" class="headerlink" title="出题思路"></a>出题思路</h2><p>考点，同源代码执行(Some攻击)，一个jsonp接口，搞不了xss，获取不了信息，但是能回调调用js函数，这样就可以Bypass csrf token了~</p>
 <p>漏洞点：</p>
 <p>礼品中心处：<br><img src="http://static.zybuluo.com/Passer6y/6pgi1em6bjnj3hhytju6fpv0/image_1cs6hv2drb3k1sgfrop6u419699.png" alt="image_1cs6hv2drb3k1sgfrop6u419699.png-251.8KB"><br>怎么购买 怎么充值都是失败的。</p>
 <p>分析js代码：<br><img src="http://static.zybuluo.com/Passer6y/f3k2f9dta43t2l92c89eo713/image_1cs6i2efa1qol641htss81lh7m.png" alt="image_1cs6i2efa1qol641htss81lh7m.png-68kB"><br>在reward.php中点击富萝莉后，会用iframe加载confirm.php的文件</p>
