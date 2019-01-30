@@ -115,13 +115,11 @@
 
 
 
-  <meta name="description" content="出题思路考点，同源代码执行(Some攻击)，一个jsonp接口，搞不了xss，获取不了信息，但是能回调调用js函数，这样就可以Bypass csrf token了~ 漏洞点： 礼品中心处：怎么购买 怎么充值都是失败的。 分析js代码：在reward.php中点击富萝莉后，会用iframe加载confirm.php的文件 跟进confirm.php一个jsonp的回调接口， 跟进接口jsonp接口">
-<meta name="keywords" content="CTF">
+  <meta name="keywords" content="CTF">
 <meta property="og:type" content="article">
 <meta property="og:title" content="安洵杯2018-WebN出题记录">
 <meta property="og:url" content="http://passer6y.fun/2018/12/01/安洵杯2018-WebN出题记录/index.html">
 <meta property="og:site_name" content="Passerby&#39;s Blog">
-<meta property="og:description" content="出题思路考点，同源代码执行(Some攻击)，一个jsonp接口，搞不了xss，获取不了信息，但是能回调调用js函数，这样就可以Bypass csrf token了~ 漏洞点： 礼品中心处：怎么购买 怎么充值都是失败的。 分析js代码：在reward.php中点击富萝莉后，会用iframe加载confirm.php的文件 跟进confirm.php一个jsonp的回调接口， 跟进接口jsonp接口">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/6pgi1em6bjnj3hhytju6fpv0/image_1cs6hv2drb3k1sgfrop6u419699.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/f3k2f9dta43t2l92c89eo713/image_1cs6i2efa1qol641htss81lh7m.png">
@@ -135,10 +133,9 @@
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/76iioigktfac7rzlp48wz7pf/exp.zip">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/q12i7rtkjemh1h5ee1i2nnq8/1.py">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/34ka4snouxxlrxtsdyf5rtgg/demo.mp4">
-<meta property="og:updated_time" content="2019-01-30T06:09:56.405Z">
+<meta property="og:updated_time" content="2019-01-30T06:11:43.621Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="安洵杯2018-WebN出题记录">
-<meta name="twitter:description" content="出题思路考点，同源代码执行(Some攻击)，一个jsonp接口，搞不了xss，获取不了信息，但是能回调调用js函数，这样就可以Bypass csrf token了~ 漏洞点： 礼品中心处：怎么购买 怎么充值都是失败的。 分析js代码：在reward.php中点击富萝莉后，会用iframe加载confirm.php的文件 跟进confirm.php一个jsonp的回调接口， 跟进接口jsonp接口">
 <meta name="twitter:image" content="http://static.zybuluo.com/Passer6y/6pgi1em6bjnj3hhytju6fpv0/image_1cs6hv2drb3k1sgfrop6u419699.png">
 
 
@@ -328,7 +325,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />Cerca</a>
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />Suche</a>
         </li>
       
     </ul>
@@ -439,14 +436,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Scritto il</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="Post creato: 2018-12-01 20:40:00" itemprop="dateCreated datePublished" datetime="2018-12-01T20:40:00+08:00">2018-12-01</time>
+              <time title="Post created: 2018-12-01 20:40:00" itemprop="dateCreated datePublished" datetime="2018-12-01T20:40:00+08:00">2018-12-01</time>
             
 
             
@@ -463,7 +460,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Post modificato: 2019-01-30 14:09:56" itemprop="dateModified" datetime="2019-01-30T14:09:56+08:00">2019-01-30</time>
+                <time title="Updated at: 2019-01-30 14:11:43" itemprop="dateModified" datetime="2019-01-30T14:11:43+08:00">2019-01-30</time>
               
             
           </span>
@@ -517,7 +514,8 @@
       
 
       
-        <a id="more"></a>
+        <hr>
+<a id="more"></a>
 <h2 id="出题思路"><a href="#出题思路" class="headerlink" title="出题思路"></a>出题思路</h2><p>考点，同源代码执行(Some攻击)，一个jsonp接口，搞不了xss，获取不了信息，但是能回调调用js函数，这样就可以Bypass csrf token了~</p>
 <p>漏洞点：</p>
 <p>礼品中心处：<br><img src="http://static.zybuluo.com/Passer6y/6pgi1em6bjnj3hhytju6fpv0/image_1cs6hv2drb3k1sgfrop6u419699.png" alt="image_1cs6hv2drb3k1sgfrop6u419699.png-251.8KB"><br>怎么购买 怎么充值都是失败的。</p>
@@ -550,13 +548,13 @@
       <div>
         <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>Autore:  </strong>Passer6y</li>
+    <strong>Post author:  </strong>Passer6y</li>
   <li class="post-copyright-link">
-    <strong>Link: </strong>
+    <strong>Post link: </strong>
     <a href="http://passer6y.fun/2018/12/01/安洵杯2018-WebN出题记录/" title="安洵杯2018-WebN出题记录">http://passer6y.fun/2018/12/01/安洵杯2018-WebN出题记录/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>Copyright:  </strong>true</li>
+    <strong>Copyright Notice:  </strong>true</li>
 </ul>
 
       </div>
@@ -645,10 +643,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Indice
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Panoramica
+            Übersicht
           </li>
         </ul>
       
@@ -673,7 +671,7 @@
                   <a href="/archives">
                 
                     <span class="site-state-item-count">10</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
               
@@ -694,7 +692,7 @@
                       
                     
                     <span class="site-state-item-count">4</span>
-                    <span class="site-state-item-name">categorie</span>
+                    <span class="site-state-item-name">Kategorien</span>
                   </a>
                 </div>
               
@@ -717,7 +715,7 @@
                       
                     
                     <span class="site-state-item-count">5</span>
-                    <span class="site-state-item-name">tags</span>
+                    <span class="site-state-item-name">Tags</span>
                   </a>
                 </div>
               
