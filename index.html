@@ -437,7 +437,7 @@
                 
               
 
-              <time title="Post created: 2019-02-09 19:00:00 / Updated at: 19:13:40" itemprop="dateCreated datePublished" datetime="2019-02-09T19:00:00+08:00">2019-02-09</time>
+              <time title="Post created: 2019-02-09 19:00:00 / Updated at: 19:16:06" itemprop="dateCreated datePublished" datetime="2019-02-09T19:00:00+08:00">2019-02-09</time>
             
 
             
@@ -515,66 +515,14 @@
 
       
         
-          
-            <p>最新不知道抽了什么风，又开始搞起了薅羊毛，还想着能多偷点懒，这两天学了会按键精灵脚本，写了初步能自动化薅羊毛的工具：<a href="https://github.com/Passer6y/quickMacro" target="_blank" rel="noopener">https://github.com/Passer6y/quickMacro</a></p>
-<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><ol>
-<li>声明变量:Dim<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Dim screenX</span><br><span class="line">screenX = GetScreenX（）</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>2.延时:Delay<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Delay 1000 //延时1000毫秒，也就是1秒再往下执行</span><br></pre></td></tr></table></figure></p>
-<ol start="3">
-<li>点击<br>触摸屏幕中的一个位置-&gt;经过一小段时间延时-&gt;放手<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TouchDown  x,y,1       //x,y为坐标，也就是点击屏幕的位置</span><br><span class="line">Delay 50</span><br><span class="line">TouchUp 1</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>tap封装了以上的几个操作步骤：<br><code>Tap x,y</code></p>
-<p><img src="http://static.zybuluo.com/Passer6y/n27ij4qkrkf2xmwyedam4fzv/image_1d31gnp159n0u0u8g41lm31qcjm.png" alt="image_1d31gnp159n0u0u8g41lm31qcjm.png-74.7kB"></p>
-<ol start="4">
-<li><p>安卓三键：主菜单、主页、返回</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">KeyPress &quot;Menu&quot;</span><br><span class="line">KeyPress &quot;Home&quot;</span><br><span class="line">KeyPress &quot;Back&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>调试：ShowMessage和TracePrint<br>ShowMessage:显示提示，两条消息之间建议1秒以上间隔。<br>TracePrint：在调试页显示信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Dim 循环次数 = 0</span><br><span class="line">Do</span><br><span class="line">    Delay 1000</span><br><span class="line">    循环次数 = 循环次数+1</span><br><span class="line">    TracePrint “循环次数：”&amp;循环次数&amp;“次”</span><br><span class="line">    ShowMessage “循环次数：”&amp;循环次数&amp;“次”</span><br><span class="line">Loop</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>滑屏幕：swipe</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Swipe 10,10,100,100,300               //从坐标10,10划动到坐标100,100，历时300毫秒</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>滑动 停顿 再松<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TouchDown 10, 10, 1</span><br><span class="line">Delay 1000</span><br><span class="line">TouchMove 100, 100, 1, 300</span><br><span class="line">Delay 1000</span><br><span class="line">TouchUp 1</span><br></pre></td></tr></table></figure></p>
-<ol start="7">
-<li>循环<br>demo1:循环点击 (10,10) 一千次<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">For 1000</span><br><span class="line">    Tap 10,10</span><br><span class="line">    // 退出 Exit For</span><br><span class="line">Next</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>demo2: 一直点击<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Do</span><br><span class="line">Tap 10,10</span><br><span class="line">//退出 Exit Do</span><br><span class="line">Loop</span><br></pre></td></tr></table></figure></p>
-<h2 id="图色操作"><a href="#图色操作" class="headerlink" title="图色操作"></a>图色操作</h2><ol>
-<li><p>获取屏幕上某点颜色：GetPixelColor()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Dim rColor</span><br><span class="line">rColor = GetPixelColor(300, 300)</span><br><span class="line">If rColor = &quot;FFFFFF&quot; Then </span><br><span class="line">    TracePrint &quot;坐标（300,300）的像素点颜色是FFFFFF，说明当前处于XX界面下&quot;</span><br><span class="line">Else </span><br><span class="line">    TracePrint &quot;坐标（300,300）的像素点颜色不是FFFFFF，说明还没到XX界面&quot;</span><br><span class="line">End If</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>多点比色:<code>CmpColorEx(mul_color,sim)</code><br>即判断当前场景<br>取点(2,2)和点(4,3)以000000-202020的偏色范围(前后各10),相似度0.9的容错判断是否为同一个图，可以用抓抓快捷生成参数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">If CmpColorEx(&quot;2|2|000000-202020,4|3|000000-202020&quot;, 0.9) = 1 Then </span><br><span class="line">    TracePrint &quot;这是第二个图&quot;</span><br><span class="line">Else </span><br><span class="line">    TracePrint &quot;这不是第二个图&quot;</span><br><span class="line">End If</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>抓抓快捷生成参数： 取两点-&gt;点开’颜色’-&gt;在’颜色记录汇总’选中我们采的两点-&gt;进入‘多点比色’模式-&gt;复制’颜色描述’即可</p>
-</blockquote>
-<ol start="3">
-<li>多点找色：<code>FindMultiColor</code><br>即找到唯一的图标的作用<br>0,0,0,0表示全屏查找，10,20,30,40表示从坐标(10,20)和(30,40)组成的矩形范围。000000初始点的颜色值?，000000-202020(202020依旧是偏色)0|1是相对坐标(往右0，往下1)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Dim IntX,IntY</span><br><span class="line">FindMultiColor 0,0,0,0,&quot;000000&quot;,&quot;0|1|000000-202020&quot;,0,0.9,intX,intY</span><br><span class="line">If intX &gt; -1 Then</span><br><span class="line">    TracePrint &quot;找到啦，坐标在&quot;&amp;intX&amp;&quot;,&quot;&amp;intY</span><br><span class="line">Else</span><br><span class="line">    TracePrint &quot;没找到&quot;</span><br><span class="line">End If</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>抓抓多点找色：和上面一样的方法</p>
-</blockquote>
-<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><ol>
-<li>定义/调用函数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Function 自定义函数()</span><br><span class="line">        TracePrint “我是自定义函数，被你调用了”</span><br><span class="line">End Function</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>调用函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">自定义函数</span><br><span class="line">自定义函数()        // 推荐</span><br><span class="line">Call 自定义函数()</span><br></pre></td></tr></table></figure></p>
-<p>demo:比大小<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Function 比大小(参数1, 参数2)</span><br><span class="line">        If 参数1 &gt; 参数2 Then </span><br><span class="line">                比大小 = 参数1          // 函数返回值</span><br><span class="line">        ElseIf 参数1 &lt; 参数2 Then</span><br><span class="line">                比大小 = 参数2</span><br><span class="line">        Else </span><br><span class="line">                TracePrint &quot;两个数一样大&quot;</span><br><span class="line">        End If</span><br><span class="line">End Function</span><br><span class="line"></span><br><span class="line">Dim numA,numB</span><br><span class="line">numA = 3</span><br><span class="line">numB = 3</span><br><span class="line">If 比大小(numA, numB) &lt;&gt; null Then </span><br><span class="line">        TracePrint &quot;较大的值是：&quot;&amp;比大小(numA,numB)</span><br><span class="line">End If</span><br></pre></td></tr></table></figure></p>
-<h2 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h2><p>我们从用户输入中读取的数据往往需要做类型转换。<br>demo: 将输入框的数据从字符串型变成整型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Dim 用户输入 = ReadUIConfig(&quot;输入框1&quot;)</span><br><span class="line">If CInt(用户输入) = 1 Then </span><br><span class="line">        TracePrint 用户输入</span><br><span class="line">End If</span><br></pre></td></tr></table></figure></p>
-<h2 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h2><p>开启log记录后，会将所有的tranceprint都输出到log文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Log.Open </span><br><span class="line">**************</span><br><span class="line">TracePrint &quot;test&quot;</span><br><span class="line">TracePrint GetTempDir()</span><br><span class="line">**************</span><br><span class="line">Log.Close</span><br></pre></td></tr></table></figure></p>
-<h2 id="分辨率"><a href="#分辨率" class="headerlink" title="分辨率"></a>分辨率</h2><p>使用的720x1280的设备开发的程序则注明如下代码，以便程序自适应其他设备(多点比色，找色这些功能才有用)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SetScreenScale 720,1280</span><br></pre></td></tr></table></figure></p>
-<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><p>一般用于一个线程运行脚本，另一个线程干其他的(检测是否卡主等等)<br><img src="http://static.zybuluo.com/Passer6y/k13f95xfntaa0sucrqmipnae/image_1d33b7oli42eu2k1c4ku5i1e8fm.png" alt="image_1d33b7oli42eu2k1c4ku5i1e8fm.png-77.2kB"><br><img src="http://static.zybuluo.com/Passer6y/majk7t188ih2ooww2ngg7zds/image_1d33b74ub1a7tesf9iug67igg9.png" alt="image_1d33b74ub1a7tesf9iug67igg9.png-242.6kB"></p>
-
-          
+          <p>最新不知道抽了什么风，又开始搞起了薅羊毛，还想着能多偷点懒，这两天学了会按键精灵脚本，写了初步能自动化薅羊毛的工具：<a href="https://github.com/Passer6y/quickMacro" target="_blank" rel="noopener">https://github.com/Passer6y/quickMacro</a></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/02/09/按键精灵学习记录/#more" rel="contents">
+              Weiterlesen &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
