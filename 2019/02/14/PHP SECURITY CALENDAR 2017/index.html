@@ -121,7 +121,7 @@
 <meta property="og:url" content="http://passer6y.fun/2019/02/14/PHP SECURITY CALENDAR 2017/index.html">
 <meta property="og:site_name" content="Passerby&#39;s Blog">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://i.loli.net/2019/02/21/5c6e621dd5273.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/03/17/5c8d1fb7af458.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/p1etqbstbr36yu1hzq10hn5h/image_1d3g7p4rh1e9gece235i9s1ogn9.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/9qelxcadm0ay204ml3poth8y/image_1d3g9a3oi1ci623uipgs7l1oj29.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/sg0t0txcij3wjnxh0ef5zc41/image_1d3gubp0f1rlvftc19cn10j66b29.png">
@@ -177,10 +177,10 @@
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/bh42en0phvil1n85lqbwtdfd/image_1d45nt3cr1m1l1rrg109stu1c5v1g.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/02d6nl1jns683da94f0xy6xs/image_1d45q71vf15t61rt61jbq1q2p1apj2d.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/d00zdb3awktvhc8ag06nt3ni/image_1d471t5dq1fer1vo49j1ien13ng37.png">
-<meta property="og:updated_time" content="2019-02-21T12:07:56.376Z">
+<meta property="og:updated_time" content="2019-03-16T16:10:23.686Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP SECURITY CALENDAR 2017">
-<meta name="twitter:image" content="https://i.loli.net/2019/02/21/5c6e621dd5273.jpg">
+<meta name="twitter:image" content="https://i.loli.net/2019/03/17/5c8d1fb7af458.png">
 
 
 
@@ -504,7 +504,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-21 20:07:56" itemprop="dateModified" datetime="2019-02-21T20:07:56+08:00">2019-02-21</time>
+                <time title="Modified: 2019-03-17 00:10:23" itemprop="dateModified" datetime="2019-03-17T00:10:23+08:00">2019-03-17</time>
               
             
           </span>
@@ -576,7 +576,7 @@
       
 
       
-        <p><img src="https://i.loli.net/2019/02/21/5c6e621dd5273.jpg" alt="image_1d47ingv01gko1ebt5puqgq1ecg3g.png-134.1kB"></p>
+        <p><img src="https://i.loli.net/2019/03/17/5c8d1fb7af458.png" alt="更新图片"></p>
 <a id="more"></a>
 <h2 id="Day-1-Wish-List"><a href="#Day-1-Wish-List" class="headerlink" title="Day 1 - Wish List"></a>Day 1 - Wish List</h2><p>考点：<code>in_array()</code>未配置第三个参数，导致弱类型绕过<br>题目源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Challenge &#123;</span><br><span class="line">  const UPLOAD_DIRECTORY = &apos;./solutions/&apos;;</span><br><span class="line">  private $file;</span><br><span class="line">  private $whitelist;</span><br><span class="line"></span><br><span class="line">  public function __construct($file) &#123;</span><br><span class="line">    $this-&gt;file = $file;</span><br><span class="line">    $this-&gt;whitelist = range(1, 24);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public function __destruct() &#123;</span><br><span class="line">    if (in_array($this-&gt;file[&apos;name&apos;], $this-&gt;whitelist)) &#123;</span><br><span class="line">      move_uploaded_file(</span><br><span class="line">        $this-&gt;file[&apos;tmp_name&apos;],</span><br><span class="line">        self::UPLOAD_DIRECTORY . $this-&gt;file[&apos;name&apos;]</span><br><span class="line">      );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$challenge = new Challenge($_FILES[&apos;solution&apos;]);</span><br></pre></td></tr></table></figure></p>
 <p>大致的逻辑为上传一个表单<code>name=solution</code>的文件，验证其文件名在<code>range(1,24)</code>的范围，使用的<code>in_array()</code>来进行验证。</p>
