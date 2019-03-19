@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Passerby&#39;s Blog</title>
+  <title>Passer6y&#39;s Blog</title>
   
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://passer6y.fun/"/>
+  <link href="http://0day.design/"/>
   <updated>2019-03-07T08:47:07.656Z</updated>
-  <id>http://passer6y.fun/</id>
+  <id>http://0day.design/</id>
   
   <author>
     <name>Passer6y</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>phpok 最新版（5.1） 审计</title>
-    <link href="http://passer6y.fun/2019/03/07/phpok%20%E6%9C%80%E6%96%B0%E7%89%88%EF%BC%885.1%EF%BC%89%20%E5%AE%A1%E8%AE%A1/"/>
-    <id>http://passer6y.fun/2019/03/07/phpok 最新版（5.1） 审计/</id>
+    <link href="http://0day.design/2019/03/07/phpok%20%E6%9C%80%E6%96%B0%E7%89%88%EF%BC%885.1%EF%BC%89%20%E5%AE%A1%E8%AE%A1/"/>
+    <id>http://0day.design/2019/03/07/phpok 最新版（5.1） 审计/</id>
     <published>2019-03-07T08:46:00.000Z</published>
     <updated>2019-03-07T08:47:07.656Z</updated>
     
@@ -33,18 +33,18 @@
     </summary>
     
     
-      <category term="Web" scheme="http://passer6y.fun/tags/Web/"/>
+      <category term="Web" scheme="http://0day.design/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>php反序列化原生类利用</title>
-    <link href="http://passer6y.fun/2019/03/05/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%8E%9F%E7%94%9F%E7%B1%BB%E5%88%A9%E7%94%A8/"/>
-    <id>http://passer6y.fun/2019/03/05/php反序列化原生类利用/</id>
+    <link href="http://0day.design/2019/03/05/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%8E%9F%E7%94%9F%E7%B1%BB%E5%88%A9%E7%94%A8/"/>
+    <id>http://0day.design/2019/03/05/php反序列化原生类利用/</id>
     <published>2019-03-05T08:25:00.000Z</published>
     <updated>2019-03-05T08:27:42.849Z</updated>
     
-    <content type="html"><![CDATA[<p>梳理和总结了一下最近学的东西~<br><a id="more"></a></p><h2 id="触发"><a href="#触发" class="headerlink" title="触发"></a>触发</h2><h3 id="phar无unserialize-反序列化"><a href="#phar无unserialize-反序列化" class="headerlink" title="phar无unserialize()反序列化"></a>phar无unserialize()反序列化</h3><p>利用条件：</p><ul><li>一个上传点</li><li>一个可控的文件操作函数：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fileatime、filectime、file_exists、file_get_contents、file_put_contents、file、filegroup、fopen、fileinode、filemtime、fileowner、fileperms、is_dir、is_executable、is_file、is_link、is_readable、is_writable、is_writeable、parse_ini_file、copy、unlink、stat、readfile、md5_file、filesize</span><br></pre></td></tr></table></figure></li></ul><p><a href="https://www.anquanke.com/post/id/159206#h3-17" target="_blank" rel="noopener">Hpdoger师傅的四个实例递进php反序列化漏洞理解</a><br><a href="https://www.anquanke.com/post/id/157439" target="_blank" rel="noopener">Blackhat议题解读 | phar反序列化</a></p><h3 id="session反序列化"><a href="#session反序列化" class="headerlink" title="session反序列化"></a>session反序列化</h3><p>利用条件：</p><ul><li>session解析引擎可控(在同一网站能同时出现两种不同的session配置方式)</li><li><code>$_SESSION</code>值可控</li></ul><p>修改session存储方式可以通过<code>session_start()</code>函数，给其传入<code>serialize_handler=php_serialize</code>参数即可。<br>具体见：<br><a href="http://passer6y.fun/2019/02/10/LCTF%202018%20Babyphp&#39;s%20revenge/">LCTF 2018 Babyphp’s revenge</a></p><h2 id="php原生类利用"><a href="#php原生类利用" class="headerlink" title="php原生类利用"></a>php原生类利用</h2><h3 id="Soapclient"><a href="#Soapclient" class="headerlink" title="Soapclient"></a>Soapclient</h3><p>利用条件：</p><ul><li>需要有soap扩展</li><li>需要有一个能实例化对象的点</li><li>需要调用一个不存在的方法触发其<code>__call()</code>函数</li></ul><p>参考：<a href="http://passer6y.fun/2019/02/10/LCTF%202018%20Babyphp&#39;s%20revenge/">LCTF 2018 Babyphp’s revenge</a></p><p>危害：盲打SSRF:可以结合Soapclient自身的CRLF漏洞，带上各种heade头参数。</p><p>参考: <a href="https://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html" target="_blank" rel="noopener">反序列化之PHP原生类的利用</a></p><h3 id="GlobIterator"><a href="#GlobIterator" class="headerlink" title="GlobIterator"></a>GlobIterator</h3><p>利用条件：</p><ul><li>有实例化对象的点即可</li></ul><p>危害：列目录</p><p>参考：<a href="http://passer6y.fun/2019/02/14/PHP%20SECURITY%20CALENDAR%202017/">PHP SECURITY CALENDAR 2017-Day 3 - Snow Flake</a></p><h3 id="SimpleXMLElement"><a href="#SimpleXMLElement" class="headerlink" title="SimpleXMLElement"></a>SimpleXMLElement</h3><p>利用条件：</p><ul><li>xmllib库为存在漏洞的版本</li><li>有实例化对象的点即可</li></ul><p>危害：</p><ul><li>任意文件读取</li><li>SSRF</li></ul><blockquote><p>盲打xxe姿势见参考链接</p></blockquote><p>参考：<a href="http://passer6y.fun/2019/02/14/PHP%20SECURITY%20CALENDAR%202017/">PHP SECURITY CALENDAR 2017-Day 3 - Snow Flake</a></p><p>参考：<a href="https://xz.aliyun.com/t/2571#toc-13" target="_blank" rel="noopener">XML外部实体注入小结</a></p><!--##  反射类的使用<?php/** * 调用PHP反射类获取类信息 * Date:    2017-05-24 * Author:  fdipzone * Ver:     1.0 * * Func * public static setClass       设置反射类 * public static getBase        读取类基本信息 * public static getInterfaces  读取类接口 * public static getProperties  读取类属性 * public static getMethods     读取类方法 */class Ref{    private static $refclass = null;    // 设置反射类    public static function setClass($classname){        self::$refclass = new ReflectionClass($classname);    }    // 读取类基本信息    public static function getBase(){        echo '<strong>BASE INFO</strong>'.PHP_EOL;        echo 'class name: '.self::$refclass->getName().PHP_EOL;        echo 'class path: '.dirname(self::$refclass->getFileName()).PHP_EOL;        echo 'class filename: '.basename(self::$refclass->getFileName()).PHP_EOL.PHP_EOL;    }    // 读取类接口    public static function getInterfaces(){        echo '<strong>INTERFACES INFO</strong>'.PHP_EOL;        $interfaces = self::$refclass->getInterfaces();        if($interfaces){            foreach($interfaces as $interface){                echo 'interface name: '.$interface->getName().PHP_EOL;            }        }    }    // 读取类属性    public static function getProperties(){        echo '<strong>PROPERTIES INFO</strong>'.PHP_EOL;        $properties = self::$refclass->getProperties();        if($properties){            foreach($properties as $property){                echo 'property name: '.$property->getName().PHP_EOL;                echo 'property modifier: '.self::getModifier($property).PHP_EOL;                echo 'property comments: '.self::formatComment($property->getDocComment()).PHP_EOL.PHP_EOL;            }        }    }    // 读取类方法    public static function getMethods(){        echo '<strong>METHODS INFO</strong>'.PHP_EOL;        $methods = self::$refclass->getMethods();        if($methods){            foreach($methods as $method){                echo 'method name: '.$method->getName().PHP_EOL;                echo 'method modifier: '.self::getModifier($method).PHP_EOL;                echo 'method params num: '.$method->getNumberOfParameters().PHP_EOL;                $params = $method->getParameters();                if($params){                    foreach($params as $param){                        echo 'param name:'.$param->getName().PHP_EOL;                    }                }                echo 'method comments: '.self::formatComment($method->getDocComment()).PHP_EOL.PHP_EOL;            }        }    }    // 获取修饰符    private static function getModifier($o){        // public        if($o->isPublic()){            return 'public';        }        // protected        if($o->isProtected()){            return 'protected';        }        // private        if($o->isPrivate()){            return 'private';        }        return '';    }    // 格式化注释内容    private static function formatComment($comment){        $doc = explode(PHP_EOL, $comment);        return isset($doc[1])? trim(str_replace('*','',$doc[1])) : '';    }}?>漏洞demo:Shopware 5.3.3 ![image_1d3jmmolk14j8n3nrb91kkdqos9.png-228.1kB][1]该函数的两个方法都可控，创建的反射类，可以为php的内置类`SimpleXMLElement`从而导致盲打xxe-->]]></content>
+    <content type="html"><![CDATA[<p>梳理和总结了一下最近学的东西~<br><a id="more"></a></p><h2 id="触发"><a href="#触发" class="headerlink" title="触发"></a>触发</h2><h3 id="phar无unserialize-反序列化"><a href="#phar无unserialize-反序列化" class="headerlink" title="phar无unserialize()反序列化"></a>phar无unserialize()反序列化</h3><p>利用条件：</p><ul><li>一个上传点</li><li>一个可控的文件操作函数：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fileatime、filectime、file_exists、file_get_contents、file_put_contents、file、filegroup、fopen、fileinode、filemtime、fileowner、fileperms、is_dir、is_executable、is_file、is_link、is_readable、is_writable、is_writeable、parse_ini_file、copy、unlink、stat、readfile、md5_file、filesize</span><br></pre></td></tr></table></figure></li></ul><p><a href="https://www.anquanke.com/post/id/159206#h3-17" target="_blank" rel="noopener">Hpdoger师傅的四个实例递进php反序列化漏洞理解</a><br><a href="https://www.anquanke.com/post/id/157439" target="_blank" rel="noopener">Blackhat议题解读 | phar反序列化</a></p><h3 id="session反序列化"><a href="#session反序列化" class="headerlink" title="session反序列化"></a>session反序列化</h3><p>利用条件：</p><ul><li>session解析引擎可控(在同一网站能同时出现两种不同的session配置方式)</li><li><code>$_SESSION</code>值可控</li></ul><p>修改session存储方式可以通过<code>session_start()</code>函数，给其传入<code>serialize_handler=php_serialize</code>参数即可。<br>具体见：<br><a href="http://passer6y.fun/2019/02/10/LCTF%202018%20Babyphp&#39;s%20revenge/" target="_blank" rel="noopener">LCTF 2018 Babyphp’s revenge</a></p><h2 id="php原生类利用"><a href="#php原生类利用" class="headerlink" title="php原生类利用"></a>php原生类利用</h2><h3 id="Soapclient"><a href="#Soapclient" class="headerlink" title="Soapclient"></a>Soapclient</h3><p>利用条件：</p><ul><li>需要有soap扩展</li><li>需要有一个能实例化对象的点</li><li>需要调用一个不存在的方法触发其<code>__call()</code>函数</li></ul><p>参考：<a href="http://passer6y.fun/2019/02/10/LCTF%202018%20Babyphp&#39;s%20revenge/" target="_blank" rel="noopener">LCTF 2018 Babyphp’s revenge</a></p><p>危害：盲打SSRF:可以结合Soapclient自身的CRLF漏洞，带上各种heade头参数。</p><p>参考: <a href="https://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html" target="_blank" rel="noopener">反序列化之PHP原生类的利用</a></p><h3 id="GlobIterator"><a href="#GlobIterator" class="headerlink" title="GlobIterator"></a>GlobIterator</h3><p>利用条件：</p><ul><li>有实例化对象的点即可</li></ul><p>危害：列目录</p><p>参考：<a href="http://passer6y.fun/2019/02/14/PHP%20SECURITY%20CALENDAR%202017/" target="_blank" rel="noopener">PHP SECURITY CALENDAR 2017-Day 3 - Snow Flake</a></p><h3 id="SimpleXMLElement"><a href="#SimpleXMLElement" class="headerlink" title="SimpleXMLElement"></a>SimpleXMLElement</h3><p>利用条件：</p><ul><li>xmllib库为存在漏洞的版本</li><li>有实例化对象的点即可</li></ul><p>危害：</p><ul><li>任意文件读取</li><li>SSRF</li></ul><blockquote><p>盲打xxe姿势见参考链接</p></blockquote><p>参考：<a href="http://passer6y.fun/2019/02/14/PHP%20SECURITY%20CALENDAR%202017/" target="_blank" rel="noopener">PHP SECURITY CALENDAR 2017-Day 3 - Snow Flake</a></p><p>参考：<a href="https://xz.aliyun.com/t/2571#toc-13" target="_blank" rel="noopener">XML外部实体注入小结</a></p><!--##  反射类的使用<?php/** * 调用PHP反射类获取类信息 * Date:    2017-05-24 * Author:  fdipzone * Ver:     1.0 * * Func * public static setClass       设置反射类 * public static getBase        读取类基本信息 * public static getInterfaces  读取类接口 * public static getProperties  读取类属性 * public static getMethods     读取类方法 */class Ref{    private static $refclass = null;    // 设置反射类    public static function setClass($classname){        self::$refclass = new ReflectionClass($classname);    }    // 读取类基本信息    public static function getBase(){        echo '<strong>BASE INFO</strong>'.PHP_EOL;        echo 'class name: '.self::$refclass->getName().PHP_EOL;        echo 'class path: '.dirname(self::$refclass->getFileName()).PHP_EOL;        echo 'class filename: '.basename(self::$refclass->getFileName()).PHP_EOL.PHP_EOL;    }    // 读取类接口    public static function getInterfaces(){        echo '<strong>INTERFACES INFO</strong>'.PHP_EOL;        $interfaces = self::$refclass->getInterfaces();        if($interfaces){            foreach($interfaces as $interface){                echo 'interface name: '.$interface->getName().PHP_EOL;            }        }    }    // 读取类属性    public static function getProperties(){        echo '<strong>PROPERTIES INFO</strong>'.PHP_EOL;        $properties = self::$refclass->getProperties();        if($properties){            foreach($properties as $property){                echo 'property name: '.$property->getName().PHP_EOL;                echo 'property modifier: '.self::getModifier($property).PHP_EOL;                echo 'property comments: '.self::formatComment($property->getDocComment()).PHP_EOL.PHP_EOL;            }        }    }    // 读取类方法    public static function getMethods(){        echo '<strong>METHODS INFO</strong>'.PHP_EOL;        $methods = self::$refclass->getMethods();        if($methods){            foreach($methods as $method){                echo 'method name: '.$method->getName().PHP_EOL;                echo 'method modifier: '.self::getModifier($method).PHP_EOL;                echo 'method params num: '.$method->getNumberOfParameters().PHP_EOL;                $params = $method->getParameters();                if($params){                    foreach($params as $param){                        echo 'param name:'.$param->getName().PHP_EOL;                    }                }                echo 'method comments: '.self::formatComment($method->getDocComment()).PHP_EOL.PHP_EOL;            }        }    }    // 获取修饰符    private static function getModifier($o){        // public        if($o->isPublic()){            return 'public';        }        // protected        if($o->isProtected()){            return 'protected';        }        // private        if($o->isPrivate()){            return 'private';        }        return '';    }    // 格式化注释内容    private static function formatComment($comment){        $doc = explode(PHP_EOL, $comment);        return isset($doc[1])? trim(str_replace('*','',$doc[1])) : '';    }}?>漏洞demo:Shopware 5.3.3 ![image_1d3jmmolk14j8n3nrb91kkdqos9.png-228.1kB][1]该函数的两个方法都可控，创建的反射类，可以为php的内置类`SimpleXMLElement`从而导致盲打xxe-->]]></content>
     
     <summary type="html">
     
@@ -53,14 +53,14 @@
     </summary>
     
     
-      <category term="Web" scheme="http://passer6y.fun/tags/Web/"/>
+      <category term="Web" scheme="http://0day.design/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>文件包含小结</title>
-    <link href="http://passer6y.fun/2019/03/05/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E5%B0%8F%E7%BB%93/"/>
-    <id>http://passer6y.fun/2019/03/05/文件包含小结/</id>
+    <link href="http://0day.design/2019/03/05/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E5%B0%8F%E7%BB%93/"/>
+    <id>http://0day.design/2019/03/05/文件包含小结/</id>
     <published>2019-03-05T08:22:00.000Z</published>
     <updated>2019-03-05T08:28:24.105Z</updated>
     
@@ -73,14 +73,14 @@
     </summary>
     
     
-      <category term="Web" scheme="http://passer6y.fun/tags/Web/"/>
+      <category term="Web" scheme="http://0day.design/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>Code-Breaking Write Up</title>
-    <link href="http://passer6y.fun/2019/03/03/Code-Breaking%20Write%20Up/"/>
-    <id>http://passer6y.fun/2019/03/03/Code-Breaking Write Up/</id>
+    <link href="http://0day.design/2019/03/03/Code-Breaking%20Write%20Up/"/>
+    <id>http://0day.design/2019/03/03/Code-Breaking Write Up/</id>
     <published>2019-03-02T16:11:00.000Z</published>
     <updated>2019-03-04T04:26:00.876Z</updated>
     
@@ -93,14 +93,14 @@
     </summary>
     
     
-      <category term="CTF" scheme="http://passer6y.fun/tags/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/tags/CTF/"/>
     
   </entry>
   
   <entry>
     <title>35C3-POST WriteUp</title>
-    <link href="http://passer6y.fun/2019/02/18/35C3-POST%20WriteUp/"/>
-    <id>http://passer6y.fun/2019/02/18/35C3-POST WriteUp/</id>
+    <link href="http://0day.design/2019/02/18/35C3-POST%20WriteUp/"/>
+    <id>http://0day.design/2019/02/18/35C3-POST WriteUp/</id>
     <published>2019-02-18T02:00:00.000Z</published>
     <updated>2019-02-18T02:38:28.334Z</updated>
     
@@ -113,14 +113,14 @@
     </summary>
     
     
-      <category term="CTF" scheme="http://passer6y.fun/tags/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/tags/CTF/"/>
     
   </entry>
   
   <entry>
     <title>PHP SECURITY CALENDAR 2017</title>
-    <link href="http://passer6y.fun/2019/02/14/PHP%20SECURITY%20CALENDAR%202017/"/>
-    <id>http://passer6y.fun/2019/02/14/PHP SECURITY CALENDAR 2017/</id>
+    <link href="http://0day.design/2019/02/14/PHP%20SECURITY%20CALENDAR%202017/"/>
+    <id>http://0day.design/2019/02/14/PHP SECURITY CALENDAR 2017/</id>
     <published>2019-02-14T05:00:00.000Z</published>
     <updated>2019-03-16T16:10:23.686Z</updated>
     
@@ -132,17 +132,17 @@
     
     </summary>
     
-      <category term="Web" scheme="http://passer6y.fun/categories/Web/"/>
+      <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="Web" scheme="http://passer6y.fun/tags/Web/"/>
+      <category term="Web" scheme="http://0day.design/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>The power of XSS WriteUp</title>
-    <link href="http://passer6y.fun/2019/02/10/The%20power%20of%20XSS%20WriteUp/"/>
-    <id>http://passer6y.fun/2019/02/10/The power of XSS WriteUp/</id>
+    <link href="http://0day.design/2019/02/10/The%20power%20of%20XSS%20WriteUp/"/>
+    <id>http://0day.design/2019/02/10/The power of XSS WriteUp/</id>
     <published>2019-02-10T09:31:00.000Z</published>
     <updated>2019-02-10T09:35:12.275Z</updated>
     
@@ -154,17 +154,17 @@
     
     </summary>
     
-      <category term="CTF" scheme="http://passer6y.fun/categories/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/categories/CTF/"/>
     
     
-      <category term="CTF" scheme="http://passer6y.fun/tags/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/tags/CTF/"/>
     
   </entry>
   
   <entry>
     <title>LCTF 2018 Babyphp&#39;s revenge</title>
-    <link href="http://passer6y.fun/2019/02/10/LCTF%202018%20Babyphp&#39;s%20revenge/"/>
-    <id>http://passer6y.fun/2019/02/10/LCTF 2018 Babyphp&#39;s revenge/</id>
+    <link href="http://0day.design/2019/02/10/LCTF%202018%20Babyphp&#39;s%20revenge/"/>
+    <id>http://0day.design/2019/02/10/LCTF 2018 Babyphp&#39;s revenge/</id>
     <published>2019-02-09T16:10:00.000Z</published>
     <updated>2019-02-11T11:49:59.054Z</updated>
     
@@ -176,17 +176,17 @@
     
     </summary>
     
-      <category term="CTF" scheme="http://passer6y.fun/categories/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/categories/CTF/"/>
     
     
-      <category term="CTF" scheme="http://passer6y.fun/tags/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/tags/CTF/"/>
     
   </entry>
   
   <entry>
     <title>按键精灵学习记录</title>
-    <link href="http://passer6y.fun/2019/02/09/%E6%8C%89%E9%94%AE%E7%B2%BE%E7%81%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
-    <id>http://passer6y.fun/2019/02/09/按键精灵学习记录/</id>
+    <link href="http://0day.design/2019/02/09/%E6%8C%89%E9%94%AE%E7%B2%BE%E7%81%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
+    <id>http://0day.design/2019/02/09/按键精灵学习记录/</id>
     <published>2019-02-09T11:00:00.000Z</published>
     <updated>2019-03-09T13:45:16.276Z</updated>
     
@@ -198,17 +198,17 @@
     
     </summary>
     
-      <category term="Code" scheme="http://passer6y.fun/categories/Code/"/>
+      <category term="Code" scheme="http://0day.design/categories/Code/"/>
     
     
-      <category term="Code" scheme="http://passer6y.fun/tags/Code/"/>
+      <category term="Code" scheme="http://0day.design/tags/Code/"/>
     
   </entry>
   
   <entry>
     <title>HCTF 2018 Web Writeup</title>
-    <link href="http://passer6y.fun/2019/02/05/HCTF%202018%20Web%20WriteUp/"/>
-    <id>http://passer6y.fun/2019/02/05/HCTF 2018 Web WriteUp/</id>
+    <link href="http://0day.design/2019/02/05/HCTF%202018%20Web%20WriteUp/"/>
+    <id>http://0day.design/2019/02/05/HCTF 2018 Web WriteUp/</id>
     <published>2019-02-05T07:51:00.000Z</published>
     <updated>2019-02-05T07:41:34.711Z</updated>
     
@@ -220,17 +220,17 @@
     
     </summary>
     
-      <category term="CTF" scheme="http://passer6y.fun/categories/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/categories/CTF/"/>
     
     
-      <category term="CTF" scheme="http://passer6y.fun/tags/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/tags/CTF/"/>
     
   </entry>
   
   <entry>
     <title>CSS Tricks</title>
-    <link href="http://passer6y.fun/2019/01/29/CSS%20Tricks/"/>
-    <id>http://passer6y.fun/2019/01/29/CSS Tricks/</id>
+    <link href="http://0day.design/2019/01/29/CSS%20Tricks/"/>
+    <id>http://0day.design/2019/01/29/CSS Tricks/</id>
     <published>2019-01-29T12:30:00.000Z</published>
     <updated>2019-02-10T09:34:18.155Z</updated>
     
@@ -242,17 +242,17 @@
     
     </summary>
     
-      <category term="Code" scheme="http://passer6y.fun/categories/Code/"/>
+      <category term="Code" scheme="http://0day.design/categories/Code/"/>
     
     
-      <category term="Code" scheme="http://passer6y.fun/tags/Code/"/>
+      <category term="Code" scheme="http://0day.design/tags/Code/"/>
     
   </entry>
   
   <entry>
     <title>CSS-前端学习记录</title>
-    <link href="http://passer6y.fun/2019/01/29/CSS-%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
-    <id>http://passer6y.fun/2019/01/29/CSS-前端学习记录/</id>
+    <link href="http://0day.design/2019/01/29/CSS-%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
+    <id>http://0day.design/2019/01/29/CSS-前端学习记录/</id>
     <published>2019-01-29T12:22:00.000Z</published>
     <updated>2019-02-10T09:34:26.670Z</updated>
     
@@ -264,17 +264,17 @@
     
     </summary>
     
-      <category term="Code" scheme="http://passer6y.fun/categories/Code/"/>
+      <category term="Code" scheme="http://0day.design/categories/Code/"/>
     
     
-      <category term="Code" scheme="http://passer6y.fun/tags/Code/"/>
+      <category term="Code" scheme="http://0day.design/tags/Code/"/>
     
   </entry>
   
   <entry>
     <title>HCTF 2018 AWD小记</title>
-    <link href="http://passer6y.fun/2018/12/20/HCTF%202018%20AWD%E5%B0%8F%E7%BB%93/"/>
-    <id>http://passer6y.fun/2018/12/20/HCTF 2018 AWD小结/</id>
+    <link href="http://0day.design/2018/12/20/HCTF%202018%20AWD%E5%B0%8F%E7%BB%93/"/>
+    <id>http://0day.design/2018/12/20/HCTF 2018 AWD小结/</id>
     <published>2018-12-20T14:02:00.000Z</published>
     <updated>2018-12-20T14:05:14.000Z</updated>
     
@@ -287,14 +287,14 @@
     </summary>
     
     
-      <category term="CTF" scheme="http://passer6y.fun/tags/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/tags/CTF/"/>
     
   </entry>
   
   <entry>
     <title>SWPUCTF WEB Writeup</title>
-    <link href="http://passer6y.fun/2018/12/20/Swpu%20CTF%202018%20Writeup/"/>
-    <id>http://passer6y.fun/2018/12/20/Swpu CTF 2018 Writeup/</id>
+    <link href="http://0day.design/2018/12/20/Swpu%20CTF%202018%20Writeup/"/>
+    <id>http://0day.design/2018/12/20/Swpu CTF 2018 Writeup/</id>
     <published>2018-12-20T12:40:00.000Z</published>
     <updated>2018-12-20T12:56:02.000Z</updated>
     
@@ -307,14 +307,14 @@
     </summary>
     
     
-      <category term="CTF" scheme="http://passer6y.fun/tags/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/tags/CTF/"/>
     
   </entry>
   
   <entry>
     <title>安洵杯2018-WebN出题记录</title>
-    <link href="http://passer6y.fun/2018/12/01/%E5%AE%89%E6%B4%B5%E6%9D%AF2018-WebN%E5%87%BA%E9%A2%98%E8%AE%B0%E5%BD%95/"/>
-    <id>http://passer6y.fun/2018/12/01/安洵杯2018-WebN出题记录/</id>
+    <link href="http://0day.design/2018/12/01/%E5%AE%89%E6%B4%B5%E6%9D%AF2018-WebN%E5%87%BA%E9%A2%98%E8%AE%B0%E5%BD%95/"/>
+    <id>http://0day.design/2018/12/01/安洵杯2018-WebN出题记录/</id>
     <published>2018-12-01T12:40:00.000Z</published>
     <updated>2019-02-10T09:33:53.398Z</updated>
     
@@ -326,17 +326,17 @@
     
     </summary>
     
-      <category term="CTF" scheme="http://passer6y.fun/categories/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/categories/CTF/"/>
     
     
-      <category term="CTF" scheme="http://passer6y.fun/tags/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/tags/CTF/"/>
     
   </entry>
   
   <entry>
     <title>骇极杯Web Writeup</title>
-    <link href="http://passer6y.fun/2018/11/07/%E9%AA%87%E6%9E%81%E6%9D%AFWeb%20Writeup/"/>
-    <id>http://passer6y.fun/2018/11/07/骇极杯Web Writeup/</id>
+    <link href="http://0day.design/2018/11/07/%E9%AA%87%E6%9E%81%E6%9D%AFWeb%20Writeup/"/>
+    <id>http://0day.design/2018/11/07/骇极杯Web Writeup/</id>
     <published>2018-11-07T03:40:00.000Z</published>
     <updated>2019-02-10T09:34:03.903Z</updated>
     
@@ -348,17 +348,17 @@
     
     </summary>
     
-      <category term="CTF" scheme="http://passer6y.fun/categories/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/categories/CTF/"/>
     
     
-      <category term="CTF" scheme="http://passer6y.fun/tags/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/tags/CTF/"/>
     
   </entry>
   
   <entry>
     <title>跨站数据劫持</title>
-    <link href="http://passer6y.fun/2018/09/16/%E8%B7%A8%E7%AB%99%E6%95%B0%E6%8D%AE%E5%8A%AB%E6%8C%81/"/>
-    <id>http://passer6y.fun/2018/09/16/跨站数据劫持/</id>
+    <link href="http://0day.design/2018/09/16/%E8%B7%A8%E7%AB%99%E6%95%B0%E6%8D%AE%E5%8A%AB%E6%8C%81/"/>
+    <id>http://0day.design/2018/09/16/跨站数据劫持/</id>
     <published>2018-09-16T12:51:00.000Z</published>
     <updated>2019-02-10T12:58:28.499Z</updated>
     
@@ -370,17 +370,17 @@
     
     </summary>
     
-      <category term="Web" scheme="http://passer6y.fun/categories/Web/"/>
+      <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="Web" scheme="http://passer6y.fun/tags/Web/"/>
+      <category term="Web" scheme="http://0day.design/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>浅析反向代理</title>
-    <link href="http://passer6y.fun/2018/07/05/%E6%B5%85%E6%9E%90%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/"/>
-    <id>http://passer6y.fun/2018/07/05/浅析反向代理/</id>
+    <link href="http://0day.design/2018/07/05/%E6%B5%85%E6%9E%90%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/"/>
+    <id>http://0day.design/2018/07/05/浅析反向代理/</id>
     <published>2018-07-05T15:00:00.000Z</published>
     <updated>2019-02-09T11:09:01.504Z</updated>
     
@@ -394,17 +394,17 @@
     
     </summary>
     
-      <category term="Web" scheme="http://passer6y.fun/categories/Web/"/>
+      <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="Web" scheme="http://passer6y.fun/tags/Web/"/>
+      <category term="Web" scheme="http://0day.design/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>Bugku Write Up</title>
-    <link href="http://passer6y.fun/2018/07/04/bugkuwp/"/>
-    <id>http://passer6y.fun/2018/07/04/bugkuwp/</id>
+    <link href="http://0day.design/2018/07/04/bugkuwp/"/>
+    <id>http://0day.design/2018/07/04/bugkuwp/</id>
     <published>2018-07-04T09:00:00.000Z</published>
     <updated>2019-03-04T03:29:06.583Z</updated>
     
@@ -418,17 +418,17 @@
     
     </summary>
     
-      <category term="CTF" scheme="http://passer6y.fun/categories/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/categories/CTF/"/>
     
     
-      <category term="CTF" scheme="http://passer6y.fun/tags/CTF/"/>
+      <category term="CTF" scheme="http://0day.design/tags/CTF/"/>
     
   </entry>
   
   <entry>
     <title>PHP反序列化总结</title>
-    <link href="http://passer6y.fun/2018/02/19/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%80%BB%E7%BB%93/"/>
-    <id>http://passer6y.fun/2018/02/19/PHP反序列化总结/</id>
+    <link href="http://0day.design/2018/02/19/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%80%BB%E7%BB%93/"/>
+    <id>http://0day.design/2018/02/19/PHP反序列化总结/</id>
     <published>2018-02-19T12:51:00.000Z</published>
     <updated>2019-02-10T09:35:00.596Z</updated>
     
@@ -443,10 +443,10 @@
     
     </summary>
     
-      <category term="Web" scheme="http://passer6y.fun/categories/Web/"/>
+      <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="PHP反序列化" scheme="http://passer6y.fun/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+      <category term="PHP反序列化" scheme="http://0day.design/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
     
   </entry>
   

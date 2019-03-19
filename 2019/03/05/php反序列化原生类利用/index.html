@@ -119,8 +119,8 @@
 <meta name="keywords" content="Web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php反序列化原生类利用">
-<meta property="og:url" content="http://passer6y.fun/2019/03/05/php反序列化原生类利用/index.html">
-<meta property="og:site_name" content="Passerby&#39;s Blog">
+<meta property="og:url" content="http://0day.design/2019/03/05/php反序列化原生类利用/index.html">
+<meta property="og:site_name" content="Passer6y&#39;s Blog">
 <meta property="og:description" content="梳理和总结了一下最近学的东西~">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2019-03-05T08:27:42.849Z">
@@ -130,12 +130,12 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="Passerby's Blog" type="application/atom+xml" />
+  <link rel="alternate" href="/atom.xml" title="Passer6y's Blog" type="application/atom+xml" />
 
 
 
 
-  <link rel="canonical" href="http://passer6y.fun/2019/03/05/php反序列化原生类利用/"/>
+  <link rel="canonical" href="http://0day.design/2019/03/05/php反序列化原生类利用/"/>
 
 
 
@@ -145,7 +145,7 @@
   };
 </script>
 
-  <title>php反序列化原生类利用 | Passerby's Blog</title>
+  <title>php反序列化原生类利用 | Passer6y's Blog</title>
   
 
 
@@ -213,7 +213,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Passerby's Blog</span>
+        <span class="site-title">Passer6y's Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -391,7 +391,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://passer6y.fun/2019/03/05/php反序列化原生类利用/">
+    <link itemprop="mainEntityOfPage" href="http://0day.design/2019/03/05/php反序列化原生类利用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Passer6y">
@@ -400,7 +400,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Passerby's Blog">
+      <meta itemprop="name" content="Passer6y's Blog">
     </span>
 
     
@@ -505,14 +505,14 @@
 <li>session解析引擎可控(在同一网站能同时出现两种不同的session配置方式)</li>
 <li><code>$_SESSION</code>值可控</li>
 </ul>
-<p>修改session存储方式可以通过<code>session_start()</code>函数，给其传入<code>serialize_handler=php_serialize</code>参数即可。<br>具体见：<br><a href="http://passer6y.fun/2019/02/10/LCTF%202018%20Babyphp&#39;s%20revenge/">LCTF 2018 Babyphp’s revenge</a></p>
+<p>修改session存储方式可以通过<code>session_start()</code>函数，给其传入<code>serialize_handler=php_serialize</code>参数即可。<br>具体见：<br><a href="http://passer6y.fun/2019/02/10/LCTF%202018%20Babyphp&#39;s%20revenge/" target="_blank" rel="noopener">LCTF 2018 Babyphp’s revenge</a></p>
 <h2 id="php原生类利用"><a href="#php原生类利用" class="headerlink" title="php原生类利用"></a>php原生类利用</h2><h3 id="Soapclient"><a href="#Soapclient" class="headerlink" title="Soapclient"></a>Soapclient</h3><p>利用条件：</p>
 <ul>
 <li>需要有soap扩展</li>
 <li>需要有一个能实例化对象的点</li>
 <li>需要调用一个不存在的方法触发其<code>__call()</code>函数</li>
 </ul>
-<p>参考：<a href="http://passer6y.fun/2019/02/10/LCTF%202018%20Babyphp&#39;s%20revenge/">LCTF 2018 Babyphp’s revenge</a></p>
+<p>参考：<a href="http://passer6y.fun/2019/02/10/LCTF%202018%20Babyphp&#39;s%20revenge/" target="_blank" rel="noopener">LCTF 2018 Babyphp’s revenge</a></p>
 <p>危害：盲打SSRF:可以结合Soapclient自身的CRLF漏洞，带上各种heade头参数。</p>
 <p>参考: <a href="https://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html" target="_blank" rel="noopener">反序列化之PHP原生类的利用</a></p>
 <h3 id="GlobIterator"><a href="#GlobIterator" class="headerlink" title="GlobIterator"></a>GlobIterator</h3><p>利用条件：</p>
@@ -520,7 +520,7 @@
 <li>有实例化对象的点即可</li>
 </ul>
 <p>危害：列目录</p>
-<p>参考：<a href="http://passer6y.fun/2019/02/14/PHP%20SECURITY%20CALENDAR%202017/">PHP SECURITY CALENDAR 2017-Day 3 - Snow Flake</a></p>
+<p>参考：<a href="http://passer6y.fun/2019/02/14/PHP%20SECURITY%20CALENDAR%202017/" target="_blank" rel="noopener">PHP SECURITY CALENDAR 2017-Day 3 - Snow Flake</a></p>
 <h3 id="SimpleXMLElement"><a href="#SimpleXMLElement" class="headerlink" title="SimpleXMLElement"></a>SimpleXMLElement</h3><p>利用条件：</p>
 <ul>
 <li>xmllib库为存在漏洞的版本</li>
@@ -534,7 +534,7 @@
 <blockquote>
 <p>盲打xxe姿势见参考链接</p>
 </blockquote>
-<p>参考：<a href="http://passer6y.fun/2019/02/14/PHP%20SECURITY%20CALENDAR%202017/">PHP SECURITY CALENDAR 2017-Day 3 - Snow Flake</a></p>
+<p>参考：<a href="http://passer6y.fun/2019/02/14/PHP%20SECURITY%20CALENDAR%202017/" target="_blank" rel="noopener">PHP SECURITY CALENDAR 2017-Day 3 - Snow Flake</a></p>
 <p>参考：<a href="https://xz.aliyun.com/t/2571#toc-13" target="_blank" rel="noopener">XML外部实体注入小结</a></p>
 <!--
 
@@ -676,7 +676,7 @@ Shopware 5.3.3
     <strong>Post author:  </strong>Passer6y</li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="http://passer6y.fun/2019/03/05/php反序列化原生类利用/" title="php反序列化原生类利用">http://passer6y.fun/2019/03/05/php反序列化原生类利用/</a>
+    <a href="http://0day.design/2019/03/05/php反序列化原生类利用/" title="php反序列化原生类利用">http://0day.design/2019/03/05/php反序列化原生类利用/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>true</li>
