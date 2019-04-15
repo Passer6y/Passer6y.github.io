@@ -115,17 +115,23 @@
 
 
 
-  <meta name="description" content="A salty fish">
-<meta name="keywords" content="Passer6y">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Passer6y&#39;s Blog">
-<meta property="og:url" content="http://0day.design/archives/index.html">
+  <meta name="keywords" content="Web,代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ThinkPHP5.1.x 代码执行漏洞分析">
+<meta property="og:url" content="http://0day.design/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/index.html">
 <meta property="og:site_name" content="Passer6y&#39;s Blog">
-<meta property="og:description" content="A salty fish">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://static.zybuluo.com/Passer6y/b3x19d6f1pu5yz4crewkthn1/image_1d8ffjpn01kouopob14c9i1mt19.png">
+<meta property="og:image" content="http://static.zybuluo.com/Passer6y/sxdjzyjnpeifkhixgpxvs1z3/image_1d8fsee7h1red11t7d9e14omhgk1j.png">
+<meta property="og:image" content="http://static.zybuluo.com/Passer6y/o3ro7og9xlqyod0c96jda16v/image_1d8fvv9pa1aadflj4bu2b4pe81m.png">
+<meta property="og:image" content="http://static.zybuluo.com/Passer6y/e402mqf4g33n4fwyo4qv5dtp/image_1d8fu10u5a7gujrjgt18171llc9.png">
+<meta property="og:image" content="http://static.zybuluo.com/Passer6y/v25l3t0ne9lfknxopicxs1jo/image_1d8g15qpv1foi12mihmd1826mvr36.png">
+<meta property="og:image" content="http://static.zybuluo.com/Passer6y/9neklp8y2cmhalulvogad1bt/image_1d8g1mln71tog1ud81g4l2931d053j.png">
+<meta property="og:image" content="http://static.zybuluo.com/Passer6y/i3q82hu9bdu5rdr6ghl1loxg/image_1d8g2fr8dkjqi9g1aah1unf18dj63.png">
+<meta property="og:updated_time" content="2019-04-15T08:43:21.323Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Passer6y&#39;s Blog">
-<meta name="twitter:description" content="A salty fish">
+<meta name="twitter:title" content="ThinkPHP5.1.x 代码执行漏洞分析">
+<meta name="twitter:image" content="http://static.zybuluo.com/Passer6y/b3x19d6f1pu5yz4crewkthn1/image_1d8ffjpn01kouopob14c9i1mt19.png">
 
 
 
@@ -134,7 +140,7 @@
 
 
 
-  <link rel="canonical" href="http://0day.design/archives/"/>
+  <link rel="canonical" href="http://0day.design/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/"/>
 
 
 
@@ -144,7 +150,7 @@
   };
 </script>
 
-  <title>Archive | Passer6y's Blog</title>
+  <title>ThinkPHP5.1.x 代码执行漏洞分析 | Passer6y's Blog</title>
   
 
 
@@ -201,7 +207,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -286,7 +292,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-folder-open"></i> <br />归档</a>
   </li>
@@ -370,270 +376,228 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://0day.design/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Passer6y">
+      <meta itemprop="description" content="A salty fish">
+      <meta itemprop="image" content="/images/21.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Passer6y's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">ThinkPHP5.1.x 代码执行漏洞分析
+              
+            
+          </h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-04-15 16:46:00 / Modified: 16:43:21" itemprop="dateCreated datePublished" datetime="2019-04-15T16:46:00+08:00">2019-04-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
           
-        
-        Um..! 25 posts in total. Keep on posting.
-      </span>
-      
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/" itemprop="url">
-              
-                <span itemprop="name">ThinkPHP5.1.x 代码执行漏洞分析</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-04-15T16:46:00+08:00"
-              content="2019-04-15" >
-          04-15
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/15/ThinkPHP5 SQL注入漏洞分析/" itemprop="url">
-              
-                <span itemprop="name">ThinkPHP5 SQL注入漏洞分析</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-04-15T09:46:00+08:00"
-              content="2019-04-15" >
-          04-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/04/13/TCTF:0CTF Web WriteUp/" itemprop="url">
-              
-                <span itemprop="name">TCTF/0CTF Web1 WriteUp</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-04-13T17:02:00+08:00"
-              content="2019-04-13" >
-          04-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <hr>
+<a id="more"></a>
+<h1 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h1><p><code>http://tprce/index.php?s=index/\think\Container/invokefunction&amp;function=call_user_func_array&amp;vars[0]=phpinfo&amp;vars[1][]=1</code></p>
+<p><img src="http://static.zybuluo.com/Passer6y/b3x19d6f1pu5yz4crewkthn1/image_1d8ffjpn01kouopob14c9i1mt19.png" alt="image_1d8ffjpn01kouopob14c9i1mt19.png-104.1kB"></p>
+<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>从payload入手，在app处下断点跟入, <code>thinkphp/library/think/Request.php</code> 681行，处理兼容模式的url请求：</p>
+<p><img src="http://static.zybuluo.com/Passer6y/sxdjzyjnpeifkhixgpxvs1z3/image_1d8fsee7h1red11t7d9e14omhgk1j.png" alt="image_1d8fsee7h1red11t7d9e14omhgk1j.png-388.5kB"></p>
+<p>在<code>thinkphp/library/think/route/Rule.php</code> 947行<br><img src="http://static.zybuluo.com/Passer6y/o3ro7og9xlqyod0c96jda16v/image_1d8fvv9pa1aadflj4bu2b4pe81m.png" alt="image_1d8fvv9pa1aadflj4bu2b4pe81m.png-276.7kB"><br>可以看到其以<code>/</code>分割，分割成模块/控制器/操作方法</p>
+<p>路由解析，分发到对应模块/控制器/操作方法<code>thinkphp/library/think/route/dispatch/Url.php</code> 37行</p>
+<p><img src="http://static.zybuluo.com/Passer6y/e402mqf4g33n4fwyo4qv5dtp/image_1d8fu10u5a7gujrjgt18171llc9.png" alt="image_1d8fu10u5a7gujrjgt18171llc9.png-345.1kB"></p>
+<p><code>thinkphp/library/think/route/dispatch/Module.php</code>  84行 <code>exec()</code>，实例化控制器<br><img src="http://static.zybuluo.com/Passer6y/v25l3t0ne9lfknxopicxs1jo/image_1d8g15qpv1foi12mihmd1826mvr36.png" alt="image_1d8g15qpv1foi12mihmd1826mvr36.png-294.2kB"></p>
+<p>跟入该文件135行，该函数利用反射机制调用类方法，从而进行代码执行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data = <span class="keyword">$this</span>-&gt;app-&gt;invokeReflectMethod($instance, $reflect, $vars);</span><br></pre></td></tr></table></figure></p>
+<p>-&gt; <code>thinkphp/library/think/Container.php</code> 347行 <code>invokeFunction()</code>：<br><img src="http://static.zybuluo.com/Passer6y/9neklp8y2cmhalulvogad1bt/image_1d8g1mln71tog1ud81g4l2931d053j.png" alt="image_1d8g1mln71tog1ud81g4l2931d053j.png-387.1kB"></p>
+<p>到这里就已经任意代码执行了。</p>
+<blockquote>
+<p>第一次接触反射机制，记录一下自己的理解，简单来说反射即根据目的地找来源，也就是根据已经实例化的对象来找其所属的类和类中的方法</p>
+</blockquote>
+<p>以上为ThinkPHP5.1.x的rce分析，ThinkPHP5.0.x有一些差异，以后来填坑。</p>
+<h1 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h1><p>路由解析过程中没有对控制器的命名规则进行检测，导致我们可以操作任意控制器，官方修复加了正则只允许字符传入：<br><img src="http://static.zybuluo.com/Passer6y/i3q82hu9bdu5rdr6ghl1loxg/image_1d8g2fr8dkjqi9g1aah1unf18dj63.png" alt="image_1d8g2fr8dkjqi9g1aah1unf18dj63.png-173.9kB"></p>
+<p>参考：</p>
+<ol>
+<li><a href="https://www.kancloud.cn/shaoguan/phpstudy/384102" target="_blank" rel="noopener">PHP反射机制原理与用法详解</a></li>
+</ol>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/25/Teaser CONFidence CTF 2019 WriteUp/" itemprop="url">
-              
-                <span itemprop="name">Teaser CONFidence CTF 2019 WriteUp</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-25T21:00:00+08:00"
-              content="2019-03-25" >
-          03-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/03/07/phpok 最新版（5.1） 审计/" itemprop="url">
-              
-                <span itemprop="name">phpok 最新版（5.1） 审计</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-03-07T16:46:00+08:00"
-              content="2019-03-07" >
-          03-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+
+    
+
+    
+    
+    
+
+	
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Passer6y</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://0day.design/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/" title="ThinkPHP5.1.x 代码执行漏洞分析">http://0day.design/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>true</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web/" rel="tag"><i class="fa fa-tag"></i> Web</a>
+          
+            <a href="/tags/代码审计/" rel="tag"><i class="fa fa-tag"></i> 代码审计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/15/ThinkPHP5 SQL注入漏洞分析/" rel="next" title="ThinkPHP5 SQL注入漏洞分析">
+                <i class="fa fa-chevron-left"></i> ThinkPHP5 SQL注入漏洞分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -654,8 +618,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -798,6 +771,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#复现"><span class="nav-number">1.</span> <span class="nav-text">复现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#漏洞分析"><span class="nav-number">2.</span> <span class="nav-text">漏洞分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修复"><span class="nav-number">3.</span> <span class="nav-text">修复</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -937,6 +926,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
 
   
 
