@@ -128,7 +128,7 @@
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/bbrlup3zenonuvidq1oi83iw/image_1d8faqgj6vr0nd8k9q8ouo9s44.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/8y2tjt5kivzwg0ma5y3bkk86/image_1d8f8g6lv13d5105o1hg7qmptdp20.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/q8k2jp76sdo9x9lv70pf04lu/image_1d8fbcjdf15o7fjp5sbc7a1o64u.png">
-<meta property="og:updated_time" content="2019-04-15T02:01:30.386Z">
+<meta property="og:updated_time" content="2019-04-15T02:10:29.375Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ThinkPHP5 SQL注入漏洞分析">
 <meta name="twitter:image" content="http://static.zybuluo.com/Passer6y/rsmd393b1y88p4ov3ef4t5on/image_1d8d5drlc17qg1na9vcv1tt013tt9.png">
@@ -438,7 +438,7 @@
                 
               
 
-              <time title="Created: 2019-04-15 09:46:00 / Modified: 10:01:30" itemprop="dateCreated datePublished" datetime="2019-04-15T09:46:00+08:00">2019-04-15</time>
+              <time title="Created: 2019-04-15 09:46:00 / Modified: 10:10:29" itemprop="dateCreated datePublished" datetime="2019-04-15T09:46:00+08:00">2019-04-15</time>
             
 
             
@@ -521,6 +521,8 @@
 <li>最后就是存在一个可控的insert操作了</li>
 <li>开启报错才能报错注入</li>
 </ol>
+<h2 id="补更"><a href="#补更" class="headerlink" title="补更"></a>补更</h2><p>后来继续跟了一下tp5其他的注入，感觉都很鸡肋，甚至觉得不是洞..</p>
+<p>利用思路都大同小异，传入数据默认不过滤，底层解析数据的也不过滤，最后进行一次字符串拼接。</p>
 <p>参考：</p>
 <ol>
 <li><a href="https://packagist.laravel-china.org/" target="_blank" rel="noopener">Laravel China 社区维护的国内全量镜像</a></li>
@@ -798,7 +800,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境搭建"><span class="nav-number">1.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最后"><span class="nav-number">3.</span> <span class="nav-text">最后</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境搭建"><span class="nav-number">1.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最后"><span class="nav-number">3.</span> <span class="nav-text">最后</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#补更"><span class="nav-number">3.1.</span> <span class="nav-text">补更</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -840,7 +842,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共52.2k字</span>
+  <span class="post-count">博客全站共52.3k字</span>
 </div>
 
 <span id="busuanzi_container_site_pv" class="theme-info">
