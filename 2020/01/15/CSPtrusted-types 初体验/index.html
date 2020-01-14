@@ -129,7 +129,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/01/14/chTDAemO3dyiVjP.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/01/14/PRvEKkwYAepyD75.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/01/14/UIfsWblVG7FQO6T.jpg">
-<meta property="og:updated_time" content="2020-01-14T05:53:12.220Z">
+<meta property="og:updated_time" content="2020-01-14T05:54:18.068Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSP:trusted-types 初体验">
 <meta name="twitter:image" content="https://i.loli.net/2020/01/14/BpweX4RQ1CZAW3g.jpg">
@@ -456,7 +456,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-01-14 13:53:12" itemprop="dateModified" datetime="2020-01-14T13:53:12+08:00">2020-01-14</time>
+                <time title="Modified: 2020-01-14 13:54:18" itemprop="dateModified" datetime="2020-01-14T13:54:18+08:00">2020-01-14</time>
               
             
           </span>
@@ -519,6 +519,7 @@
       
         <hr>
 <a id="more"></a>
+<p>文章首发<a href="">先知社区</a></p>
 <h1 id="CSP-trusted-types-初体验"><a href="#CSP-trusted-types-初体验" class="headerlink" title="CSP:trusted-types 初体验"></a>CSP:trusted-types 初体验</h1><p>面试的时候被问到这样一个有意思的问题，为什么新版Chrome取消了XSS Audit机制？</p>
 <p>以前<a href="https://zhuanlan.zhihu.com/p/74288648" target="_blank" rel="noopener">看到过文章</a>说新版Chrome取消这个的原因是因为被绕过的姿势过多(我也不知道几个)或者说是误报影响到正常功能了。并说用<code>trusted-types</code>的API替换<code>XSS Audit</code>能彻底杜绝<code>DOM XSS</code>。</p>
 <p>仔细跟了一下<a href="https://developers.google.com/web/updates/2019/02/trusted-types" target="_blank" rel="noopener">谷歌的开发文档介绍</a>，通过给CSP配置一个<code>trusted-types</code>属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Security-Policy: trusted-types *</span><br></pre></td></tr></table></figure></p>
