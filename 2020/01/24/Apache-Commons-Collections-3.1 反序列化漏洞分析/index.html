@@ -141,7 +141,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/01/24/H1WBxCctdLiRKuT.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/01/25/T1ONzCtkoGPQBWL.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/01/25/jCcsWYhg1HnkVlM.jpg">
-<meta property="og:updated_time" content="2020-01-26T02:55:25.856Z">
+<meta property="og:updated_time" content="2020-01-27T02:17:15.018Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java入坑：Apache-Commons-Collections-3.1 反序列化漏洞分析">
 <meta name="twitter:image" content="https://i.loli.net/2020/01/24/2DY64UVGfb1dPcH.jpg">
@@ -468,7 +468,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-01-26 10:55:25" itemprop="dateModified" datetime="2020-01-26T10:55:25+08:00">2020-01-26</time>
+                <time title="Modified: 2020-01-27 10:17:15" itemprop="dateModified" datetime="2020-01-27T10:17:15+08:00">2020-01-27</time>
               
             
           </span>
@@ -576,7 +576,7 @@
 <p>流程：参考seebug的一张图<br><img src="https://i.loli.net/2020/01/24/H1WBxCctdLiRKuT.jpg" alt="-w1295"></p>
 <h2 id="远程利用实现"><a href="#远程利用实现" class="headerlink" title="远程利用实现"></a>远程利用实现</h2><p>先学习几个概念：</p>
 <ul>
-<li>RMI（Remote Method Invocation）：远程方法调用，RMI使我们可以调⽤远程对象上的方法，将真实的Java对象作为参数传递，并将真实的Java对象作为返回值，RMI要调用的对象必须可以被序列化，即实现Serialize接⼝，“远程”是指通过可在网络上传递的特殊类型的对象引用来使⽤对象，⽆论在何处使用引用，方法调⽤都在原始对象上进行，该对象仍位于其原始宿主上。如果远程主机向您返回对其对象之⼀一的引用，则可以调⽤该对象的⽅法。 实际的⽅法调用将在对象所在的远程主机上进行。</li>
+<li>RMI（Remote Method Invocation）：远程方法调用，是JDK 1.2版本中实现的一种远程方法调用机制，是分布式编程中的基本思想。利用这种机制可以让某台服务器上的对象在调用另外一台服务器上的方法时，和在本地机上对象间的方法调用的语法规则一样。</li>
 <li>JNDI（Java Naming and Directory Interface），Java 命名与目录接口(JNDI是注册表可以包含很多的RMI，客户端调用RMI记录的时候会先去JNDI这个本子，然后从本子上找相应的RMI记录)<br>(还有很多概念，先挖坑)</li>
 </ul>
 <h3 id="RMI服务端实现"><a href="#RMI服务端实现" class="headerlink" title="RMI服务端实现"></a>RMI服务端实现</h3><p>构造一个User接口：User.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> RMI;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.rmi.Remote;</span><br><span class="line"><span class="keyword">import</span> java.rmi.RemoteException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">Remote</span></span>&#123;</span><br><span class="line">    <span class="function">String <span class="title">name</span><span class="params">(String name)</span> <span class="keyword">throws</span> RemoteException</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">say</span><span class="params">(String say)</span> <span class="keyword">throws</span> RemoteException</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dowork</span><span class="params">(Object work)</span> <span class="keyword">throws</span> RemoteException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -924,7 +924,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共62.3k字</span>
+  <span class="post-count">博客全站共62.2k字</span>
 </div>
 
 <span id="busuanzi_container_site_pv" class="theme-info">
