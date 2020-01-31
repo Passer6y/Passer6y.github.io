@@ -126,7 +126,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/01/28/BrZ8EnK1uXOvN2h.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/01/28/1CHwVoucj4AFYxq.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/01/28/mfDwk2joXgnepP5.jpg">
-<meta property="og:updated_time" content="2020-01-30T06:55:24.431Z">
+<meta property="og:updated_time" content="2020-01-31T02:16:09.114Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="fastjson 1.2.61 远程代码执行漏洞分析(commons-configuration gadget)">
 <meta name="twitter:image" content="https://i.loli.net/2020/01/28/trlqBy5D72CvXdE.jpg">
@@ -453,7 +453,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-01-30 14:55:24" itemprop="dateModified" datetime="2020-01-30T14:55:24+08:00">2020-01-30</time>
+                <time title="Modified: 2020-01-31 10:16:09" itemprop="dateModified" datetime="2020-01-31T10:16:09+08:00">2020-01-31</time>
               
             
           </span>
@@ -533,7 +533,7 @@
 <p>那么问题来了，<code>this.getContext()</code>是怎么设置的呢？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Context <span class="title">getContext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.context;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>获取了成员变量<code>this.context</code>，在构造方法中我们可以看到一顿套娃的操作，无参构造函数调用单参数构造函数，调用双参数构造函数，将<code>new InitialContext()</code>赋给了成员变量<code>this.context</code><br><img src="https://i.loli.net/2020/01/28/mfDwk2joXgnepP5.jpg" alt="-w1071"><br>最终导致漏洞产生。</p>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>漏洞影响fastjson版本：<code>version &lt;= 1.2.6</code>。修复也就是多了个组件黑名单。</p>
-<p>乏而无味，仅仅对gadget chain进行了简单分析，对fastjson的关键代码分析欠缺，接下里的任务就是搞懂fastjson漏洞触发的条件以及原理。</p>
+<p>索然无味，仅仅对gadget chain进行了简单分析，对fastjson的关键代码分析欠缺，接下里的任务就是搞懂fastjson漏洞触发的条件以及原理。</p>
 
       
     </div>
@@ -731,7 +731,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -868,7 +870,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共65.8k字</span>
+  <span class="post-count">博客全站共66.6k字</span>
 </div>
 
 <span id="busuanzi_container_site_pv" class="theme-info">
