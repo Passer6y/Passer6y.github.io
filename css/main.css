@@ -1673,7 +1673,7 @@ pre .javascript .function {
   z-index: 9999;
   display: block;
   width: 0;
-  height: 2px;
+  height: 3px;
   background: #37c6c0;
 }
 .sidebar {
@@ -1864,7 +1864,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffffc8;
+  background: #99a400;
 }
 .links-of-blogroll {
   font-size: 13px;
