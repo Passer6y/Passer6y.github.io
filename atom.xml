@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://0day.design/"/>
-  <updated>2020-02-14T08:17:50.230Z</updated>
+  <updated>2020-02-14T08:19:54.399Z</updated>
   <id>http://0day.design/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://0day.design/2020/02/14/CVE-2019-17564%EF%BC%9AApache%20Dubbo%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     <id>http://0day.design/2020/02/14/CVE-2019-17564：Apache Dubbo反序列化漏洞分析/</id>
     <published>2020-02-14T08:17:00.000Z</published>
-    <updated>2020-02-14T08:17:50.230Z</updated>
+    <updated>2020-02-14T08:19:54.399Z</updated>
     
-    <content type="html"><![CDATA[<hr><a id="more"></a><h1 id="CVE-2019-17564：Apache-Dubbo反序列化漏洞分析"><a href="#CVE-2019-17564：Apache-Dubbo反序列化漏洞分析" class="headerlink" title="CVE-2019-17564：Apache Dubbo反序列化漏洞分析"></a>CVE-2019-17564：Apache Dubbo反序列化漏洞分析</h1><p>前几天360发了一则<a href="https://cert.360.cn/warning/detail?id=f7a1500f71a6c192974a58167b00715e" target="_blank" rel="noopener">Apache Dubbo的漏洞预警</a>，@hu3sky师傅让我帮他看看这个漏洞复现的问题。Burp打二进制的反序列化数据有一点bug，这里记录一下解决的过程。</p><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/apache/dubbo-samples.git</span><br><span class="line">cd dubbo-samples/java/dubbo-samples-http</span><br></pre></td></tr></table></figure><p>修改<code>/dubbo-samples/java/dubbo-samples-http/pom.xml</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source.level</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source.level</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">target.level</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target.level</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--修改版本为2.7.3--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo.version</span>&gt;</span>2.7.3<span class="tag">&lt;/<span class="name">dubbo.version</span>&gt;</span></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></p><p>再加一个dependency，作为gadget：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/commons-collections/commons-collections --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-collections<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-collections<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p>然后 <code>mvn clean package</code><br>接着 <code>mvn -Djava.net.preferIPv4Stack=true -Dexec.mainClass=org.apache.dubbo.samples.http.HttpProvider exec:java</code></p><p>或者扔进idea里，配一个<code>-Djava.net.preferIPv4Stack=true</code>参数<br><img src="https://i.loli.net/2020/02/14/MiAtCTDOJWLaFQk.jpg" alt="-w607"></p><p>还要配一个zookeeper：<br><a href="media/15816499211332/zookeeper-3.4.14.tar.gz">zookeeper-3.4.14.ta</a></p><p>执行<code>bin/zkServer.sh</code>，如果提示<code>no such file zoo.cfg</code>，在<code>conf</code>目录下把<code>zoo-sample.cfg</code>改成<code>zoo.cfg</code>，然后继续执行即可。</p><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>踩了一堆坑，yso生成的反序列化数据，直接贴进burp是有蜜汁bug的，最后的解决办法有两种：</p><ul><li>在Repeat里用Paste from file (@hu3sky师傅成功了，我没成功)<br><img src="https://i.loli.net/2020/02/14/ZDVUbvoFjeN4G9x.jpg" alt="-w485"></li><li>最后翻<a href="https://github.com/snoopysecurity/awesome-burp-extensions/blob/master/README.md" target="_blank" rel="noopener">awesome-burp-extensions</a>找到了<a href="https://github.com/federicodotta/Java-Deserialization-Scanner" target="_blank" rel="noopener">Java-Deserialization-Scanner</a>这个burp插件解决的，安利一波：<br><img src="https://i.loli.net/2020/02/14/ChAkUBnpoy5WSFG.jpg" alt="-w1501"><br><img src="https://i.loli.net/2020/02/14/n4ORovwryFxVT3K.jpg" alt="-w1539"></li></ul><h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>在dispatch文件处理http路由分发，/org/apache/dubbo/remoting/http/servlet/DispatcherServlet.java<br><img src="https://i.loli.net/2020/02/14/Y2Pd14HDOksAc3Z.jpg" alt="-w1157"></p><p>跟进<code>handle</code>函数：/org/apache/dubbo/rpc/protocol/http/HttpProtocol.java<br><img src="https://i.loli.net/2020/02/14/PhLxtDC3yM6qXkB.jpg" alt="-w1234"><br>判断是否为post请求，然后继续处理Request：/org/springframework/remoting/httpinvoker/HttpInvokerServiceExporter.class<br><img src="https://i.loli.net/2020/02/14/cpnAQzj1BfhuUGO.jpg" alt="-w1250"><br>将request的post输入传入：<br><img src="https://i.loli.net/2020/02/14/cwU3EBLyIWRlMNt.jpg" alt="-w1379"></p><p>最后在/org/springframework/remoting/rmi/RemoteInvocationSerializingExporter.class， 调用<code>readObject()</code><br><img src="https://i.loli.net/2020/02/14/t73GKlqsYydihA8.jpg" alt="-w1510"></p><p>调用栈：<br><img src="https://i.loli.net/2020/02/14/yNWOjJD1TYSBQbE.jpg" alt="-w679"></p><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>一个sample环境的反序列化，要结合其他组件才能利用，个人感觉危害面不是很大。<br>新版的修复策略，在处理路由的<code>handle</code>函数，使用了另外一个组件，且在处理非json数据的时候会抛出异常。<br><img src="https://i.loli.net/2020/02/14/rkn6JQA9iNPHRLF.jpg" alt="-w1526"></p>]]></content>
+    <content type="html"><![CDATA[<hr><a id="more"></a><p>前几天360发了一则<a href="https://cert.360.cn/warning/detail?id=f7a1500f71a6c192974a58167b00715e" target="_blank" rel="noopener">Apache Dubbo的漏洞预警</a>，@hu3sky师傅让我帮他看看这个漏洞复现的问题。Burp打二进制的反序列化数据有一点bug，这里记录一下解决的过程。</p><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/apache/dubbo-samples.git</span><br><span class="line">cd dubbo-samples/java/dubbo-samples-http</span><br></pre></td></tr></table></figure><p>修改<code>/dubbo-samples/java/dubbo-samples-http/pom.xml</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source.level</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source.level</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">target.level</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target.level</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--修改版本为2.7.3--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo.version</span>&gt;</span>2.7.3<span class="tag">&lt;/<span class="name">dubbo.version</span>&gt;</span></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></p><p>再加一个dependency，作为gadget：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/commons-collections/commons-collections --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-collections<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-collections<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p>然后 <code>mvn clean package</code><br>接着 <code>mvn -Djava.net.preferIPv4Stack=true -Dexec.mainClass=org.apache.dubbo.samples.http.HttpProvider exec:java</code></p><p>或者扔进idea里，配一个<code>-Djava.net.preferIPv4Stack=true</code>参数<br><img src="https://i.loli.net/2020/02/14/MiAtCTDOJWLaFQk.jpg" alt="-w607"></p><p>还要配一个zookeeper：<br><a href="media/15816499211332/zookeeper-3.4.14.tar.gz">zookeeper-3.4.14.ta</a></p><p>执行<code>bin/zkServer.sh</code>，如果提示<code>no such file zoo.cfg</code>，在<code>conf</code>目录下把<code>zoo-sample.cfg</code>改成<code>zoo.cfg</code>，然后继续执行即可。</p><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>踩了一堆坑，yso生成的反序列化数据，直接贴进burp是有蜜汁bug的，最后的解决办法有两种：</p><ul><li>在Repeat里用Paste from file (@hu3sky师傅成功了，我没成功)<br><img src="https://i.loli.net/2020/02/14/ZDVUbvoFjeN4G9x.jpg" alt="-w485"></li><li>最后翻<a href="https://github.com/snoopysecurity/awesome-burp-extensions/blob/master/README.md" target="_blank" rel="noopener">awesome-burp-extensions</a>找到了<a href="https://github.com/federicodotta/Java-Deserialization-Scanner" target="_blank" rel="noopener">Java-Deserialization-Scanner</a>这个burp插件解决的，安利一波：<br><img src="https://i.loli.net/2020/02/14/ChAkUBnpoy5WSFG.jpg" alt="-w1501"><br><img src="https://i.loli.net/2020/02/14/n4ORovwryFxVT3K.jpg" alt="-w1539"></li></ul><h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>在dispatch文件处理http路由分发，/org/apache/dubbo/remoting/http/servlet/DispatcherServlet.java<br><img src="https://i.loli.net/2020/02/14/Y2Pd14HDOksAc3Z.jpg" alt="-w1157"></p><p>跟进<code>handle</code>函数：/org/apache/dubbo/rpc/protocol/http/HttpProtocol.java<br><img src="https://i.loli.net/2020/02/14/PhLxtDC3yM6qXkB.jpg" alt="-w1234"><br>判断是否为post请求，然后继续处理Request：/org/springframework/remoting/httpinvoker/HttpInvokerServiceExporter.class<br><img src="https://i.loli.net/2020/02/14/cpnAQzj1BfhuUGO.jpg" alt="-w1250"><br>将request的post输入传入：<br><img src="https://i.loli.net/2020/02/14/cwU3EBLyIWRlMNt.jpg" alt="-w1379"></p><p>最后在/org/springframework/remoting/rmi/RemoteInvocationSerializingExporter.class， 调用<code>readObject()</code><br><img src="https://i.loli.net/2020/02/14/t73GKlqsYydihA8.jpg" alt="-w1510"></p><p>调用栈：<br><img src="https://i.loli.net/2020/02/14/yNWOjJD1TYSBQbE.jpg" alt="-w679"></p><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>一个sample环境的反序列化，要结合其他组件才能利用，个人感觉危害面不是很大。<br>新版的修复策略，在处理路由的<code>handle</code>函数，使用了另外一个组件，且在处理非json数据的时候会抛出异常。<br><img src="https://i.loli.net/2020/02/14/rkn6JQA9iNPHRLF.jpg" alt="-w1526"></p>]]></content>
     
     <summary type="html">
     
@@ -34,9 +34,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="http://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -58,9 +58,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="http://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
       <category term="weblogic" scheme="http://0day.design/tags/weblogic/"/>
     
@@ -84,9 +84,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="http://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -108,9 +108,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="http://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
       <category term="fastjson" scheme="http://0day.design/tags/fastjson/"/>
     
@@ -134,9 +134,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="http://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
       <category term="fastjson" scheme="http://0day.design/tags/fastjson/"/>
     
@@ -160,9 +160,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="http://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -184,9 +184,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="http://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -208,9 +208,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="http://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -252,9 +252,9 @@
     </summary>
     
     
-      <category term="Web" scheme="http://0day.design/tags/Web/"/>
-    
       <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Web" scheme="http://0day.design/tags/Web/"/>
     
   </entry>
   
@@ -276,9 +276,9 @@
     </summary>
     
     
-      <category term="Web" scheme="http://0day.design/tags/Web/"/>
-    
       <category term="Code" scheme="http://0day.design/tags/Code/"/>
+    
+      <category term="Web" scheme="http://0day.design/tags/Web/"/>
     
   </entry>
   
