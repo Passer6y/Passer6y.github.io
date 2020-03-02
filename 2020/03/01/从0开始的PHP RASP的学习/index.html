@@ -144,7 +144,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/03/01/nVsm84hZrGI3LMP.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/01/e9vlZQR4nsoFN6g.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/01/EDpUPNlS1teb23A.jpg">
-<meta property="og:updated_time" content="2020-03-02T02:48:11.103Z">
+<meta property="og:updated_time" content="2020-03-02T07:12:05.024Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从0开始的PHP RASP的学习">
 <meta name="twitter:image" content="https://i.loli.net/2020/03/01/ozHCscaQTyjXBgO.jpg">
@@ -473,7 +473,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-03-02 10:48:11" itemprop="dateModified" datetime="2020-03-02T10:48:11+08:00">2020-03-02</time>
+                <time title="Modified: 2020-03-02 15:12:05" itemprop="dateModified" datetime="2020-03-02T15:12:05+08:00">2020-03-02</time>
               
             
           </span>
@@ -655,7 +655,6 @@
 <p>在遇到base64解码操作时，如果<code>source</code>点已被标记，则传递标记给解码后的字符串。</p>
 <p>最后就是威胁判断的过程，这些数据在最后到达敏感函数的<code>sink</code>点，比如<code>system</code>、<code>eval</code>这些高危函数，判断标记是否还存在，即检测是否有可控的风险。</p>
 <h2 id="上报平台"><a href="#上报平台" class="headerlink" title="上报平台"></a>上报平台</h2><h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>最后想了一下payload模式的缺点，在多入口php文件时，容易产生遗漏包含waf的情况，导致误报的问题，当然如果把全部逻辑都写到扩展中，与之而言的代价就是开发难度极高。其次Fuzz模式特殊漏洞检测需要指定的payload，且检测的精度取决于payload的精度。不过我觉得有污点检测功能就够了。</p>
-<p>再说一下绕过，我目前能想到的思路是，这样防御的本质是通过修改函数名或者对opcode的Hook，进行威胁函数劫持。如果我们能通过phpinfo，或者fuzz的手段去获取到他修改后的函数名则可以去绕开检测限制。</p>
 <p>花了差不多半个月的时间来研究PHP的RASP机制，从php内核到各种开源的rasp项目都有了一个深入的学习。写C语言扩展，研究php底层太硬核了，属实自闭，以后打算再研究一下java的rasp机制。</p>
 <p>最后膜前辈们的探索和分享。</p>
 <p>参考文章：</p>
