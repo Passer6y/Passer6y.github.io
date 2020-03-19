@@ -115,7 +115,7 @@
 
 
 
-  <meta name="keywords" content="Java,漏洞分析">
+  <meta name="keywords" content="漏洞分析,Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Weblogic IIOP反序列化漏洞分析(CVE-2020-2551)">
 <meta property="og:url" content="http://0day.design/2020/03/19/Weblogic IIOP反序列化漏洞分析/index.html">
@@ -182,7 +182,7 @@
 <meta property="og:image" content="https://i.loli.net/2020/03/19/ygOivUZAXzqPoWp.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/19/EF7qws8WKhU2lZT.jpg">
 <meta property="og:image" content="https://i.loli.net/2020/03/19/pZvQfW3FdPXI4nx.jpg">
-<meta property="og:updated_time" content="2020-03-19T02:54:31.036Z">
+<meta property="og:updated_time" content="2020-03-19T03:00:29.550Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Weblogic IIOP反序列化漏洞分析(CVE-2020-2551)">
 <meta name="twitter:image" content="https://i.loli.net/2020/03/18/pFrPDu6RwlOQ1VC.jpg">
@@ -494,7 +494,7 @@
                 
               
 
-              <time title="Created: 2020-03-19 10:44:00 / Modified: 10:54:31" itemprop="dateCreated datePublished" datetime="2020-03-19T10:44:00+08:00">2020-03-19</time>
+              <time title="Created: 2020-03-19 10:44:00 / Modified: 11:00:29" itemprop="dateCreated datePublished" datetime="2020-03-19T10:44:00+08:00">2020-03-19</time>
             
 
             
@@ -717,6 +717,7 @@
 <p>回过头来看<code>JtaTransactionManager</code>类的接口：<br><img src="https://i.loli.net/2020/03/19/pZvQfW3FdPXI4nx.jpg" alt="-w1492"><br>正是这个原因才需要我们在编写EXP的时候，需要将<code>jtaTransactionManager</code>通过反射，动态转换成remote达到远程调用的目的。</p>
 <h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>在自己动手分析之前，我一直把weblogic当成servant side和orbd(name Service)，也无法理解为什么EXP要和COBAR的servant side一样用rebind注册，后来在@Lucifaer师傅的帮助下才理解这里没有client side的参与，而对于Name Service而言这两者都是客户端。</p>
 <p>其次这种漏洞IIOP只是载体，<code>JtaTransactionManager</code>为gadget，官方修复也仅仅只是添加黑名单，IIOP的问题没根本解决，再爆一个gadget又得修，问题源源不断。更坑爹的是官网直接下的weblogic连黑名单都没有，个人觉得防御这种问题单纯靠waf流量检测根本防不住，没有反序列化特征，二进制数据流。要防范这类新问题的产生，或许只有RASP的行为检测才能解决。</p>
+<p>最后感谢@Lucifaer师傅的帮助~</p>
 <p>参考文章：</p>
 <ul>
 <li><a href="https://paper.seebug.org/1105/" target="_blank" rel="noopener">关于 Java 中的 RMI-IIOP</a></li>
@@ -759,9 +760,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
-          
             <a href="/tags/漏洞分析/" rel="tag"><i class="fa fa-tag"></i> 漏洞分析</a>
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
         </div>
       
