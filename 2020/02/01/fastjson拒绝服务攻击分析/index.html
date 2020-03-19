@@ -67,21 +67,21 @@
 
 
 
-<link href="http://static-passer6y.d0g3.cn/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="https://static-passer6y.d0g3.cn/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="http://static-passer6y.d0g3.cn/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="http://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0">
+<link href="https://static-passer6y.d0g3.cn/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="http://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="http://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0">
 
 
-  <link rel="mask-icon" href="http://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0">
+
+
+  <link rel="mask-icon" href="https://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0" color="#222">
 
 
 
@@ -126,28 +126,28 @@
   <meta name="keywords" content="Java,漏洞分析,fastjson">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FastJson 拒绝服务攻击分析 (&lt;=1.2.59)">
-<meta property="og:url" content="http://0day.design/2020/02/01/fastjson拒绝服务攻击分析/index.html">
+<meta property="og:url" content="https://0day.design/2020/02/01/fastjson拒绝服务攻击分析/index.html">
 <meta property="og:site_name" content="Passer6y&#39;s Blog">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077022.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077029.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077036.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077044.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077051.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077058.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077066.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077073.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077081.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077090.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077100.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077108.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077115.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077123.jpg">
-<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077132.jpg">
-<meta property="og:updated_time" content="2020-03-19T11:16:35.017Z">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077022.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077029.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077036.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077044.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077051.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077058.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077066.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077073.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077081.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077090.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077100.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077108.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077115.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077123.jpg">
+<meta property="og:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077132.jpg">
+<meta property="og:updated_time" content="2020-03-19T12:47:56.509Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FastJson 拒绝服务攻击分析 (&lt;=1.2.59)">
-<meta name="twitter:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077022.jpg">
+<meta name="twitter:image" content="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077022.jpg">
 
 
 
@@ -156,7 +156,7 @@
 
 
 
-  <link rel="canonical" href="http://0day.design/2020/02/01/fastjson拒绝服务攻击分析/"/>
+  <link rel="canonical" href="https://0day.design/2020/02/01/fastjson拒绝服务攻击分析/"/>
 
 
 
@@ -410,12 +410,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://0day.design/2020/02/01/fastjson拒绝服务攻击分析/">
+    <link itemprop="mainEntityOfPage" href="https://0day.design/2020/02/01/fastjson拒绝服务攻击分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Passer6y">
       <meta itemprop="description" content="A salty fish">
-      <meta itemprop="image" content="http://static-passer6y.d0g3.cn/images/21.jpg">
+      <meta itemprop="image" content="https://static-passer6y.d0g3.cn/images/21.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -469,7 +469,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-03-19 19:16:35" itemprop="dateModified" datetime="2020-03-19T19:16:35+08:00">2020-03-19</time>
+                <time title="Modified: 2020-03-19 20:47:56" itemprop="dateModified" datetime="2020-03-19T20:47:56+08:00">2020-03-19</time>
               
             
           </span>
@@ -533,28 +533,28 @@
         <hr>
 <a id="more"></a>
 <h1 id="FastJson-拒绝服务攻击分析-lt-1-2-59"><a href="#FastJson-拒绝服务攻击分析-lt-1-2-59" class="headerlink" title="FastJson 拒绝服务攻击分析 (&lt;=1.2.59)"></a>FastJson 拒绝服务攻击分析 (&lt;=1.2.59)</h1><p>最近在翻资料的时候发现了这样一个有意思的漏洞，简而言之，漏洞产生的原因是开发对输入数据考虑不周全，致使一个索引指针越界，导致拒绝服务的问题。比如我们输入16进制<code>\x0a</code>，而开发未考虑到恶意攻击者如果只输入<code>\x</code>，将会导致索引指针往后移动了两个指向了数据之外(越界)的地方.</p>
-<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>pom.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- http://mvnrepository.com/artifact/com.alibaba/fastjson --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.59<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>pom.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/com.alibaba/fastjson --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.59<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>poc:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import com.alibaba.fastjson.JSON;</span><br><span class="line"></span><br><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        String DEATH_STRING = &quot;&#123;\&quot;a\&quot;:\&quot;\\x&quot;;//输入字符串长度为8</span><br><span class="line">        JSON.parse(DEATH_STRING);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077022.jpg" alt="-w1047"></p>
-<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>在这篇文章里介绍了fastjson解析json串的机制：<a href="http://zonghaishang.gitbooks.io/fastjson-source-code-analysis/content/lexer/lexer_part2.html" target="_blank" rel="noopener">fastjson源码解析：JSON Token解析</a>，这里我们记住<code>bp</code>为读取字符串的指针、<code>sp</code>为字符缓存区索引就好了:<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077029.jpg" alt="-w491"><br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077036.jpg" alt="-w513"></p>
-<p>直接来看解析16进制的代码位置：/parser/JSONLexerBase.java#scanString<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077044.jpg" alt="-w1432"></p>
-<p>跟进<code>next</code>函数：JSONScanner.java#next()<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077051.jpg" alt="-w881"><br>先给索引指针进行了自增赋值，接着判断索引和实际长度的比较，如果索引比实际长度长或者相等则返回<code>EOI</code>,否则返回当前索引指向的字符：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077058.jpg" alt="-w480"><br>经过第一次的<code>next</code>处理，已经返回<code>EOI(0x1A)</code>了：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077066.jpg" alt="-w967"></p>
-<p>但是他又调用了一次<code>next</code>(即默认信任用户输入<code>\x</code>后跟两位字符)，此时索引的指针<code>bp</code>为9了，已经越界了：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077073.jpg" alt="-w914"></p>
-<p>然后经过<code>putChar</code>函数，<code>break</code>了<code>switch</code>分支，继续进行这个循环：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077081.jpg" alt="-w1125"></p>
-<p>跟进<code>isEOF</code>函数：JSONScanner.java#isEOF：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077090.jpg" alt="-w1013"><br><code>bp+1</code>已经远大于len了，这个条件永远只能返回<code>false</code>。</p>
-<p>跟进<code>putChar</code>函数，如果<code>sp</code>和缓存字符长度相对后，则申请一个<code>char</code>占用当前<code>sbuf.length</code>的两倍：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077100.jpg" alt="-w920"><br>所以最后的结果就是进入一个死循环且成倍申请内存：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077108.jpg" alt="-w709"></p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>在新版本1.2.60中，修改了<code>isEOF</code>函数的判断条件：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077115.jpg" alt="-w677"><br>并且增加了<code>x1</code>和<code>x2</code>的校验：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077123.jpg" alt="-w1043"></p>
+<p><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077022.jpg" alt="-w1047"></p>
+<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>在这篇文章里介绍了fastjson解析json串的机制：<a href="https://zonghaishang.gitbooks.io/fastjson-source-code-analysis/content/lexer/lexer_part2.html" target="_blank" rel="noopener">fastjson源码解析：JSON Token解析</a>，这里我们记住<code>bp</code>为读取字符串的指针、<code>sp</code>为字符缓存区索引就好了:<br><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077029.jpg" alt="-w491"><br><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077036.jpg" alt="-w513"></p>
+<p>直接来看解析16进制的代码位置：/parser/JSONLexerBase.java#scanString<br><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077044.jpg" alt="-w1432"></p>
+<p>跟进<code>next</code>函数：JSONScanner.java#next()<br><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077051.jpg" alt="-w881"><br>先给索引指针进行了自增赋值，接着判断索引和实际长度的比较，如果索引比实际长度长或者相等则返回<code>EOI</code>,否则返回当前索引指向的字符：<br><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077058.jpg" alt="-w480"><br>经过第一次的<code>next</code>处理，已经返回<code>EOI(0x1A)</code>了：<br><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077066.jpg" alt="-w967"></p>
+<p>但是他又调用了一次<code>next</code>(即默认信任用户输入<code>\x</code>后跟两位字符)，此时索引的指针<code>bp</code>为9了，已经越界了：<br><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077073.jpg" alt="-w914"></p>
+<p>然后经过<code>putChar</code>函数，<code>break</code>了<code>switch</code>分支，继续进行这个循环：<br><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077081.jpg" alt="-w1125"></p>
+<p>跟进<code>isEOF</code>函数：JSONScanner.java#isEOF：<br><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077090.jpg" alt="-w1013"><br><code>bp+1</code>已经远大于len了，这个条件永远只能返回<code>false</code>。</p>
+<p>跟进<code>putChar</code>函数，如果<code>sp</code>和缓存字符长度相对后，则申请一个<code>char</code>占用当前<code>sbuf.length</code>的两倍：<br><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077100.jpg" alt="-w920"><br>所以最后的结果就是进入一个死循环且成倍申请内存：<br><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077108.jpg" alt="-w709"></p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>在新版本1.2.60中，修改了<code>isEOF</code>函数的判断条件：<br><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077115.jpg" alt="-w677"><br>并且增加了<code>x1</code>和<code>x2</code>的校验：<br><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077123.jpg" alt="-w1043"></p>
 <p>其次，在实际的测试中并没有理想中的拒绝服务效果，使用多线程占用也就从100多M涨到2.5G的样子。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">fastjsonDos</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> fastjsonDos()).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> fastjsonDos()).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> fastjsonDos()).start();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String DEATH_STRING = <span class="string">"&#123;\"a\":\"\\x"</span>;</span><br><span class="line">        JSON.parse(DEATH_STRING);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077132.jpg" alt="-w882"></p>
+<p><img src="https://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077132.jpg" alt="-w882"></p>
 <p>后来学习到，java启动的时候可以通过<code>-Xmx</code>参数为jvm设置最大内存占用，默认为主机的四分之一。</p>
 <p>其次Java的OutOfMemoryError是JVM内部的异常，是一个可捕获异常，并不会直接导致java进程被Kill掉，顶多线程挂掉。</p>
 <p>在Linux下当应用程序内存超出内存上限时，会触发Out Of Memory Killer机制以保持系统空间正常运行，java默认最大1/4物理内存占用，还不太容易导致系统的OOM。</p>
 <p>总的来说，漏洞危害有限，但是利用过程还是挺看细节的，有一些值得学习的点~</p>
 <p>参考文章：</p>
 <ul>
-<li><a href="http://zonghaishang.gitbooks.io/fastjson-source-code-analysis/content/lexer/lexer_part2.html" target="_blank" rel="noopener">fastjson源码解析：JSON Token解析</a></li>
-<li><a href="http://nosec.org/home/detail/2933.html" target="_blank" rel="noopener">FastJson拒绝服务漏洞分析</a></li>
-<li><a href="http://blog.csdn.net/liukuan73/article/details/43238623" target="_blank" rel="noopener">Linux内核OOM机制的详细分析</a></li>
+<li><a href="https://zonghaishang.gitbooks.io/fastjson-source-code-analysis/content/lexer/lexer_part2.html" target="_blank" rel="noopener">fastjson源码解析：JSON Token解析</a></li>
+<li><a href="https://nosec.org/home/detail/2933.html" target="_blank" rel="noopener">FastJson拒绝服务漏洞分析</a></li>
+<li><a href="https://blog.csdn.net/liukuan73/article/details/43238623" target="_blank" rel="noopener">Linux内核OOM机制的详细分析</a></li>
 </ul>
 
       
@@ -578,7 +578,7 @@
     <strong>Post author:  </strong>Passer6y</li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="http://0day.design/2020/02/01/fastjson拒绝服务攻击分析/" title="FastJson 拒绝服务攻击分析 (<=1.2.59)">http://0day.design/2020/02/01/fastjson拒绝服务攻击分析/</a>
+    <a href="https://0day.design/2020/02/01/fastjson拒绝服务攻击分析/" title="FastJson 拒绝服务攻击分析 (<=1.2.59)">https://0day.design/2020/02/01/fastjson拒绝服务攻击分析/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh">CC BY-NC-SA 3.0</a>许可协议。转载请注明出处！</li>
@@ -687,7 +687,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://static-passer6y.d0g3.cn/images/21.jpg"
+                src="https://static-passer6y.d0g3.cn/images/21.jpg"
                 alt="Passer6y" />
             
               <p class="site-author-name" itemprop="name">Passer6y</p>
@@ -782,7 +782,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="http://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -807,39 +807,39 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
+                    <a href="https://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://Hu3sky.github.io" title="Hu3sky" target="_blank">Hu3sky</a>
+                    <a href="https://Hu3sky.github.io" title="Hu3sky" target="_blank">Hu3sky</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
+                    <a href="https://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
+                    <a href="https://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
+                    <a href="https://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
+                    <a href="https://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://ph0rse.me/" title="Ph0rse" target="_blank">Ph0rse</a>
+                    <a href="https://ph0rse.me/" title="Ph0rse" target="_blank">Ph0rse</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
+                    <a href="https://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
+                    <a href="https://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
                   </li>
                 
               </ul>
@@ -978,17 +978,17 @@
 
   
   
-    <script type="text/javascript" src="http://static-passer6y.d0g3.cn/lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="https://static-passer6y.d0g3.cn/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="http://static-passer6y.d0g3.cn/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="https://static-passer6y.d0g3.cn/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="http://static-passer6y.d0g3.cn/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="https://static-passer6y.d0g3.cn/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
@@ -1000,32 +1000,32 @@
   
 
 
-  <script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/utils.js?v=6.3.0"></script>
+  <script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/utils.js?v=6.3.0"></script>
 
-  <script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/motion.js?v=6.3.0"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/affix.js?v=6.3.0"></script>
-
-  <script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/schemes/pisces.js?v=6.3.0"></script>
+  <script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/motion.js?v=6.3.0"></script>
 
 
 
   
-  <script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/scrollspy.js?v=6.3.0"></script>
-<script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/post-details.js?v=6.3.0"></script>
+  
+
+
+  <script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/post-details.js?v=6.3.0"></script>
 
 
 
   
 
 
-  <script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/bootstrap.js?v=6.3.0"></script>
+  <script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/bootstrap.js?v=6.3.0"></script>
 
 
 

