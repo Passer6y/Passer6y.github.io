@@ -129,7 +129,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/4e9xj3u7mweeimm65v6arw5v/image_1d9c6jjt8bqdrao66julv1vn59.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/ujevdi5cdxz1g9jzqe2kfun6/image_1d9eqhob11k6013iqqjilb7r9.png">
-<meta property="og:updated_time" content="2019-04-27T12:35:30.811Z">
+<meta property="og:updated_time" content="2020-03-19T11:16:35.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RSA小结">
 <meta name="twitter:description" content="最近打比赛频频遇到各种学过又不会的密码学… 抽了点时间捣鼓了一下常见rsa攻击方法的原理，以后有时间继续填坑">
@@ -164,7 +164,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
+      hm.src = "http://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -442,12 +442,24 @@
                 
               
 
-              <time title="Created: 2019-04-27 20:46:00 / Modified: 20:35:30" itemprop="dateCreated datePublished" datetime="2019-04-27T20:46:00+08:00">2019-04-27</time>
+              <time title="Created: 2019-04-27 20:46:00" itemprop="dateCreated datePublished" datetime="2019-04-27T20:46:00+08:00">2019-04-27</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-03-19 19:16:35" itemprop="dateModified" datetime="2020-03-19T19:16:35+08:00">2020-03-19</time>
               
             
           </span>
@@ -529,7 +541,7 @@
 <blockquote>
 <p>d为e模phi(n)的逆元，e很大那么d就小</p>
 </blockquote>
-<p>脚本：<a href="https://github.com/pablocelayes/rsa-wiener-attack" target="_blank" rel="noopener">https://github.com/pablocelayes/rsa-wiener-attack</a></p>
+<p>脚本：<a href="http://github.com/pablocelayes/rsa-wiener-attack" target="_blank" rel="noopener">http://github.com/pablocelayes/rsa-wiener-attack</a></p>
 <blockquote>
 <p>这里注意一个细节问题，如果在运行脚本的时候报错，请在脚本前加上：<br>import   sys<br>sys.setrecursionlimit(10000000)</p>
 </blockquote>
@@ -539,19 +551,19 @@
 <p>构造表达式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c1^s ≡ m^(e1*s)(mod n)</span><br><span class="line">c2^r ≡ m^(e2*r)(mod n)</span><br></pre></td></tr></table></figure></p>
 <p>联立：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c1^s * c2^r ≡ m^[(e1*s)+(e2*r)] (mod n)</span><br><span class="line">c1^s * c2^r ≡ m^1 (mod n)</span><br></pre></td></tr></table></figure></p>
 <p>解出明文：<code>m = (c1^s * c2^r)(mod n)</code></p>
-<h1 id="一些例题"><a href="#一些例题" class="headerlink" title="一些例题"></a>一些例题</h1><h2 id="jarvisoj-Medium-RSA"><a href="#jarvisoj-Medium-RSA" class="headerlink" title="jarvisoj: Medium RSA"></a><a href="https://www.jarvisoj.com/challenges" target="_blank" rel="noopener">jarvisoj: Medium RSA</a></h2><p>给了公钥和加密后的flag文件，先用openssl提取公钥信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ openssl  rsa -pubin -text -modulus -in warmup -in pubkey.pem </span><br><span class="line">RSA Public-Key: (256 bit)</span><br><span class="line">Modulus:</span><br><span class="line">    00:c2:63:6a:e5:c3:d8:e4:3f:fb:97:ab:09:02:8f:</span><br><span class="line">    1a:ac:6c:0b:f6:cd:3d:70:eb:ca:28:1b:ff:e9:7f:</span><br><span class="line">    be:30:dd</span><br><span class="line">Exponent: 65537 (0x10001)</span><br><span class="line">Modulus=C2636AE5C3D8E43FFB97AB09028F1AAC6C0BF6CD3D70EBCA281BFFE97FBE30DD</span><br><span class="line">writing RSA key</span><br><span class="line">-----BEGIN PUBLIC KEY-----</span><br><span class="line">MDwwDQYJKoZIhvcNAQEBBQADKwAwKAIhAMJjauXD2OQ/+5erCQKPGqxsC/bNPXDr</span><br><span class="line">yigb/+l/vjDdAgMBAAE=</span><br><span class="line">-----END PUBLIC KEY-----</span><br></pre></td></tr></table></figure></p>
+<h1 id="一些例题"><a href="#一些例题" class="headerlink" title="一些例题"></a>一些例题</h1><h2 id="jarvisoj-Medium-RSA"><a href="#jarvisoj-Medium-RSA" class="headerlink" title="jarvisoj: Medium RSA"></a><a href="http://www.jarvisoj.com/challenges" target="_blank" rel="noopener">jarvisoj: Medium RSA</a></h2><p>给了公钥和加密后的flag文件，先用openssl提取公钥信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ openssl  rsa -pubin -text -modulus -in warmup -in pubkey.pem </span><br><span class="line">RSA Public-Key: (256 bit)</span><br><span class="line">Modulus:</span><br><span class="line">    00:c2:63:6a:e5:c3:d8:e4:3f:fb:97:ab:09:02:8f:</span><br><span class="line">    1a:ac:6c:0b:f6:cd:3d:70:eb:ca:28:1b:ff:e9:7f:</span><br><span class="line">    be:30:dd</span><br><span class="line">Exponent: 65537 (0x10001)</span><br><span class="line">Modulus=C2636AE5C3D8E43FFB97AB09028F1AAC6C0BF6CD3D70EBCA281BFFE97FBE30DD</span><br><span class="line">writing RSA key</span><br><span class="line">-----BEGIN PUBLIC KEY-----</span><br><span class="line">MDwwDQYJKoZIhvcNAQEBBQADKwAwKAIhAMJjauXD2OQ/+5erCQKPGqxsC/bNPXDr</span><br><span class="line">yigb/+l/vjDdAgMBAAE=</span><br><span class="line">-----END PUBLIC KEY-----</span><br></pre></td></tr></table></figure></p>
 <p>分析, 给了我们m， 也就是phi(n)， 通过其求出p,q(①)，然后将n求出(②),通过表达式③将e的逆元d求出，从而将密文解出(⑤)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">①：modulus = (p-1)(p-1)</span><br><span class="line">②： n = p * q</span><br><span class="line">③： e*d ≡ 1 (mod modulus)</span><br><span class="line">④： 加密：c ≡ m^e (mod n)</span><br><span class="line">⑤： 解密：m ≡ c^d (mod n)</span><br></pre></td></tr></table></figure></p>
 <p>尝试factor无解。<br>继续尝试用yafu分解m， 也就是phi(n),得到<code>p</code>和<code>q</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">P39 = 319576316814478949870590164193048041239</span><br><span class="line">P39 = 275127860351348928173285174381581152299</span><br></pre></td></tr></table></figure></p>
 <p><img src="http://static.zybuluo.com/Passer6y/ujevdi5cdxz1g9jzqe2kfun6/image_1d9eqhob11k6013iqqjilb7r9.png" alt="image_1d9eqhob11k6013iqqjilb7r9.png-17.8kB"></p>
-<p>根据<code>e p q</code>生成私钥文件,这里用<a href="https://github.com/ohroot/rsatools" target="_blank" rel="noopener">rsatools</a></p>
+<p>根据<code>e p q</code>生成私钥文件,这里用<a href="http://github.com/ohroot/rsatools" target="_blank" rel="noopener">rsatools</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python3 rsatool.py -o private.pem -e 65537 -p 319576316814478949870590164193048041239 -q 275127860351348928173285174381581152299</span><br></pre></td></tr></table></figure>
 <p>接着拿着这个私钥用openssl解密：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ openssl rsautl -decrypt -in flag.enc -inkey private.pem </span><br><span class="line">PCTF&#123;256b_i5_m3dium&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="jarvisoj-Hard-RSA"><a href="#jarvisoj-Hard-RSA" class="headerlink" title="jarvisoj: Hard RSA"></a><a href="https://www.anquanke.com/post/id/84632" target="_blank" rel="noopener">jarvisoj: Hard RSA</a></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ openssl  rsa -pubin -text -modulus -in warmup -in pubkey.pem</span><br><span class="line">RSA Public-Key: (256 bit)</span><br><span class="line">Modulus:</span><br><span class="line">    00:c2:63:6a:e5:c3:d8:e4:3f:fb:97:ab:09:02:8f:</span><br><span class="line">    1a:ac:6c:0b:f6:cd:3d:70:eb:ca:28:1b:ff:e9:7f:</span><br><span class="line">    be:30:dd</span><br><span class="line">Exponent: 2 (0x2)</span><br><span class="line">Modulus=C2636AE5C3D8E43FFB97AB09028F1AAC6C0BF6CD3D70EBCA281BFFE97FBE30DD</span><br><span class="line">writing RSA key</span><br><span class="line">-----BEGIN PUBLIC KEY-----</span><br><span class="line">MDowDQYJKoZIhvcNAQEBBQADKQAwJgIhAMJjauXD2OQ/+5erCQKPGqxsC/bNPXDr</span><br><span class="line">yigb/+l/vjDdAgEC</span><br><span class="line">-----END PUBLIC KEY-----</span><br></pre></td></tr></table></figure>
+<h2 id="jarvisoj-Hard-RSA"><a href="#jarvisoj-Hard-RSA" class="headerlink" title="jarvisoj: Hard RSA"></a><a href="http://www.anquanke.com/post/id/84632" target="_blank" rel="noopener">jarvisoj: Hard RSA</a></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ openssl  rsa -pubin -text -modulus -in warmup -in pubkey.pem</span><br><span class="line">RSA Public-Key: (256 bit)</span><br><span class="line">Modulus:</span><br><span class="line">    00:c2:63:6a:e5:c3:d8:e4:3f:fb:97:ab:09:02:8f:</span><br><span class="line">    1a:ac:6c:0b:f6:cd:3d:70:eb:ca:28:1b:ff:e9:7f:</span><br><span class="line">    be:30:dd</span><br><span class="line">Exponent: 2 (0x2)</span><br><span class="line">Modulus=C2636AE5C3D8E43FFB97AB09028F1AAC6C0BF6CD3D70EBCA281BFFE97FBE30DD</span><br><span class="line">writing RSA key</span><br><span class="line">-----BEGIN PUBLIC KEY-----</span><br><span class="line">MDowDQYJKoZIhvcNAQEBBQADKQAwJgIhAMJjauXD2OQ/+5erCQKPGqxsC/bNPXDr</span><br><span class="line">yigb/+l/vjDdAgEC</span><br><span class="line">-----END PUBLIC KEY-----</span><br></pre></td></tr></table></figure>
 <p>很显然，这里加密指数e为2，采用低加密指数攻击。</p>
 <p>参考：</p>
 <ol>
-<li><a href="https://www.jarvisoj.com/challenges" target="_blank" rel="noopener">jarvisoj</a></li>
-<li><a href="https://www.anquanke.com/post/id/84632" target="_blank" rel="noopener">CTF中RSA的常见攻击方法</a></li>
+<li><a href="http://www.jarvisoj.com/challenges" target="_blank" rel="noopener">jarvisoj</a></li>
+<li><a href="http://www.anquanke.com/post/id/84632" target="_blank" rel="noopener">CTF中RSA的常见攻击方法</a></li>
 </ol>
 
       
@@ -775,7 +787,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="http://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -800,7 +812,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
+                    <a href="http://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -808,19 +820,19 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
+                    <a href="http://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
+                    <a href="http://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
+                    <a href="http://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
+                    <a href="http://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -828,11 +840,11 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
+                    <a href="http://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
+                    <a href="http://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
                   </li>
                 
               </ul>

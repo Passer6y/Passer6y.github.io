@@ -160,7 +160,7 @@
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/6vda01kdf6371cgnylfro3p3/image_1d4l6siej1ud37qu1ebv1fd11d1m9.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/nyc1cs1p2pcmesp9fw5rmvr5/image_1d4l7b4pd1d0186u17a8cm1ehsm.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/exb2sbtm64zn2dpmlgsx58xj/image_1d4l7d16r1aqq19ov1fn312vi10k023.png">
-<meta property="og:updated_time" content="2019-04-15T02:02:18.574Z">
+<meta property="og:updated_time" content="2020-03-19T11:16:35.016Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="phpok 最新版（5.1） 审计">
 <meta name="twitter:description" content="文章首发：安全客  前言：最近审了一下phpok，能力有限，目前找到的大部后台一些能利用的洞，涉及到的漏洞类型也挺多的，能getshell，在这里分享一些自己的拙见~">
@@ -195,7 +195,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
+      hm.src = "http://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -490,7 +490,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-15 10:02:18" itemprop="dateModified" datetime="2019-04-15T10:02:18+08:00">2019-04-15</time>
+                <time title="Modified: 2020-03-19 19:16:35" itemprop="dateModified" datetime="2020-03-19T19:16:35+08:00">2020-03-19</time>
               
             
           </span>
@@ -533,12 +533,12 @@
       
 
       
-        <p>文章首发：<a href="https://www.anquanke.com/post/id/172110" target="_blank" rel="noopener">安全客</a> </p>
+        <p>文章首发：<a href="http://www.anquanke.com/post/id/172110" target="_blank" rel="noopener">安全客</a> </p>
 <p>前言：最近审了一下phpok，能力有限，目前找到的大部后台一些能利用的洞，涉及到的漏洞类型也挺多的，能getshell，在这里分享一些自己的拙见~<br><a id="more"></a></p>
-<h2 id="基本分析"><a href="#基本分析" class="headerlink" title="基本分析"></a>基本分析</h2><p>官网下载最新的phpok 5.1版本：<a href="https://phpok.com" target="_blank" rel="noopener">https://phpok.com</a></p>
+<h2 id="基本分析"><a href="#基本分析" class="headerlink" title="基本分析"></a>基本分析</h2><p>官网下载最新的phpok 5.1版本：<a href="http://phpok.com" target="_blank" rel="noopener">http://phpok.com</a></p>
 <p>首先可以黑白盒结合的方式来分析路由解析规则：<br><img src="http://static.zybuluo.com/Passer6y/zlxqgpk6lnjnh5bjm4ajyn0m/image_1d4l2nmm01gsc1k06f30qjqsrl9.png" alt="image_1d4l2nmm01gsc1k06f30qjqsrl9.png-95.9kB"></p>
 <p>跟目下有这么几个入口文件：<br><img src="http://static.zybuluo.com/Passer6y/kccx9ephq6ctm4olaje1rf6o/image_1d4cm58lf1oqb17lf13h7c6ncvc9.png" alt="image_1d4cm58lf1oqb17lf13h7c6ncvc9.png-100.1kB"></p>
-<p>纵览整个目录，容易发现该程序是<a href="https://baike.baidu.com/item/MVC%E6%A1%86%E6%9E%B6/9241230?fr=aladdin&amp;fromid=85990&amp;fromtitle=MVC" target="_blank" rel="noopener">mvc的模式</a>来编写的，至少有三个入口：<br>index.php,api.php,admin.php</p>
+<p>纵览整个目录，容易发现该程序是<a href="http://baike.baidu.com/item/MVC%E6%A1%86%E6%9E%B6/9241230?fr=aladdin&amp;fromid=85990&amp;fromtitle=MVC" target="_blank" rel="noopener">mvc的模式</a>来编写的，至少有三个入口：<br>index.php,api.php,admin.php</p>
 <p>所以，我们可以打开框架目录<code>framework/</code>来印证这个猜想：<br><img src="http://static.zybuluo.com/Passer6y/ehejnl7eo1wwq6qk9exaew35/image_1d4l30uhq19daamv1mej17731drmm.png" alt="image_1d4l30uhq19daamv1mej17731drmm.png-122.9kB"></p>
 <p>这时候我们可以结合黑盒的方式看具体的解析到具体文件(控制器)以及具体的方法的过程，安装后网站后，随便点开个页面，观察参数变化：<br><img src="http://static.zybuluo.com/Passer6y/kdq6c1wupjw5n6mmgu3rucgy/image_1d4l36cio8m11o13c87e5crr513.png" alt="image_1d4l36cio8m11o13c87e5crr513.png-55.1kB"><br>再看看后台：<br><img src="http://static.zybuluo.com/Passer6y/dygurkcwqte8y7gpub64bj4a/image_1d4l39hud1krpd401i9d51lp0v2g.png" alt="image_1d4l39hud1krpd401i9d51lp0v2g.png-92.8kB"></p>
 <p>到这里其实差不多已经知道解析规则了，比如：<br><code>http://phpok/index.php?c=cart&amp;f=checkout&amp;id[]=2</code></p>
@@ -823,7 +823,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="http://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -848,7 +848,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
+                    <a href="http://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -856,19 +856,19 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
+                    <a href="http://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
+                    <a href="http://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
+                    <a href="http://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
+                    <a href="http://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -876,11 +876,11 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
+                    <a href="http://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
+                    <a href="http://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
                   </li>
                 
               </ul>

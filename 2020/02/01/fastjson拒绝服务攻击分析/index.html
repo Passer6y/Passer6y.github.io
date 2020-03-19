@@ -140,7 +140,7 @@
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077115.jpg">
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077123.jpg">
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077132.jpg">
-<meta property="og:updated_time" content="2020-03-19T08:27:03.201Z">
+<meta property="og:updated_time" content="2020-03-19T11:16:35.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FastJson 拒绝服务攻击分析 (&lt;=1.2.59)">
 <meta name="twitter:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077022.jpg">
@@ -174,7 +174,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
+      hm.src = "http://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -469,7 +469,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-03-19 16:27:03" itemprop="dateModified" datetime="2020-03-19T16:27:03+08:00">2020-03-19</time>
+                <time title="Modified: 2020-03-19 19:16:35" itemprop="dateModified" datetime="2020-03-19T19:16:35+08:00">2020-03-19</time>
               
             
           </span>
@@ -533,10 +533,10 @@
         <hr>
 <a id="more"></a>
 <h1 id="FastJson-拒绝服务攻击分析-lt-1-2-59"><a href="#FastJson-拒绝服务攻击分析-lt-1-2-59" class="headerlink" title="FastJson 拒绝服务攻击分析 (&lt;=1.2.59)"></a>FastJson 拒绝服务攻击分析 (&lt;=1.2.59)</h1><p>最近在翻资料的时候发现了这样一个有意思的漏洞，简而言之，漏洞产生的原因是开发对输入数据考虑不周全，致使一个索引指针越界，导致拒绝服务的问题。比如我们输入16进制<code>\x0a</code>，而开发未考虑到恶意攻击者如果只输入<code>\x</code>，将会导致索引指针往后移动了两个指向了数据之外(越界)的地方.</p>
-<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>pom.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/com.alibaba/fastjson --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.59<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>pom.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- http://mvnrepository.com/artifact/com.alibaba/fastjson --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.59<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>poc:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import com.alibaba.fastjson.JSON;</span><br><span class="line"></span><br><span class="line">public class test &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        String DEATH_STRING = &quot;&#123;\&quot;a\&quot;:\&quot;\\x&quot;;//输入字符串长度为8</span><br><span class="line">        JSON.parse(DEATH_STRING);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077022.jpg" alt="-w1047"></p>
-<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>在这篇文章里介绍了fastjson解析json串的机制：<a href="https://zonghaishang.gitbooks.io/fastjson-source-code-analysis/content/lexer/lexer_part2.html" target="_blank" rel="noopener">fastjson源码解析：JSON Token解析</a>，这里我们记住<code>bp</code>为读取字符串的指针、<code>sp</code>为字符缓存区索引就好了:<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077029.jpg" alt="-w491"><br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077036.jpg" alt="-w513"></p>
+<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>在这篇文章里介绍了fastjson解析json串的机制：<a href="http://zonghaishang.gitbooks.io/fastjson-source-code-analysis/content/lexer/lexer_part2.html" target="_blank" rel="noopener">fastjson源码解析：JSON Token解析</a>，这里我们记住<code>bp</code>为读取字符串的指针、<code>sp</code>为字符缓存区索引就好了:<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077029.jpg" alt="-w491"><br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077036.jpg" alt="-w513"></p>
 <p>直接来看解析16进制的代码位置：/parser/JSONLexerBase.java#scanString<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077044.jpg" alt="-w1432"></p>
 <p>跟进<code>next</code>函数：JSONScanner.java#next()<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077051.jpg" alt="-w881"><br>先给索引指针进行了自增赋值，接着判断索引和实际长度的比较，如果索引比实际长度长或者相等则返回<code>EOI</code>,否则返回当前索引指向的字符：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077058.jpg" alt="-w480"><br>经过第一次的<code>next</code>处理，已经返回<code>EOI(0x1A)</code>了：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077066.jpg" alt="-w967"></p>
 <p>但是他又调用了一次<code>next</code>(即默认信任用户输入<code>\x</code>后跟两位字符)，此时索引的指针<code>bp</code>为9了，已经越界了：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846064077073.jpg" alt="-w914"></p>
@@ -552,9 +552,9 @@
 <p>总的来说，漏洞危害有限，但是利用过程还是挺看细节的，有一些值得学习的点~</p>
 <p>参考文章：</p>
 <ul>
-<li><a href="https://zonghaishang.gitbooks.io/fastjson-source-code-analysis/content/lexer/lexer_part2.html" target="_blank" rel="noopener">fastjson源码解析：JSON Token解析</a></li>
-<li><a href="https://nosec.org/home/detail/2933.html" target="_blank" rel="noopener">FastJson拒绝服务漏洞分析</a></li>
-<li><a href="https://blog.csdn.net/liukuan73/article/details/43238623" target="_blank" rel="noopener">Linux内核OOM机制的详细分析</a></li>
+<li><a href="http://zonghaishang.gitbooks.io/fastjson-source-code-analysis/content/lexer/lexer_part2.html" target="_blank" rel="noopener">fastjson源码解析：JSON Token解析</a></li>
+<li><a href="http://nosec.org/home/detail/2933.html" target="_blank" rel="noopener">FastJson拒绝服务漏洞分析</a></li>
+<li><a href="http://blog.csdn.net/liukuan73/article/details/43238623" target="_blank" rel="noopener">Linux内核OOM机制的详细分析</a></li>
 </ul>
 
       
@@ -782,7 +782,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="http://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -807,7 +807,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
+                    <a href="http://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -815,19 +815,19 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
+                    <a href="http://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
+                    <a href="http://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
+                    <a href="http://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
+                    <a href="http://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -835,11 +835,11 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
+                    <a href="http://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
+                    <a href="http://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
                   </li>
                 
               </ul>

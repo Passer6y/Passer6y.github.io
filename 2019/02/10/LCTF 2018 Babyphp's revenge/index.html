@@ -144,7 +144,7 @@
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/7dr647kzvcpu6lq8ed84dce3/image_1d3928hpt1uav102t87v2n31i4tm.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/hgggcquf896j63z2byrijoc7/image_1d39g8666dtm1sgh1voe1t89j3n1t.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/v3t4jjyvhwwh6eidi5ozw683/image_1d39g291h1i0s3jb1ao71cb614qe1g.png">
-<meta property="og:updated_time" content="2019-02-11T11:50:00.000Z">
+<meta property="og:updated_time" content="2020-03-19T11:16:35.005Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LCTF 2018 Babyphp&#39;s revenge">
 <meta name="twitter:description" content="继续填坑..">
@@ -179,7 +179,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
+      hm.src = "http://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -474,7 +474,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-11 19:50:00" itemprop="dateModified" datetime="2019-02-11T19:50:00+08:00">2019-02-11</time>
+                <time title="Modified: 2020-03-19 19:16:35" itemprop="dateModified" datetime="2020-03-19T19:16:35+08:00">2020-03-19</time>
               
             
           </span>
@@ -551,11 +551,11 @@
 <li>其次当数据被反序列化后，其对象还要调用一个不存在的类，以调用soapclient的__call方法</li>
 </ul>
 <blockquote>
-<p>同时该类__call方法还有crlf注入漏洞，具体分析见：<a href="https://xz.aliyun.com/t/2148" target="_blank" rel="noopener">https://xz.aliyun.com/t/2148</a></p>
+<p>同时该类__call方法还有crlf注入漏洞，具体分析见：<a href="http://xz.aliyun.com/t/2148" target="_blank" rel="noopener">http://xz.aliyun.com/t/2148</a></p>
 </blockquote>
 <p>如何触发ssrf呢？<br>参考： </p>
 <ul>
-<li><a href="https://xz.aliyun.com/t/2148#toc-0" target="_blank" rel="noopener">https://xz.aliyun.com/t/2148#toc-0</a></li>
+<li><a href="http://xz.aliyun.com/t/2148#toc-0" target="_blank" rel="noopener">http://xz.aliyun.com/t/2148#toc-0</a></li>
 <li><a href="http://php.net/manual/zh/soapclient.soapclient.php" target="_blank" rel="noopener">http://php.net/manual/zh/soapclient.soapclient.php</a></li>
 </ul>
 <p>该类实例化的时候有两个参数：<br><img src="http://static.zybuluo.com/Passer6y/xuxs1zvq8enjdrecy8yu8iip/image_1d36c2pvtjn21por2trqvf1ffb20.png" alt="image_1d36c2pvtjn21por2trqvf1ffb20.png-35.3kB"><br>第一个参数控制是否为WSDL模式。如果为NULL，就是non-WSDL模式。<br>如果是非wsdl模式，反序列化的时候就会对options中的url进行远程soap请求。<br><img src="http://static.zybuluo.com/Passer6y/1ha4j8ki4elb8kqtn1ogn6g2/image_1d36c8d6mg6tsiq1k431k1d1uli2d.png" alt="image_1d36c8d6mg6tsiq1k431k1d1uli2d.png-106.3kB"><br>如果是wsdl模式，在序列化之前就会对$url参数进行请求，从而无法可控序列化数据。</p>
@@ -564,7 +564,7 @@
 <p>执行：<br><img src="http://static.zybuluo.com/Passer6y/d535hyg4qv14nchcydmlyo4h/image_1d36md4p9npvjcs6psc92s0q1j.png" alt="image_1d36md4p9npvjcs6psc92s0q1j.png-13.2kB"></p>
 <p>vps监听到：<br><img src="http://static.zybuluo.com/Passer6y/q8a8klv10qiu0zstoqowi9yf/image_1d36mdtlq1d2t9bgbhdbt25lu20.png" alt="image_1d36mdtlq1d2t9bgbhdbt25lu20.png-140.9kB"></p>
 <p>可以看到在soap库发送的xml数据在数据包的post处，所以这个的局限在于一般只能打get形的ssrf。</p>
-<p>后来在l3m0n师傅的博客上看到可以发post请求的思路：<a href="https://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html" target="_blank" rel="noopener">https://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html</a></p>
+<p>后来在l3m0n师傅的博客上看到可以发post请求的思路：<a href="http://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html" target="_blank" rel="noopener">http://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html</a></p>
 <p><img src="http://static.zybuluo.com/Passer6y/wkh2hbldh22t89ss9il4crnn/image_1d3dp2gq9rbt10s6hdj28p1kfa9.png" alt="image_1d3dp2gq9rbt10s6hdj28p1kfa9.png-186.9kB"></p>
 <h3 id="二：php-session反序列化"><a href="#二：php-session反序列化" class="headerlink" title="二：php session反序列化"></a>二：php session反序列化</h3><p>其核心原理在于php在存储序列化$_SESSION数据引擎和反序列化该数据的引擎不一样导致。</p>
 <p>利用条件：</p>
@@ -822,7 +822,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="http://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -847,7 +847,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
+                    <a href="http://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -855,19 +855,19 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
+                    <a href="http://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
+                    <a href="http://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
+                    <a href="http://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
+                    <a href="http://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -875,11 +875,11 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
+                    <a href="http://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
+                    <a href="http://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
                   </li>
                 
               </ul>

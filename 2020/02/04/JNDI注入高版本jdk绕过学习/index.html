@@ -163,7 +163,7 @@
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782566.jpg">
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782574.jpg">
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782585.jpg">
-<meta property="og:updated_time" content="2020-03-19T08:26:35.931Z">
+<meta property="og:updated_time" content="2020-03-19T11:16:35.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JNDI注入高版本jdk绕过学习">
 <meta name="twitter:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782231.jpg">
@@ -197,7 +197,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
+      hm.src = "http://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -492,7 +492,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-03-19 16:26:35" itemprop="dateModified" datetime="2020-03-19T16:26:35+08:00">2020-03-19</time>
+                <time title="Modified: 2020-03-19 19:16:35" itemprop="dateModified" datetime="2020-03-19T19:16:35+08:00">2020-03-19</time>
               
             
           </span>
@@ -557,8 +557,8 @@
 <a id="more"></a>
 <p>在之前的复现分析过程中用到的jdk版本都是较低的版本，这篇文章主要研究不同jdk版本对JNDI注入不同姿势的影响，以及绕过姿势。关于JNDI注入和RMI的基础知识可以参考这两篇文章学习：</p>
 <ul>
-<li><a href="https://curz0n.github.io/2019/09/20/cve-2019-14540/" target="_blank" rel="noopener">curz0n: CVE-2019-14540远程代码执行漏洞分析&amp;复现</a></li>
-<li><a href="https://kingx.me/Exploit-Java-Deserialization-with-RMI.html" target="_blank" rel="noopener">kingx: 深入理解JNDI注入与Java反序列化漏洞利用</a></li>
+<li><a href="http://curz0n.github.io/2019/09/20/cve-2019-14540/" target="_blank" rel="noopener">curz0n: CVE-2019-14540远程代码执行漏洞分析&amp;复现</a></li>
+<li><a href="http://kingx.me/Exploit-Java-Deserialization-with-RMI.html" target="_blank" rel="noopener">kingx: 深入理解JNDI注入与Java反序列化漏洞利用</a></li>
 </ul>
 <h2 id="RMI-Remote-Object-Payload-限制较多，不常使用"><a href="#RMI-Remote-Object-Payload-限制较多，不常使用" class="headerlink" title="RMI Remote Object Payload (限制较多，不常使用)"></a>RMI Remote Object Payload (限制较多，不常使用)</h2><h2 id="RMI-JNDI-Reference-Payload"><a href="#RMI-JNDI-Reference-Payload" class="headerlink" title="RMI + JNDI Reference Payload"></a>RMI + JNDI Reference Payload</h2><p>这个方法就是我们常用的加载远程class进行JNDI注入的操作，攻击者通过RMI服务返回一个JNDI Naming Reference，受害者解码Reference时会去我们指定的Codebase远程地址加载Factory类，但是原理上并非使用RMI Class Loading机制的，因此不受 <code>java.rmi.server.useCodebaseOnly</code>系统属性的限制，相对来说更加通用。</p>
 <p>但是在JDK 6u132,JDK 7u122,JDK 8u113 中Java提升了JNDI 限制了Naming/Directory服务中JNDI Reference远程加载Object Factory类的特性。系统属性<code>com.sun.jndi.rmi.object.trustURLCodebase</code>、<code>com.sun.jndi.cosnaming.object.trustURLCodebase</code> 的默认值变为false，即默认不允许从远程的Codebase加载Reference工厂类。如果需要开启RMI Registry或者COS Naming Service Provider的远程类加载功能，需要将前面说的两个属性值设置为true。</p>
@@ -598,7 +598,7 @@
 <ol>
 <li>找到一个受害者本地CLASSPATH中的类作为恶意的Reference Factory工厂类，并利用这个本地的Factory类执行命令。</li>
 <li>利用LDAP直接返回一个恶意的序列化对象，JNDI注入依然会对该对象进行反序列化操作，利用反序列化Gadget完成命令执行。</li>
-<li>JRMP：<a href="https://mp.weixin.qq.com/s?__biz=MzU4MTg1NzAzMA==&amp;mid=2247483796&amp;idx=1&amp;sn=ce4249ba61d7f402a1211e508f83d2b4&amp;chksm=fd407bfdca37f2ebd51202f8221d320ccd639fd48d6a2adcb53c17ccb143fc3f037e6198662a&amp;mpshare=1&amp;scene=23&amp;srcid=&amp;sharer_sharetime=1577970121763&amp;sharer_shareid=b6a93c2ad862a6198898de9305c515e1#rd" target="_blank" rel="noopener">空指针-treasure-Writeup</a><br>这三种方式都依赖受害者本地CLASSPATH中环境，需要利用受害者本地的Gadget进行攻击。</li>
+<li>JRMP：<a href="http://mp.weixin.qq.com/s?__biz=MzU4MTg1NzAzMA==&amp;mid=2247483796&amp;idx=1&amp;sn=ce4249ba61d7f402a1211e508f83d2b4&amp;chksm=fd407bfdca37f2ebd51202f8221d320ccd639fd48d6a2adcb53c17ccb143fc3f037e6198662a&amp;mpshare=1&amp;scene=23&amp;srcid=&amp;sharer_sharetime=1577970121763&amp;sharer_shareid=b6a93c2ad862a6198898de9305c515e1#rd" target="_blank" rel="noopener">空指针-treasure-Writeup</a><br>这三种方式都依赖受害者本地CLASSPATH中环境，需要利用受害者本地的Gadget进行攻击。</li>
 </ol>
 <h3 id="利用本地Class作为Reference-Factory绕过高版本限制"><a href="#利用本地Class作为Reference-Factory绕过高版本限制" class="headerlink" title="利用本地Class作为Reference Factory绕过高版本限制"></a>利用本地Class作为Reference Factory绕过高版本限制</h3><p>在上文中<em>RMI + JNDI Reference Payload</em>部分我们已经介绍了在高版本修复策略，以及绕过的利用条件。在<code>org.apache.naming.factory.BeanFactory</code>中刚好满足条件并且存在被利用的可能，该接口存在于Tomcat依赖包中，使用也是非常广泛。</p>
 <p><strong>环境搭建</strong><br>之前用pom.xml拉tomcat的包复现蜜汁原因失败，后来用的MxSrvs里自带的tomcat依赖复现成功了。<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782342.jpg" alt="-w1393"><br>为了便于分析去导个源码，找到对应的版本，点下图所示的View All<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782353.jpg" alt="-w811"><br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782363.jpg" alt="-w783"><br>然后去idea里导入就行了</p>
@@ -615,7 +615,7 @@
 <p>在veracode博客中构造的beanClass是<code>javax.el.ELProcessor</code>，<code>ELProcessor</code>中有个<code>eval(String)</code>方法可以执行EL表达式，<code>javax.el.ELProcessor</code>是Tomcat8中的库，所以仅限Tomcat8及更高版本环境下可以通过该库进行攻击。</p>
 <p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782489.jpg" alt="-w1598"></p>
 <blockquote>
-<p>翻了一些资料还有一些其他的类符合条件可以作为beanClass注入到BeanFactory中实现利用，比如<a href="https://blog.orange.tw/2019/02/abusing-meta-programming-for-unauthenticated-rce.html" target="_blank" rel="noopener">Orange师傅的Jenkins漏洞实现利用</a>，先挖个坑。</p>
+<p>翻了一些资料还有一些其他的类符合条件可以作为beanClass注入到BeanFactory中实现利用，比如<a href="http://blog.orange.tw/2019/02/abusing-meta-programming-for-unauthenticated-rce.html" target="_blank" rel="noopener">Orange师傅的Jenkins漏洞实现利用</a>，先挖个坑。</p>
 </blockquote>
 <h3 id="利用LDAP返回序列化数据，触发本地Gadget绕过高版本限制"><a href="#利用LDAP返回序列化数据，触发本地Gadget绕过高版本限制" class="headerlink" title="利用LDAP返回序列化数据，触发本地Gadget绕过高版本限制"></a>利用LDAP返回序列化数据，触发本地Gadget绕过高版本限制</h3><p>目录是一种分布式数据库，目录服务是由目录数据库和一套访问协议组成的系统。LDAP全称是轻量级目录访问协议（The Lightweight Directory Access Protocol），它提供了一种查询、浏览、搜索和修改互联网目录数据的机制，运行在TCP/IP协议栈之上，基于C/S架构。除了RMI服务之外，JNDI也可以与LDAP目录服务进行交互，Java对象在LDAP目录中也有多种存储形式：</p>
 <ul>
@@ -636,7 +636,7 @@
 <p>jdk8u201测试结果：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782513.jpg" alt="-w1415"></p>
 <p>这种绕过方式需要利用一个本地的反序列化利用链，来结合JNDI注入的入口来利用。</p>
 <h3 id="利用JRMP触发本地gadget"><a href="#利用JRMP触发本地gadget" class="headerlink" title="利用JRMP触发本地gadget"></a>利用JRMP触发本地gadget</h3><p>JRMP(Java Remote Method Protocol)，Java远程方法协议，类比于HTTP协议是基于TCP/IP协议，RMI即基于JRMP协议。JRMP规定了RMI通信过程的数据格式等。</p>
-<p>以<a href="https://mp.weixin.qq.com/s?__biz=MzU4MTg1NzAzMA==&amp;mid=2247483796&amp;idx=1&amp;sn=ce4249ba61d7f402a1211e508f83d2b4&amp;chksm=fd407bfdca37f2ebd51202f8221d320ccd639fd48d6a2adcb53c17ccb143fc3f037e6198662a&amp;mpshare=1&amp;scene=23&amp;srcid=&amp;sharer_sharetime=1577970121763&amp;sharer_shareid=b6a93c2ad862a6198898de9305c515e1#rd" target="_blank" rel="noopener">空指针公开赛CTF-treasure</a>这题为例，题目源码：<a href="media/15806219737687/treasure.zip">treasure</a><br>高版本jdk8u201(默认不开远程类加载)，fastjson1.2.61，标准的解析json：me/firesun/treasure/controller/SubmitController.java<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782525.jpg" alt="-w1273"><br>SubmitController.java中开启了<code>autotype</code>：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782533.jpg" alt="-w669"></p>
+<p>以<a href="http://mp.weixin.qq.com/s?__biz=MzU4MTg1NzAzMA==&amp;mid=2247483796&amp;idx=1&amp;sn=ce4249ba61d7f402a1211e508f83d2b4&amp;chksm=fd407bfdca37f2ebd51202f8221d320ccd639fd48d6a2adcb53c17ccb143fc3f037e6198662a&amp;mpshare=1&amp;scene=23&amp;srcid=&amp;sharer_sharetime=1577970121763&amp;sharer_shareid=b6a93c2ad862a6198898de9305c515e1#rd" target="_blank" rel="noopener">空指针公开赛CTF-treasure</a>这题为例，题目源码：<a href="media/15806219737687/treasure.zip">treasure</a><br>高版本jdk8u201(默认不开远程类加载)，fastjson1.2.61，标准的解析json：me/firesun/treasure/controller/SubmitController.java<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782525.jpg" alt="-w1273"><br>SubmitController.java中开启了<code>autotype</code>：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782533.jpg" alt="-w669"></p>
 <p>中间件中LogAspect.java检测type关键字，这里用<code>\x</code>16进制编码绕就行了，在之前的文章<a href="mweblib://15802654101358" target="_blank" rel="noopener">Fastjson 反序列化触发流程分析</a>中有分析。<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782541.jpg" alt="-w1102"></p>
 <p>接着就是寻找JNDI注入点，全局搜<code>lookup(</code>：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846063782553.jpg" alt="-w1269"></p>
 <blockquote>
@@ -652,10 +652,10 @@
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>文章研究了多个jdk版本的多种jndi注入方式，以及高版本利用限制分析和绕过方式，收获颇为丰富。</p>
 <p>参考文章：</p>
 <ul>
-<li><a href="https://kingx.me/Exploit-Java-Deserialization-with-RMI.html" target="_blank" rel="noopener">kingx: 深入理解JNDI注入与Java反序列化漏洞利用</a></li>
-<li><a href="https://kingx.me/Restrictions-and-Bypass-of-JNDI-Manipulations-RCE.html" target="_blank" rel="noopener">kingx: 如何绕过高版本JDK的限制进行JNDI注入利用</a></li>
-<li><a href="https://www.veracode.com/blog/research/exploiting-jndi-injections-java" target="_blank" rel="noopener">Exploiting JNDI Injections in Java</a></li>
-<li><a href="https://www.cnblogs.com/Welk1n/p/11066397.html" target="_blank" rel="noopener">Welkin: 浅析JNDI注入Bypass</a></li>
+<li><a href="http://kingx.me/Exploit-Java-Deserialization-with-RMI.html" target="_blank" rel="noopener">kingx: 深入理解JNDI注入与Java反序列化漏洞利用</a></li>
+<li><a href="http://kingx.me/Restrictions-and-Bypass-of-JNDI-Manipulations-RCE.html" target="_blank" rel="noopener">kingx: 如何绕过高版本JDK的限制进行JNDI注入利用</a></li>
+<li><a href="http://www.veracode.com/blog/research/exploiting-jndi-injections-java" target="_blank" rel="noopener">Exploiting JNDI Injections in Java</a></li>
+<li><a href="http://www.cnblogs.com/Welk1n/p/11066397.html" target="_blank" rel="noopener">Welkin: 浅析JNDI注入Bypass</a></li>
 </ul>
 
       
@@ -881,7 +881,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="http://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -906,7 +906,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
+                    <a href="http://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -914,19 +914,19 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
+                    <a href="http://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
+                    <a href="http://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
+                    <a href="http://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
+                    <a href="http://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -934,11 +934,11 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
+                    <a href="http://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
+                    <a href="http://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
                   </li>
                 
               </ul>

