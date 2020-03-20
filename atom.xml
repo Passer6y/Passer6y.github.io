@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://0day.design/"/>
-  <updated>2020-03-19T12:47:56.506Z</updated>
+  <updated>2020-03-20T04:04:19.094Z</updated>
   <id>https://0day.design/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>博客上云优化小记</title>
+    <link href="https://0day.design/2020/03/20/%E5%8D%9A%E5%AE%A2%E4%B8%8A%E4%BA%91%E5%B0%8F%E8%AE%B0/"/>
+    <id>https://0day.design/2020/03/20/博客上云小记/</id>
+    <published>2020-03-20T04:03:00.000Z</published>
+    <updated>2020-03-20T04:04:19.094Z</updated>
+    
+    <content type="html"><![CDATA[<hr><a id="more"></a><p><strong>先说结论，千万别用千牛云！！</strong></p><p><strong>优化结果：</strong> 从以前的8秒都出不来，到现在秒开：</p><p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231873.jpg" alt="-w697"></p><p>最开始是迫于图床需求，之前一直用的<code>sm.ms</code>，最开始速度慢就算了，凑合用一下，到后来把我传的图片ban掉了，导致之前写的文章图片大量404，关键是重新传也传不上..</p><p>加上最近写了一篇图片贼多的文章，访问速度巨慢，忍不住就开始找图床。</p><p>很早之前看到千牛云每个月免费10G S3对象存储，但是要身份证照片，一直搁置没用，昨天分析完漏洞无事，就一起把之前吃灰的域名都实名了。</p><p>之前一直以为满足我图床需求的免费的10g s3能不花钱，后来在配置过程中发现这玩意必须和cdn捆绑使用，好了，七牛云cdn http免费10g流量，用过github page的都知道配置https就是一个按钮的事情，不过问题不大，https的站img用http加载，就是主页有锁，点进文章内容没锁的区别。</p><p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231570.jpg" alt="-w421"></p><p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231579.jpg" alt="-w558"></p><p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231597.jpg" alt="-w1132"></p><blockquote><p>用国内cdn最麻烦的地方在于要备案，这里好在白嫖了一个小组的d0g3.cn域名，省去了很多麻烦。</p></blockquote><p>优化完图片后，访问是快了很多，影响加载的主要因素变成了js和css，然后想顺手把hexo的public目录给拉到s3上。</p><p>然后我人傻了，他这个不能上传文件夹就很离谱：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231606.jpg" alt="-w920"></p><p>然后康师傅让我用ftp传上去(他用的又拍云)，找了半天连接工具，然后搜怎么用：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231645.jpg" alt="-w866"></p><p>继续找解决办法…<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231653.jpg" alt="-w845"><br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231661.jpg" alt="-w499"></p><p>最后找了个他们推出的<code>qshell</code>命令行工具，想想也算了，<code>hexo</code>也要用命令行，就无所谓了。</p><p>把静态资源同步上去，完了在next里配置一下：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231669.jpg" alt="-w492"><br>结果博客成这样了：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231678.jpg" alt="-w418"><br>对，https的站加载不了http的js资源。。</p><p>这里为了白嫖10g的http cdn流量，我把hexo全部https全换成了http。</p><p>改完之后，这里有个很严重的问题，以前拿https访问过的，之后拿http访问，浏览器会有缓存自动跳https，可是我站强制访问https就会像上图那样，没🔐没js。。</p><p>这里我想了个骚主意，插了下边一段代码放在了主页：强制跳转成http…<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231702.jpg" alt="-w694"></p><p>测试了一下，结果就是在chrome缓存和js的双重加持下，http-&gt;https-&gt;http，死循环….</p><blockquote><p>这里是关了github page的force https测试的，依旧如此…</p></blockquote><p>屈服了，最后还是选择氪金吧，都花了这么多时间折腾了，不想换厂商了…<br>CDN和S3分别收费：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231710.jpg" alt="-w954"><br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231724.jpg" alt="-w689"><br>为了节约流量，我还加了一个这个<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231735.jpg" alt="-w702"><br>后来@0akarma师傅给我说，这些在又拍云都是免费的，我…</p><p>好了，全站https之后，又有新的问题了：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231746.jpg" alt="-w1670"><br>woff等字体文件要配一个跨域资源共享(CORS)，然后凭着印象记得S3对象存储那有一个资源共享配置：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231754.jpg" alt="-w1469"></p><p>配了之后以为要延迟生效，出去打了个球回来，还是不行，然后网上搜了一下：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231788.jpg" alt="-w1077"><br>这波操作属实给我整吐了，在七牛云控制台转了一天，也没看到CDN有跨域的配置。后来想想也确实得在CDN的响应上配置。</p><p>后来还遇到几个小问题，woff字体的referer是css，而不是url，这里在防盗链referer校验难多加一个白名单就行了：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231841.jpg" alt="-w719"></p><p>到现在，就只有html在github上了，我访问<a href="https://static-passer6y.d0g3.cn/，不也是我的博客吗，为什么还要用github" target="_blank" rel="noopener">https://static-passer6y.d0g3.cn/，不也是我的博客吗，为什么还要用github</a> page呢，而且还解决了html加载慢的问题。</p><p>然后我就想着去加一个<code>@</code>的<code>cname</code>解析到<code>static-passer6y.d0g3.cn</code>，在这之前我配了一个<code>mx</code>的<code>@</code>记录，用来收邮件的。</p><p>一波操作下，阿里云不支持@的cname和mx记录共存…<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231856.jpg" alt="-w433"></p><p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231865.jpg" alt="-w943"></p><p>算了不折腾了，除了html文件在github上，其他的都优化了。</p><p>最后，折腾了大半天，七牛云控制台给俺整吐了，人生忠告，千万别用<em>七牛云</em>..</p><p>第一次上云真香，就是流量有点贵。<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231873.jpg" alt="-w697"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+    
+    </summary>
+    
+      <category term="Others" scheme="https://0day.design/categories/Others/"/>
+    
+    
+      <category term="Others" scheme="https://0day.design/tags/Others/"/>
+    
+  </entry>
   
   <entry>
     <title>Weblogic IIOP反序列化漏洞分析(CVE-2020-2551)</title>
@@ -34,9 +56,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="https://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="https://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -58,9 +80,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="https://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="https://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -82,9 +104,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="https://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="https://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -106,9 +128,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="https://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="https://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -154,9 +176,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="https://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="https://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -178,9 +200,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="https://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="https://0day.design/tags/Java/"/>
     
       <category term="weblogic" scheme="https://0day.design/tags/weblogic/"/>
     
@@ -204,9 +226,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="https://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="https://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -228,9 +250,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="https://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="https://0day.design/tags/Java/"/>
     
       <category term="fastjson" scheme="https://0day.design/tags/fastjson/"/>
     
@@ -254,9 +276,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="https://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="https://0day.design/tags/Java/"/>
     
       <category term="fastjson" scheme="https://0day.design/tags/fastjson/"/>
     
@@ -280,9 +302,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="https://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="https://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -304,9 +326,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="https://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="https://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -328,9 +350,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="Java" scheme="https://0day.design/tags/Java/"/>
-    
       <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Java" scheme="https://0day.design/tags/Java/"/>
     
   </entry>
   
@@ -372,9 +394,9 @@
     </summary>
     
     
-      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Web" scheme="https://0day.design/tags/Web/"/>
+    
+      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -396,9 +418,9 @@
     </summary>
     
     
-      <category term="Code" scheme="https://0day.design/tags/Code/"/>
-    
       <category term="Web" scheme="https://0day.design/tags/Web/"/>
+    
+      <category term="Code" scheme="https://0day.design/tags/Code/"/>
     
   </entry>
   
@@ -450,28 +472,6 @@
     <updated>2020-03-19T12:47:56.506Z</updated>
     
     <content type="html"><![CDATA[<hr><a id="more"></a><h1 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h1><p><code>https://tprce/index.php?s=index/\think\Container/invokefunction&amp;function=call_user_func_array&amp;vars[0]=phpinfo&amp;vars[1][]=1</code></p><p><img src="https://static.zybuluo.com/Passer6y/b3x19d6f1pu5yz4crewkthn1/image_1d8ffjpn01kouopob14c9i1mt19.png" alt="image_1d8ffjpn01kouopob14c9i1mt19.png-104.1kB"></p><h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>从payload入手，在app处下断点跟入, <code>thinkphp/library/think/Request.php</code> 681行，处理兼容模式的url请求：</p><p><img src="https://static.zybuluo.com/Passer6y/sxdjzyjnpeifkhixgpxvs1z3/image_1d8fsee7h1red11t7d9e14omhgk1j.png" alt="image_1d8fsee7h1red11t7d9e14omhgk1j.png-388.5kB"></p><p>在<code>thinkphp/library/think/route/Rule.php</code> 947行<br><img src="https://static.zybuluo.com/Passer6y/o3ro7og9xlqyod0c96jda16v/image_1d8fvv9pa1aadflj4bu2b4pe81m.png" alt="image_1d8fvv9pa1aadflj4bu2b4pe81m.png-276.7kB"><br>可以看到其以<code>/</code>分割，分割成模块/控制器/操作方法</p><p>路由解析，分发到对应模块/控制器/操作方法<code>thinkphp/library/think/route/dispatch/Url.php</code> 37行</p><p><img src="https://static.zybuluo.com/Passer6y/e402mqf4g33n4fwyo4qv5dtp/image_1d8fu10u5a7gujrjgt18171llc9.png" alt="image_1d8fu10u5a7gujrjgt18171llc9.png-345.1kB"></p><p><code>thinkphp/library/think/route/dispatch/Module.php</code>  84行 <code>exec()</code>，实例化控制器<br><img src="https://static.zybuluo.com/Passer6y/v25l3t0ne9lfknxopicxs1jo/image_1d8g15qpv1foi12mihmd1826mvr36.png" alt="image_1d8g15qpv1foi12mihmd1826mvr36.png-294.2kB"></p><p>跟入该文件135行，该函数利用反射机制调用类方法，从而进行代码执行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data = <span class="keyword">$this</span>-&gt;app-&gt;invokeReflectMethod($instance, $reflect, $vars);</span><br></pre></td></tr></table></figure></p><p>-&gt; <code>thinkphp/library/think/Container.php</code> 347行 <code>invokeFunction()</code>：<br><img src="https://static.zybuluo.com/Passer6y/9neklp8y2cmhalulvogad1bt/image_1d8g1mln71tog1ud81g4l2931d053j.png" alt="image_1d8g1mln71tog1ud81g4l2931d053j.png-387.1kB"></p><p>到这里就已经任意代码执行了。</p><blockquote><p>第一次接触反射机制，记录一下自己的理解，简单来说反射即根据目的地找来源，也就是根据已经实例化的对象来找其所属的类和类中的方法</p></blockquote><p>以上为ThinkPHP5.1.x的rce分析，ThinkPHP5.0.x有一些差异，以后来填坑。</p><h1 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h1><p>路由解析过程中没有对控制器的命名规则进行检测，导致我们可以操作任意控制器，官方修复加了正则只允许字符传入：<br><img src="https://static.zybuluo.com/Passer6y/i3q82hu9bdu5rdr6ghl1loxg/image_1d8g2fr8dkjqi9g1aah1unf18dj63.png" alt="image_1d8g2fr8dkjqi9g1aah1unf18dj63.png-173.9kB"></p><p>参考：</p><ol><li><a href="https://www.kancloud.cn/shaoguan/phpstudy/384102" target="_blank" rel="noopener">PHP反射机制原理与用法详解</a></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;hr&gt;
-    
-    </summary>
-    
-    
-      <category term="Web" scheme="https://0day.design/tags/Web/"/>
-    
-      <category term="代码审计" scheme="https://0day.design/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ThinkPHP5 SQL注入漏洞分析</title>
-    <link href="https://0day.design/2019/04/15/ThinkPHP5%20SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    <id>https://0day.design/2019/04/15/ThinkPHP5 SQL注入漏洞分析/</id>
-    <published>2019-04-15T01:46:00.000Z</published>
-    <updated>2020-03-19T12:47:56.508Z</updated>
-    
-    <content type="html"><![CDATA[<hr><a id="more"></a><p>参考的红日安全团队的文章:<br><a href="https://github.com/Passer6y/ThinkPHP-Vuln/blob/master/ThinkPHP5/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A51.md" target="_blank" rel="noopener">https://github.com/Passer6y/ThinkPHP-Vuln/blob/master/ThinkPHP5/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A51.md</a></p><h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p>第一次用composer安装源码，记录一下配置过程：<br>用brew安装composer：<code>brew install composer</code><br>更新一下composer：<code>composer self-update</code><br>安装国内镜像源：<code>composer config -g repo.packagist composer https://packagist.laravel-china.org</code></p><p>安装漏洞环境，thinkphp 5.0.15:<br><code>composer create-project --prefer-dist topthink/think=5.0.15 tp5.0.15</code><br>将 composer.json 文件的 require 字段设置成如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;require&quot;: &#123;</span><br><span class="line">    &quot;php&quot;: &quot;&gt;=5.4.0&quot;,</span><br><span class="line">    &quot;topthink/framework&quot;: &quot;5.0.15&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>将数据库文件，报错信息开启后，在控制器中index.php写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace app\index\controller;</span><br><span class="line"></span><br><span class="line">class Index</span><br><span class="line">&#123;</span><br><span class="line">    public function index()</span><br><span class="line">    &#123;</span><br><span class="line">        $username = request()-&gt;get(&apos;username/a&apos;);</span><br><span class="line">        db(&apos;users&apos;)-&gt;insert([&apos;username&apos; =&gt; $username]);</span><br><span class="line">        return &apos;Update success&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>paylaod:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://tp5.0.15/?username[0]=inc&amp;username[1]=updatexml(1,concat(0x7,user(),0x7e),1)&amp;username[2]=1</span><br></pre></td></tr></table></figure></p><p><img src="https://static.zybuluo.com/Passer6y/rsmd393b1y88p4ov3ef4t5on/image_1d8d5drlc17qg1na9vcv1tt013tt9.png" alt="image_1d8d5drlc17qg1na9vcv1tt013tt9.png-97.9kB"></p><h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>从demo代码入手：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$username = request()-&gt;get(&apos;username/a&apos;);   // 强制类型转换成数组</span><br><span class="line">db(&apos;users&apos;)-&gt;insert([&apos;username&apos; =&gt; $username]);</span><br><span class="line">return &apos;Update success&apos;;</span><br></pre></td></tr></table></figure></p><p>对其动态调试过程中，<code>request()-&gt;get()</code>，在thinkphp/library/think/Request.php 1093行对其数组的每个参数过滤：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public function filterExp(&amp;$value)</span><br><span class="line">&#123;</span><br><span class="line">    // 过滤查询特殊字符</span><br><span class="line">    if (is_string($value) &amp;&amp; preg_match(&apos;/^(EXP|NEQ|GT|EGT|LT|ELT|OR|XOR|LIKE|NOTLIKE|NOT LIKE|NOT BETWEEN|NOTBETWEEN|BETWEEN|NOTIN|NOT IN|IN)$/i&apos;, $value)) &#123;</span><br><span class="line">        $value .= &apos; &apos;;</span><br><span class="line">    &#125;</span><br><span class="line">    // TODO 其他安全过滤</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>显然这个过滤规则是形同虚设的。</p><p>再来跟入: <code>db(&#39;users&#39;)-&gt;insert([&#39;username&#39; =&gt; $username]);</code><br>从上面payload可以发现数组的第一个值为<code>inc</code>， 是tp5新增的链式查询操作:<code>https://www.kancloud.cn/manual/thinkphp5/135178</code>,<code>Auto-increment</code>即自动创建主键字段值。</p><p>thinkphp/library/think/db/Builder.php 726行insert 数据处理后进行拼接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public function insert(array $data, $options = [], $replace = false)</span><br><span class="line">&#123;</span><br><span class="line">    // 分析并处理数据</span><br><span class="line">    $data = $this-&gt;parseData($data, $options);</span><br><span class="line">    if (empty($data)) &#123;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    $fields = array_keys($data);</span><br><span class="line">    $values = array_values($data);</span><br><span class="line"></span><br><span class="line">    $sql = str_replace(</span><br><span class="line">        [&apos;%INSERT%&apos;, &apos;%TABLE%&apos;, &apos;%FIELD%&apos;, &apos;%DATA%&apos;, &apos;%COMMENT%&apos;],</span><br><span class="line">        [</span><br><span class="line">            $replace ? &apos;REPLACE&apos; : &apos;INSERT&apos;,</span><br><span class="line">            $this-&gt;parseTable($options[&apos;table&apos;], $options),</span><br><span class="line">            implode(&apos; , &apos;, $fields),</span><br><span class="line">            implode(&apos; , &apos;, $values),</span><br><span class="line">            $this-&gt;parseComment($options[&apos;comment&apos;]),</span><br><span class="line">        ], $this-&gt;insertSql);</span><br><span class="line"></span><br><span class="line">    return $sql;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>thinkphp/library/think/db/Builder.php 118行选择了 inc模式 这里只是对数据进行清洗并没有对其进行过滤</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">switch ($val[0]) &#123;</span><br><span class="line">    case &apos;exp&apos;:</span><br><span class="line">        $result[$item] = $val[1];</span><br><span class="line">        break;</span><br><span class="line">    case &apos;inc&apos;:</span><br><span class="line">        $result[$item] = $this-&gt;parseKey($val[1]) . &apos;+&apos; . floatval($val[2]);</span><br><span class="line">        break;</span><br><span class="line">    case &apos;dec&apos;:</span><br><span class="line">        $result[$item] = $this-&gt;parseKey($val[1]) . &apos;-&apos; . floatval($val[2]);</span><br><span class="line">        break;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>数据清洗完后，value值被拼接进去：<br><img src="https://static.zybuluo.com/Passer6y/47w555l5o2ghy1cdikqnruoa/image_1d8f724ato7qe5bdh8h671j8p.png" alt="image_1d8f724ato7qe5bdh8h671j8p.png-307.5kB"></p><p>接着在对其一番预处理参数绑定后再进行查库，thinkphp/library/think/db/Connection.php 456行：<br><img src="https://static.zybuluo.com/Passer6y/931jhgsx7141uag4mtw3dlyw/image_1d8f7dfs829a11t8f5l1e8na8216.png" alt="image_1d8f7dfs829a11t8f5l1e8na8216.png-548.3kB"></p><p>同样的，从<code>thinkphp/library/think/db/Builder.php</code>可以知道，对<code>Inc</code>模式和对<code>dec</code>处理模式一样，所以同样也存在这个问题：<br><img src="https://static.zybuluo.com/Passer6y/ik5xnzy1lclz5e6ccyq4xkhg/image_1d8f9s34g1qjn1ki7irg12j71vbg3a.png" alt="image_1d8f9s34g1qjn1ki7irg12j71vbg3a.png-290.4kB"></p><p>修复过程，将<code>composer.json</code>版本修改成<code>5.0.17</code>,执行<code>composer update</code>:</p><figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">switch ($val[0]) &#123;</span><br><span class="line">    case 'exp':</span><br><span class="line">        $result[$item] = $val[1];</span><br><span class="line">        break;</span><br><span class="line">    case 'inc':</span><br><span class="line"><span class="deletion">-        $result[$item] = $this-&gt;parseKey($val[1]) . '+' . floatval($val[2]);</span></span><br><span class="line"><span class="addition">+        $result[$item] = $item . '+' . floatval($val[2]);</span></span><br><span class="line">        break;</span><br><span class="line">    case 'dec':</span><br><span class="line"><span class="deletion">-        $result[$item] = $this-&gt;parseKey($val[1]) . '-' . floatval($val[2]);</span></span><br><span class="line"><span class="addition">+        $result[$item] = $item . '-' . floatval($val[2]);</span></span><br><span class="line">        break;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>可以看到改为拼接数组的键了：<br><img src="https://static.zybuluo.com/Passer6y/bbrlup3zenonuvidq1oi83iw/image_1d8faqgj6vr0nd8k9q8ouo9s44.png" alt="image_1d8faqgj6vr0nd8k9q8ouo9s44.png-409.2kB"></p><p>看到这里，其实有几个疑问的：</p><ol><li>为什么使用框架提供的参数方法过滤这么简单</li><li>将值换成键拼接还能注入吗？</li></ol><p>对于第一个问题，因为自己对thinkphp开发流程不熟悉原因，查阅<a href="https://www.kancloud.cn/manual/thinkphp5/118044" target="_blank" rel="noopener">文档</a>之后发现：<br><img src="https://static.zybuluo.com/Passer6y/8y2tjt5kivzwg0ma5y3bkk86/image_1d8f8g6lv13d5105o1hg7qmptdp20.png" alt="image_1d8f8g6lv13d5105o1hg7qmptdp20.png-81.1kB"><br>显然，就像上文分析的那样，默认情况下过滤就只有那些简单的关键字。</p><p>对于第二个问题，之前以为是客户端可控的传入变量的键，后来调试的时候发现是：<br><img src="https://static.zybuluo.com/Passer6y/q8k2jp76sdo9x9lv70pf04lu/image_1d8fbcjdf15o7fjp5sbc7a1o64u.png" alt="image_1d8fbcjdf15o7fjp5sbc7a1o64u.png-29.5kB"></p><h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>总结一下利用条件：</p><ol><li>过滤规则为默认，即无过滤</li><li>获取参数为array类型， 传入的三个参数，第一个为查询模式inc/dec，第二个未过滤为payload，第三个会进行<code>floatval()</code>类型转换，功能为递增的step</li><li>最后就是存在一个可控的insert操作了</li><li>开启报错才能报错注入</li></ol><h2 id="补更"><a href="#补更" class="headerlink" title="补更"></a>补更</h2><p>后来继续跟了一下tp5其他的注入，感觉都很鸡肋，甚至觉得不是洞..</p><p>利用思路都大同小异，传入数据默认不过滤，底层解析数据的也不过滤，最后进行一次字符串拼接。</p><p>参考：</p><ol><li><a href="https://packagist.laravel-china.org/" target="_blank" rel="noopener">Laravel China 社区维护的国内全量镜像</a></li><li><a href="https://github.com/Passer6y/ThinkPHP-Vuln" target="_blank" rel="noopener">ThinkPHP-Vuln</a></li></ol>]]></content>
     
     <summary type="html">
     
