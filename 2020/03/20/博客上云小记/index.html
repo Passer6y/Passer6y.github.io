@@ -150,7 +150,7 @@
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231856.jpg">
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231865.jpg">
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231873.jpg">
-<meta property="og:updated_time" content="2020-03-20T04:04:19.094Z">
+<meta property="og:updated_time" content="2020-03-20T04:19:25.623Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="博客上云优化小记">
 <meta name="twitter:image" content="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231873.jpg">
@@ -448,7 +448,7 @@
                 
               
 
-              <time title="Created: 2020-03-20 12:03:00 / Modified: 12:04:19" itemprop="dateCreated datePublished" datetime="2020-03-20T12:03:00+08:00">2020-03-20</time>
+              <time title="Created: 2020-03-20 12:03:00 / Modified: 12:19:25" itemprop="dateCreated datePublished" datetime="2020-03-20T12:03:00+08:00">2020-03-20</time>
             
 
             
@@ -517,8 +517,7 @@
         <hr>
 <a id="more"></a>
 <p><strong>先说结论，千万别用千牛云！！</strong></p>
-<p><strong>优化结果：</strong> 从以前的8秒都出不来，到现在秒开：</p>
-<p><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231873.jpg" alt="-w697"></p>
+<p><strong>优化结果：</strong>从以前的8秒都出不来，到现在秒开：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231873.jpg" alt="-w697"></p>
 <p>最开始是迫于图床需求，之前一直用的<code>sm.ms</code>，最开始速度慢就算了，凑合用一下，到后来把我传的图片ban掉了，导致之前写的文章图片大量404，关键是重新传也传不上..</p>
 <p>加上最近写了一篇图片贼多的文章，访问速度巨慢，忍不住就开始找图床。</p>
 <p>很早之前看到千牛云每个月免费10G S3对象存储，但是要身份证照片，一直搁置没用，昨天分析完漏洞无事，就一起把之前吃灰的域名都实名了。</p>
@@ -545,7 +544,7 @@
 <p>屈服了，最后还是选择氪金吧，都花了这么多时间折腾了，不想换厂商了…<br>CDN和S3分别收费：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231710.jpg" alt="-w954"><br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231724.jpg" alt="-w689"><br>为了节约流量，我还加了一个这个<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231735.jpg" alt="-w702"><br>后来@0akarma师傅给我说，这些在又拍云都是免费的，我…</p>
 <p>好了，全站https之后，又有新的问题了：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231746.jpg" alt="-w1670"><br>woff等字体文件要配一个跨域资源共享(CORS)，然后凭着印象记得S3对象存储那有一个资源共享配置：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231754.jpg" alt="-w1469"></p>
 <p>配了之后以为要延迟生效，出去打了个球回来，还是不行，然后网上搜了一下：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231788.jpg" alt="-w1077"><br>这波操作属实给我整吐了，在七牛云控制台转了一天，也没看到CDN有跨域的配置。后来想想也确实得在CDN的响应上配置。</p>
-<p>后来还遇到几个小问题，woff字体的referer是css，而不是url，这里在防盗链referer校验难多加一个白名单就行了：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231841.jpg" alt="-w719"></p>
+<p>后来还遇到几个小问题，woff字体的referer是css，而不是url，这里在防盗链referer校验那加一个白名单就行了：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231841.jpg" alt="-w719"></p>
 <p>到现在，就只有html在github上了，我访问<a href="https://static-passer6y.d0g3.cn/，不也是我的博客吗，为什么还要用github" target="_blank" rel="noopener">https://static-passer6y.d0g3.cn/，不也是我的博客吗，为什么还要用github</a> page呢，而且还解决了html加载慢的问题。</p>
 <p>然后我就想着去加一个<code>@</code>的<code>cname</code>解析到<code>static-passer6y.d0g3.cn</code>，在这之前我配了一个<code>mx</code>的<code>@</code>记录，用来收邮件的。</p>
 <p>一波操作下，阿里云不支持@的cname和mx记录共存…<br><img src="http://static-passer6y.d0g3.cn/0day/2020-03-20-15846769231856.jpg" alt="-w433"></p>
